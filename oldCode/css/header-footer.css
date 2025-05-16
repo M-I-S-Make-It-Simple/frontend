@@ -1,6 +1,4 @@
-/* Стилі для хедера */
 .header {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -92,7 +90,6 @@ hr {
     padding: 0;
 }
 
-/* Стилі для навігаційних елементів та випадаючого меню */
 .nav-item {
     position: relative;
     display: inline-block;

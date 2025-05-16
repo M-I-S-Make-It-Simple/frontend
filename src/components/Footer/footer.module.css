@@ -1,0 +1,118 @@
+.footer {
+    width: 100%;
+    height: 364px;
+    background-color: #182BA1;
+    color: white;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 70px;
+}
+
+.social-section {
+    position: absolute;
+    left: 88px;
+    top: 88px;
+    width: 373px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.social-title {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 62px;
+    color: white;
+    width: 100%;
+}
+
+.social-icons {
+    display: flex;
+    gap: 52px;
+    justify-content: flex-start;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Instagram icon */
+.social-icon:nth-child(1) {
+    width: 53px;
+    height: 53px;
+}
+
+.social-icon:nth-child(1) img {
+    width: 53px;
+    height: 53px;
+}
+
+/* YouTube icon */
+.social-icon:nth-child(2) {
+    width: 79px;
+    height: 53px;
+}
+
+.social-icon:nth-child(2) img {
+    width: 79px;
+    height: 53px;
+}
+
+/* Facebook icon */
+.social-icon:nth-child(3) {
+    width: 30px;
+    height: 53px;
+}
+
+.social-icon:nth-child(3) img {
+    width: 30px;
+    height: 53px;
+}
+
+.address-section {
+    position: absolute;
+    left: 575px;
+    top: 123px;
+    width: 432px;
+}
+
+.contacts-section {
+    position: absolute;
+    left: 1093px;
+    top: 131px;
+    width: 290px;
+}
+
+.footer h3 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: white;
+}
+
+.address-text, .contacts-text {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: white;
+}
+
+.contacts-text a {
+    color: white;
+    text-decoration: underline;
+}
