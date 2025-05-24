@@ -9,9 +9,19 @@ body {
   overflow-x: hidden;
 }
 
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContent {
+  flex: 1 0 auto;
+}
+
 .container {
   width: 100vw;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   position: relative;
   padding-top: 60px;
 }
@@ -34,8 +44,6 @@ body {
   background: linear-gradient(180deg, #182ba1 0%, #8e99dd 84%, #9ea8e5 100%);
   z-index: 0;
 }
-
-
 
 .content {
   max-width: 1400px;

@@ -1,16 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat_Alternates } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserratAlternates = Montserrat_Alternates({
+  weight: ['400', '700'],
+  variable: "--font-montserrat-alternates",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -21,10 +18,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {/*<Header />*/}
-        {children}
-        <Footer />
+      <body className={montserratAlternates.variable}>
+        <div className="pageWrapper">
+          <Header />
+          <main className="mainContent">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

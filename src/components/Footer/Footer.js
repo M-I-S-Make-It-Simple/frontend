@@ -24,8 +24,8 @@ const Footer = () => {
                 <Image
                   src={instagramImage}
                   alt="Instagram"
-                  width={40}
-                  height={40}
+                  width={52}
+                  height={52}
                 />
               </a>
               <a
@@ -37,8 +37,8 @@ const Footer = () => {
                 <Image
                   src={youTubeImage}
                   alt="YouTube"
-                  width={40}
-                  height={40}
+                  width={79}
+                  height={52}
                 />
               </a>
               <a
@@ -50,8 +50,8 @@ const Footer = () => {
                 <Image
                   src={facebookImage}
                   alt="Facebook"
-                  width={40}
-                  height={40}
+                  width={30}
+                  height={52}
                 />
               </a>
             </div>

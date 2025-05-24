@@ -1,31 +1,48 @@
 import Image from "next/image";
-import logoImage from '../assets/logo_bg.png';
+import schoolPhoto1 from "@/assets/school_photo1.jpg";
+import schoolPhoto2 from "@/assets/school_photo2.jpg";
+import schoolPhoto3 from "@/assets/school_photo3.jpg";
+import styles from "../styles/history.module.css";
 
-export default function Home() {
+
+export default function HistoryPage() {
   return (
-      <>
-        <div className="container">
-          <div className="background">
-            <div className="gradient-bg"></div>
-            <div className="logo-image-bg">
-              <Image src={logoImage}  alt="Background Logo" width={100} height={50} />
-            </div>
-          </div>
+    <>
+<main className={styles.historyContent}>
+  <section className={styles.schoolBuilding}>
+    <h2 className={styles.sectionTitle}>Будівля школи</h2>
 
-          <div className="content">
-            <h1 className="welcome-text">Ласкаво просимо!</h1>
+     {/* Блок 1 - текст по центру */}
+    <div className={styles.historyBlock}>
+      <div className={styles.historyImage}>
+        <Image src={schoolPhoto1} alt="schoolPhoto1" width={380} height={260} />
+      </div>
+      <div className={styles.historyText}>
+        <p>Спочатку школа №6 була розташована в одноповерховому будинку по вулиці Лисенка (сьогодні тут знаходиться Лубенська художня школа).</p>
+      </div>
+    </div>
 
-            <div className="text-container">
-              <div className="text-box">
-                <p>Якщо Ви шукаєте друзів і партнерів, цікавитеся системою освіти в Україні та хочете переконатися,
-                  як вона діє на практиці, маєте бажання віртуально повернутися в дитинство чи поспілкуватися зі
-                  своїми вчителями, поділитися життєвими надбаннями, дати добру пораду чи отримати її, або ж намірилися
-                  надати нашому ліцею спонсорську допомогу, <span className="bold-text">ласкаво запрошуємо на наш офіційний сайт</span>.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
+     {/* Блок 2 - текст розтягнутий  */}
+    <div className={styles.historyBlock}>
+      <div className={styles.historyImage}>
+        <Image src={schoolPhoto2} alt="schoolPhoto2" width={380} height={260} />
+      </div>
+      <div className={styles.historyText}>
+        <p>Приміщення школи розбудовувалося в роки, коли її очолював Сахно Володимир Іванович, а заступником директора був Горбенко Іван Іванович. У 1967 році по вулиці Карла Маркса зведено нове приміщення для навчання.</p>
+      </div>
+    </div>
+
+    {/* Блок 3 - текст на всю ширину  */}
+    <div className={styles.historyBlock}>
+      <div className={styles.historyImage}>
+        <Image src={schoolPhoto3} alt="schoolPhoto3" width={380} height={260} />
+      </div>
+      <div className={styles.historyText}>
+        <p>Організацією будівництва займалася директор школи Чабаненко Олександра Іванівна за активної підтримки всього педагогічного, батьківського й учнівського колективів. Держава відзначила її працю орденом Трудового Червоного Прапора. Особливий ентузіазм виявили вчителі праці Бабич Костянтин Володимирович, Баранов Микола Іванович, Кулініч Микола Олександрович, технічний працівник школи Балацький Петро Трохимович, учителі фізкультури та початкової військової підготовки Зозуля Олексій Іванович та Сластьон Петро Никифорович.</p>
+      </div>
+    </div>
+  </section>
+</main>
+    </>
   );
 }

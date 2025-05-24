@@ -5,10 +5,10 @@
     color: white;
     padding: 0;
     margin: 0;
-    position: relative;
+    bottom: 0;
 }
 
-.footer-content {
+.footerContent {
     max-width: 1440px;
     margin: 0 auto;
     position: relative;
@@ -19,7 +19,7 @@
     padding-top: 70px;
 }
 
-.social-section {
+.socialSection {
     position: absolute;
     left: 88px;
     top: 88px;
@@ -29,8 +29,8 @@
     align-items: flex-start;
 }
 
-.social-title {
-    font-family: 'Montserrat Alternates', sans-serif;
+.socialTitle {
+    font-family: var(--font-montserrat-alternates), sans-serif;
     font-size: 24px;
     font-weight: 500;
     margin-bottom: 62px;
@@ -38,59 +38,59 @@
     width: 100%;
 }
 
-.social-icons {
+.socialIcons {
     display: flex;
     gap: 52px;
     justify-content: flex-start;
 }
 
-.social-icon {
+.socialIcon {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 /* Instagram icon */
-.social-icon:nth-child(1) {
+.socialIcon:nth-child(1) {
     width: 53px;
     height: 53px;
 }
 
-.social-icon:nth-child(1) img {
+.socialIcon:nth-child(1) img {
     width: 53px;
     height: 53px;
 }
 
 /* YouTube icon */
-.social-icon:nth-child(2) {
+.socialIcon:nth-child(2) {
     width: 79px;
     height: 53px;
 }
 
-.social-icon:nth-child(2) img {
+.socialIcon:nth-child(2) img {
     width: 79px;
     height: 53px;
 }
 
 /* Facebook icon */
-.social-icon:nth-child(3) {
+.socialIcon:nth-child(3) {
     width: 30px;
     height: 53px;
 }
 
-.social-icon:nth-child(3) img {
+.socialIcon:nth-child(3) img {
     width: 30px;
     height: 53px;
 }
 
-.address-section {
+.addressSection {
     position: absolute;
     left: 575px;
     top: 123px;
     width: 432px;
 }
 
-.contacts-section {
+.contactsSection {
     position: absolute;
     left: 1093px;
     top: 131px;
@@ -98,21 +98,21 @@
 }
 
 .footer h3 {
-    font-family: 'Montserrat Alternates', sans-serif;
+    font-family: var(--font-montserrat-alternates), sans-serif;
     font-size: 24px;
     font-weight: 500;
     margin-bottom: 24px;
     color: white;
 }
 
-.address-text, .contacts-text {
-    font-family: 'Montserrat Alternates', sans-serif;
+.addressText, .contactsText {
+    font-family: var(--font-montserrat-alternates), sans-serif;
     font-size: 18px;
     line-height: 1.5;
     color: white;
 }
 
-.contacts-text a {
+.contactsText a {
     color: white;
     text-decoration: underline;
 }
