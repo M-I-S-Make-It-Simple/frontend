@@ -39,13 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollTimer = setTimeout(handleScroll, 10);
     });
     
-
-    // Код для відкриття першого акордеону по замовчуванню
-    const firstAccordionItem = document.querySelector('.accordion-item');
-    if (firstAccordionItem) {
-        firstAccordionItem.classList.add('active');
-    }
-    
     // Додаємо обробники кліку для всіх кнопок акордеону
     document.querySelectorAll('.accordion-button').forEach(button => {
         button.addEventListener('click', () => {
@@ -77,5 +70,139 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // JavaScript для роботи акордеону на нових сторінках
+    const eventItems = document.querySelectorAll('.event-item');
     
+    if (eventItems.length > 0) {
+        console.log('Found event-items:', eventItems.length);
+        eventItems.forEach(item => {
+            const header = item.querySelector('.event-header');
+            
+            if (header) {
+                console.log('Setting up click handler for event header');
+                header.addEventListener('click', function() {
+                    console.log('Event header clicked');
+                    // Закриваємо всі активні елементи крім поточного
+                    eventItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Перемикаємо клас 'active' для поточного елемента
+                    item.classList.toggle('active');
+                    console.log('Toggled active class, new state:', item.classList.contains('active'));
+                });
+            } else {
+                console.log('No event-header found in event-item');
+            }
+        });
+    } else {
+        console.log('No event-items found on page');
+    }
+
+    // Обробка кнопки зі спадним списком
+    const yearButton = document.querySelector('.year-button');
+    const yearDropdown = document.querySelector('.year-dropdown-content');
+    
+    if (yearButton && yearDropdown) {
+        yearButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            yearButton.classList.toggle('active');
+            yearDropdown.classList.toggle('active');
+        });
+
+        // Закриваємо список при кліку поза ним
+        document.addEventListener('click', function(e) {
+            if (!yearButton.contains(e.target) && !yearDropdown.contains(e.target)) {
+                yearButton.classList.remove('active');
+                yearDropdown.classList.remove('active');
+            }
+        });
+
+        // Обробка вибору пункту меню
+        const yearLinks = yearDropdown.querySelectorAll('a');
+        yearLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const text = this.textContent;
+                document.querySelector('.year-text').textContent = text;
+                yearButton.classList.remove('active');
+                yearDropdown.classList.remove('active');
+            });
+        });
+    }
+    
+    // Анімація для секції статистики
+    const statisticsSection = document.querySelector('.statistics-section');
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    // Зберігаємо цільові значення кожного числа
+    const targetNumbers = [];
+    statNumbers.forEach(statNumber => {
+        const targetValue = parseInt(statNumber.textContent, 10);
+        targetNumbers.push(targetValue);
+        // Скидаємо всі числа до 0 перед початком анімації
+        statNumber.textContent = '0';
+    });
+    
+    let animationStarted = false;
+    
+    // Функція для перевірки, чи елемент видимий на екрані
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+            rect.bottom >= 0
+        );
+    }
+    
+    // Функція для анімації чисел
+    function animateNumbers() {
+        if (animationStarted) return;
+        
+        if (isElementInViewport(statisticsSection)) {
+            animationStarted = true;
+            
+            const animationDuration = 2000; // 2 секунди
+            const steps = 100; // Кількість кроків анімації
+            const stepDuration = animationDuration / steps;
+            
+            let currentStep = 0;
+            
+            const interval = setInterval(() => {
+                currentStep++;
+                
+                statNumbers.forEach((statNumber, index) => {
+                    const targetValue = targetNumbers[index];
+                    let currentValue;
+                    
+                    // Плавна анімація з уповільненням наприкінці (ease-out)
+                    if (currentStep < steps * 0.7) {
+                        // Швидка фаза (70% часу)
+                        currentValue = Math.floor((currentStep / (steps * 0.7)) * targetValue * 0.9);
+                    } else {
+                        // Повільна фаза (останні 30% часу)
+                        const progress = (currentStep - steps * 0.7) / (steps * 0.3);
+                        currentValue = Math.floor(targetValue * 0.9 + progress * targetValue * 0.1);
+                    }
+                    
+                    statNumber.textContent = currentValue;
+                });
+                
+                if (currentStep >= steps) {
+                    clearInterval(interval);
+                    // Пересвідчимось, що фінальні числа точно дорівнюють цільовим
+                    statNumbers.forEach((statNumber, index) => {
+                        statNumber.textContent = targetNumbers[index];
+                    });
+                }
+            }, stepDuration);
+        }
+    }
+    
+    // Додаємо обробник прокрутки для перевірки, чи секція статистики видима
+    window.addEventListener('scroll', animateNumbers);
+    // Викликаємо анімацію під час завантаження на випадок, якщо секція вже видима
+    animateNumbers();
 }); 
