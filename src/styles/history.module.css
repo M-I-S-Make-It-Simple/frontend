@@ -22,7 +22,6 @@
   margin-bottom: 60px;
   gap: 40px;
   width: 100%;
-  justify-content: center;
 }
 
 .historyImage {
@@ -41,17 +40,17 @@
 }
 
 .historyText {
-  width: 560px;
   min-height: 240px;
   background-color: rgba(24, 43, 161, 0.5);
   border-radius: 20px;
   padding: 30px;
   display: flex;
   align-items: center;
+  width: 100%
 }
 
 .historyBlock:nth-child(3) .historyText {
-  width: 647px;
+  /*width: 647px;*/
 }
 
 .historyBlock:nth-child(4) .historyText {
