@@ -1,21 +1,37 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 import headerLogo from "../../assets/header_lyceum_logo.png";
 import languageChange from "../../assets/language_change.png";
 import styles from "../../styles/HeaderFooter.module.css";
 
 const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.navContainer}>
         <div className={styles.logo}>
-          <Image src={headerLogo} alt="Logo" width={52} height={52} />
+          <Link href="/">
+            <Image src={headerLogo} alt="Logo" width={52} height={52} />
+          </Link>
         </div>
 
+        {/* Desktop Navigation */}
         <div className={styles.navLinks}>
           <div className={`${styles.navItem} ${styles.dropdown}`}>
-            <Link className={styles.navLink} href="/">
+            <Link className={styles.navLink} href="/index">
               <span>Про</span>
               <span>ліцей</span>
             </Link>
@@ -123,6 +139,7 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Desktop Language Switcher */}
         <div className={styles.languageSwitcher}>
           <Image
             src={languageChange}
@@ -131,7 +148,196 @@ const Header = () => {
             height={38}
           />
         </div>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          className={`${styles.hamburger} ${isMobileMenuOpen ? styles.active : ""}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle mobile menu"
+        >
+          <div className={styles.hamburgerLine}></div>
+          <div className={styles.hamburgerLine}></div>
+          <div className={styles.hamburgerLine}></div>
+        </button>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`${styles.mobileMenuOverlay} ${isMobileMenuOpen ? styles.active : ""}`}
+        onClick={closeMobileMenu}
+      ></div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.active : ""}`}
+      >
+        <div className={styles.mobileMenuHeader}>
+          <button
+            className={styles.closeButton}
+            onClick={closeMobileMenu}
+            aria-label="Close mobile menu"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className={styles.mobileNavLinks}>
+          <div className={styles.mobileNavItem}>
+            <Link
+              className={styles.mobileNavLink}
+              href="/index"
+              onClick={closeMobileMenu}
+            >
+              Про ліцей
+            </Link>
+            <div className={styles.mobileDropdownContent}>
+              <Link href="/visitingcard" onClick={closeMobileMenu}>
+                Наша візитка
+              </Link>
+              <Link href="/history" onClick={closeMobileMenu}>
+                Історія закладу
+              </Link>
+              <Link href="/innovative" onClick={closeMobileMenu}>
+                Інноваційна діяльність
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.mobileNavItem}>
+            <Link
+              className={styles.mobileNavLink}
+              href="/news"
+              onClick={closeMobileMenu}
+            >
+              Новини
+            </Link>
+          </div>
+
+          <div className={styles.mobileNavItem}>
+            <Link
+              className={styles.mobileNavLink}
+              href="/teaching-staff"
+              onClick={closeMobileMenu}
+            >
+              Педагогічний колектив
+            </Link>
+          </div>
+
+          <div className={styles.mobileNavItem}>
+            <Link
+              className={styles.mobileNavLink}
+              href="#"
+              onClick={closeMobileMenu}
+            >
+              Прозорість управління
+            </Link>
+            <div className={styles.mobileDropdownContent}>
+              <Link href="/regulatory-documents" onClick={closeMobileMenu}>
+                Нормативні документи
+              </Link>
+              <Link href="/financial-reports" onClick={closeMobileMenu}>
+                Фінансова звітність
+              </Link>
+              <Link href="/public-information" onClick={closeMobileMenu}>
+                Публічна інформація
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.mobileNavItem}>
+            <Link
+              className={styles.mobileNavLink}
+              href="#"
+              onClick={closeMobileMenu}
+            >
+              Освітній процес
+            </Link>
+            <div className={styles.mobileDropdownContent}>
+              <Link href="/intellect" onClick={closeMobileMenu}>
+                Інтелект та обдарованість
+              </Link>
+              <Link href="/student-self-government" onClick={closeMobileMenu}>
+                Учнівське самоврядування
+              </Link>
+              <Link href="/project-research" onClick={closeMobileMenu}>
+                Проєктно-дослідницька діяльність
+              </Link>
+              <Link href="/patriotic-education" onClick={closeMobileMenu}>
+                Національно-патріотичне виховання
+              </Link>
+              <Link href="/evaluation-criteria" onClick={closeMobileMenu}>
+                Критерії оцінювання
+              </Link>
+              <Link href="/career-guidance" onClick={closeMobileMenu}>
+                Профорієнтаційна сторінка
+              </Link>
+              <Link href="/moral-education" onClick={closeMobileMenu}>
+                Морально-етичне виховання
+              </Link>
+              <Link href="/clubs-studios" onClick={closeMobileMenu}>
+                Клуби та студії
+              </Link>
+              <Link href="/sportlife" onClick={closeMobileMenu}>
+                СпортLife
+              </Link>
+              <Link href="/psychological-support" onClick={closeMobileMenu}>
+                Соціально-психологічна підтримка
+              </Link>
+              <Link href="/anti-bullying" onClick={closeMobileMenu}>
+                Протидія булінгу
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.mobileNavItem}>
+            <Link
+              className={styles.mobileNavLink}
+              href="#"
+              onClick={closeMobileMenu}
+            >
+              Методична робота
+            </Link>
+            <div className={styles.mobileDropdownContent}>
+              <Link href="/teacher-help" onClick={closeMobileMenu}>
+                На допомогу вчителю
+              </Link>
+              <Link href="/qualification-improvement" onClick={closeMobileMenu}>
+                Підвищення кваліфікації
+              </Link>
+              <Link href="/teacher-certification" onClick={closeMobileMenu}>
+                Атестація педпрацівників
+              </Link>
+              <Link href="/methodical-events" onClick={closeMobileMenu}>
+                Основні методичні заходи
+              </Link>
+              <Link href="pedagogical-olympus.html" onClick={closeMobileMenu}>
+                Педагогічний Олімп
+              </Link>
+              <Link href="methodical-lifehacks.html" onClick={closeMobileMenu}>
+                Методичні лайфхаки
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.mobileNavItem}>
+            <Link
+              className={styles.mobileNavLink}
+              href="#"
+              onClick={closeMobileMenu}
+            >
+              Інформаційна сторінка
+            </Link>
+            <div className={styles.mobileDropdownContent}>
+              <Link href="#" onClick={closeMobileMenu}>
+                Батькам
+              </Link>
+              <Link href="#" onClick={closeMobileMenu}>
+                Учням
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <hr />
     </header>
