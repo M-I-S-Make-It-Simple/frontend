@@ -9,41 +9,15 @@ import testImage from "@/assets/test.jpg";
 import faqImg from "@/assets/FAQ.jpg";
 import Link from "next/link";
 import FAQSection from "@/components/FAQSection/FAQSection";
+import { useTranslation } from "@/contexts/TranslationProvider";
 
 export default function MainPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [counters, setCounters] = useState([0, 0, 0, 0]);
   const sectionRef = useRef(null);
+  const { t } = useTranslation();
 
   const finalValues = [780, 60, 46, 6];
-
-  // FAQ данні
-  const faqOptions = [
-    {
-      label: "Які іноземні мови у вас вивчаються?",
-      text: "Англійська мова як перша іноземна та німецька/французька як друга іноземна мова.",
-    },
-    {
-      label: "Який формат навчання у вашому закладі?",
-      text: "Усі класи, крім 6 і 7 знаходяться на офлайн навчанні, відвідуючи школу щодня. Паралелі 6-7 класів — на змішаному. Вони ходять до школи через день.",
-    },
-    {
-      label: "Які профілі навчання пропонуються в десятих класах?",
-      text: "Іноземна філологія, українська філологія, історичний профіль, математичний, хіміко-біологічний, фізико-математичний.",
-    },
-    {
-      label: "Які гуртки пропонує ваш навчальний заклад?",
-      text: "Вокал, хореографія, спортивні секції, театральна студія, художній гурток.",
-    },
-    {
-      label: "Чи проводиться набір у 5-ті класи?",
-      text: "Так. Починаючи з 5-го класу буде реалізуватися допрофільне навчання з англійської мови та математики.",
-    },
-    {
-      label: "Який режим роботи закладу під час повітряної тривоги?",
-      text: "Уроки продовжуються в безпечному місці.",
-    },
-  ];
 
   const animateNumber = (start, end, duration, callback) => {
     const startTime = Date.now();
@@ -104,21 +78,13 @@ export default function MainPage() {
         </div>
 
         <div className="content">
-          <h1 className="welcome-text">Ласкаво просимо!</h1>
+          <h1 className="welcome-text">{t("welcome")}</h1>
 
           <div className="text-container">
             <div className="text-box">
               <p>
-                Якщо Ви шукаєте друзів і партнерів, цікавитеся системою освіти в
-                Україні та хочете переконатися, як вона діє на практиці, маєте
-                бажання віртуально повернутися в дитинство чи поспілкуватися зі
-                своїми вчителями, поділитися життєвими надбаннями, дати добру
-                пораду чи отримати її, або ж намірилися надати нашому ліцею
-                спонсорську допомогу,{" "}
-                <span className="bold-text">
-                  ласкаво запрошуємо на наш офіційний сайт
-                </span>
-                .
+                {t("welcomeDescription")}{" "}
+                <span className="bold-text">{t("welcomeHighlight")}</span>.
               </p>
             </div>
           </div>
@@ -126,27 +92,27 @@ export default function MainPage() {
       </div>
 
       <section className="useful-functions">
-        <h2 className="section-title">Корисні функції нашого сайту</h2>
-        <p className="section-subtitle">Рекомендуємо спробувати!</p>
+        <h2 className="section-title">{t("usefulFunctions")}</h2>
+        <p className="section-subtitle">{t("recommendTry")}</p>
 
         <div className="cards-container">
           <a href="#" className="card wide-card">
-            <Image src={virtualImg} alt="Віртуальна прогулянка" />
+            <Image src={virtualImg} alt={t("virtualTour")} />
             <div className="card-gradient"></div>
-            <h3 className="card-title">Віртуальна прогулянка</h3>
+            <h3 className="card-title">{t("virtualTour")}</h3>
           </a>
 
           <div className="cards-row">
             <a href="#" className="card">
-              <Image src={testImage} alt="Профільні тести" />
+              <Image src={testImage} alt={t("profileTests")} />
               <div className="card-gradient"></div>
-              <h3 className="card-title">Профільні тести</h3>
+              <h3 className="card-title">{t("profileTests")}</h3>
             </a>
 
             <Link href="#faq-section" className="card">
-              <Image src={faqImg} alt="FAQ" />
+              <Image src={faqImg} alt={t("faq")} />
               <div className="card-gradient"></div>
-              <h3 className="card-title">FAQ</h3>
+              <h3 className="card-title">{t("faq")}</h3>
             </Link>
           </div>
         </div>
@@ -156,28 +122,26 @@ export default function MainPage() {
         <div className="statistics-content">
           <div className="stat-item">
             <h2 className="stat-number">{counters[0].toLocaleString()}</h2>
-            <p className="stat-text">учнів здобувають освіту у нашому ліцеї</p>
+            <p className="stat-text">{t("studentsCount")}</p>
           </div>
           <div className="stat-item">
             <h2 className="stat-number">{counters[1].toLocaleString()}</h2>
-            <p className="stat-text">вчителів працюють у ліцеї на даний час</p>
+            <p className="stat-text">{t("teachersCount")}</p>
           </div>
           <div className="stat-item">
             <h2 className="stat-number">{counters[2].toLocaleString()}</h2>
-            <p className="stat-text">
-              переможців національної програми обміну FLEX
-            </p>
+            <p className="stat-text">{t("flexWinners")}</p>
           </div>
           <div className="stat-item">
             <h2 className="stat-number">{counters[3].toLocaleString()}</h2>
-            <p className="stat-text">учнів склали НМТ 2024 на 200 балів</p>
+            <p className="stat-text">{t("examResults")}</p>
           </div>
         </div>
       </div>
 
       <FAQSection
-        options={faqOptions}
-        title="FAQ (поширені запитання)"
+        options={t("faqData")}
+        title={t("faqTitle")}
         image={firebirdImg}
         imageAlt="Жар-птиця"
       />

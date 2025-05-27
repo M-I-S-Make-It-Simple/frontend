@@ -3,13 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { Box } from "@mui/material";
 
 import headerLogo from "../../assets/header_lyceum_logo.png";
 import languageChange from "../../assets/language_change.png";
+import enImageLang from "../../assets/en.svg";
 import styles from "../../styles/HeaderFooter.module.css";
+import { useTranslation } from "@/contexts/TranslationProvider";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t, locale, changeLanguage } = useTranslation();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -128,10 +132,18 @@ const Header = () => {
               <span>Інше</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="http://malyk.ho.ua/">Літературний сайт Володимира Малика</Link>
-              <Link href="https://lubnyrada.gov.ua/">Лубенська міська рада</Link>
-              <Link href="https://www.mon.gov.ua/">Міністерство освіти і науки України</Link>
-              <Link href="https://testportal.gov.ua">Український центр оцінювання якості освіти</Link>
+              <Link href="http://malyk.ho.ua/">
+                Літературний сайт Володимира Малика
+              </Link>
+              <Link href="https://lubnyrada.gov.ua/">
+                Лубенська міська рада
+              </Link>
+              <Link href="https://www.mon.gov.ua/">
+                Міністерство освіти і науки України
+              </Link>
+              <Link href="https://testportal.gov.ua">
+                Український центр оцінювання якості освіти
+              </Link>
               <Link href="https://zno-kharkiv.org.ua/">
                 Харківський регіональний центр оцінювання якості освіти
               </Link>
@@ -139,17 +151,21 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Desktop Language Switcher */}
         <div className={styles.languageSwitcher}>
-          <Image
-            src={languageChange}
-            alt="languageChange"
-            width={32}
-            height={38}
-          />
+          <Box
+            onClick={() => {
+              changeLanguage(locale === "uk" ? "en" : "uk");
+            }}
+          >
+            <Image
+              src={locale === "uk" ? languageChange : enImageLang}
+              alt="languageChange"
+              width={32}
+              height={38}
+            />
+          </Box>
         </div>
 
-        {/* Mobile Hamburger Button */}
         <button
           className={`${styles.hamburger} ${isMobileMenuOpen ? styles.active : ""}`}
           onClick={toggleMobileMenu}
@@ -161,13 +177,11 @@ const Header = () => {
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
       <div
         className={`${styles.mobileMenuOverlay} ${isMobileMenuOpen ? styles.active : ""}`}
         onClick={closeMobileMenu}
       ></div>
 
-      {/* Mobile Menu */}
       <div
         className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.active : ""}`}
       >
