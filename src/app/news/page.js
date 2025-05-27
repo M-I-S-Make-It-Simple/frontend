@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 import newsPhoto11 from "@/assets/news_photo1.1.png";
 import newsPhoto12 from "@/assets/news_photo1.2.png";
 import newsPhoto21 from "@/assets/news_photo2.1.png";
 import newsPhoto22 from "@/assets/news_photo2.2.png";
 import newsPhoto23 from "@/assets/news_photo2.3.png";
-import styles from '@/styles/news.module.css';
-import { useState } from 'react';
+import styles from "@/styles/news.module.css";
+import { useState } from "react";
 
 export default function NewsPage() {
   const [expandedNews, setExpandedNews] = useState(null);
@@ -18,64 +18,55 @@ export default function NewsPage() {
   const news = [
     {
       id: 1,
-      title: "Олімпіада "Всесвіт знань. Весна-2025" з української мови (23.05.2025)",
-      text: "Старшокласники Академічного ліцею "Європейський" продемонстрували глибокі знання та любов до рідного слова, узявши участь у Всеукраїнській дистанційній олімпіаді "Всесвіт знань. Весна-2025" з української мови.
-      <><br />
-      З великою гордістю повідомляємо, що серед учасників є наші переможці:
-      <br />
-      1 місце: Глущенко Юлія, Єрченко Анастасія, Хоменко Євгенія,
-      <br />
-      2 місце: Москаленко Софія, Гребінник Дар'я, Петренко Олександр,
-      <br />
-      3 місце: Корнієнко Ангеліна, Андрієвська Віра, Моротченко Яна, Гашко Поліна (учитель -Тетяна Хоменко).
-      <br /><br />
-      Щиро вітаємо всіх учнів, які долучилися до цього інтелектуального змагання, та бажаємо подальших успіхів!",
-      images: [newsPhoto11, newsPhoto12]
+      title: `Олімпіада "Всесвіт знань. Весна-2025" з української мови (23.05.2025)`,
+      text: `Старшокласники Академічного ліцею "Європейський" продемонстрували глибокі знання та любов до рідного слова, узявши участь у Всеукраїнській дистанційній олімпіаді "Всесвіт знань. Весна-2025" з української мови.<br /><br />З великою гордістю повідомляємо, що серед учасників є наші переможці:<br />1 місце: Глущенко Юлія, Єрченко Анастасія, Хоменко Євгенія,<br />2 місце: Москаленко Софія, Гребінник Дар'я, Петренко Олександр,<br />3 місце: Корнієнко Ангеліна, Андрієвська Віра, Моротченко Яна, Гашко Поліна (учитель -Тетяна Хоменко).<br /><br />Щиро вітаємо всіх учнів, які долучилися до цього інтелектуального змагання, та бажаємо подальших успіхів!`,
+      images: [newsPhoto11, newsPhoto12],
     },
     {
       id: 2,
-      title: 'Обласний літературний конкурс «Відлуння заповітів земляків» (23.05.2025)',
+      title:
+        "Обласний літературний конкурс «Відлуння заповітів земляків» (23.05.2025)",
       text: `20 травня в Полтаві відбувся обласний літературний конкурс «Відлуння заповітів земляків», присвячений 90-річчю від дня народження нашого земляка, видатного українського поета Василя Симоненка.
-      <br /><br />
-      Академічний ліцей "Європейський" гідно представила Євгенія ХОМЕНКО, учениця 11-Б класу, яка виступила в номінації «Дослідницька робота». Її науковим керівником стала вчителька української мови та літератури Інна ЛЕВЧЕНКО.
-      <br /><br />
-      У своєму дослідженні Євгенія розкрила глибину художнього слова Василя Симоненка, поєднавши науковий аналіз із творчим підходом. Захист учениці супроводжувався зворушливим виконанням пісні на слова "витязя молодої української поезії".
-      <br /><br />
-      За підсумками конкурсу Євгенія ХОМЕНКО нагороджена Дипломом ІІІ ступеня. Щиро вітаємо одинадцятикласницю та її наставницю — Інну ЛЕВЧЕНКО — з високою відзнакою, бажаємо нових творчих і наукових здобутків!`,
-      images: [newsPhoto21, newsPhoto22, newsPhoto23]
+    <br /><br />
+    Академічний ліцей "Європейський" гідно представила Євгенія ХОМЕНКО, учениця 11-Б класу, яка виступила в номінації «Дослідницька робота». Її науковим керівником стала вчителька української мови та літератури Інна ЛЕВЧЕНКО.
+    <br /><br />
+    У своєму дослідженні Євгенія розкрила глибину художнього слова Василя Симоненка, поєднавши науковий аналіз із творчим підходом. Захист учениці супроводжувався зворушливим виконанням пісні на слова "витязя молодої української поезії".
+    <br /><br />
+    За підсумками конкурсу Євгенія ХОМЕНКО нагороджена Дипломом ІІІ ступеня. Щиро вітаємо одинадцятикласницю та її наставницю — Інну ЛЕВЧЕНКО — з високою відзнакою, бажаємо нових творчих і наукових здобутків!`,
+      images: [newsPhoto21, newsPhoto22, newsPhoto23],
     },
     {
       id: 3,
-      title: 'Міжнародний конкурс з англійської мови (18.05.2025)',
+      title: "Міжнародний конкурс з англійської мови (18.05.2025)",
       text: `Наші учні успішно представили ліцей на Міжнародному конкурсі з англійської мови, показавши відмінне володіння мовою та знання культури англомовних країн.
-      <br /><br />
-      Результати конкурсу:
-      <br />
-      1 місце: Марченко Катерина, Лисенко Олександр
-      <br />
-      2 місце: Кравченко Юлія, Ткаченко Максим
-      <br />
-      3 місце: Гончаренко Анна, Шевчук Олег (учитель - Марія Сидоренко)
-      <br /><br />
-      Пишаємося нашими учнями та їх досягненнями!`,
-      images: []
+    <br /><br />
+    Результати конкурсу:
+    <br />
+    1 місце: Марченко Катерина, Лисенко Олександр
+    <br />
+    2 місце: Кравченко Юлія, Ткаченко Максим
+    <br />
+    3 місце: Гончаренко Анна, Шевчук Олег (учитель - Марія Сидоренко)
+    <br /><br />
+    Пишаємося нашими учнями та їх досягненнями!`,
+      images: [],
     },
     {
       id: 4,
       title: 'Науково-практична конференція "Молоді дослідники" (15.05.2025)',
       text: `У нашому ліцеї відбулася щорічна науково-практична конференція "Молоді дослідники", де учні представили свої наукові проекти та дослідження.
-      <br /><br />
-      Переможці конференції:
-      <br />
-      1 місце: Проект "Екологічні проблеми сучасності" - Група 10-А класу
-      <br />
-      2 місце: Проект "Інноваційні технології в освіті" - Група 11-Б класу
-      <br />
-      3 місце: Проект "Розвиток креативного мислення" - Група 9-В класу
-      <br /><br />
-      Дякуємо всім учасникам за цікаві проекти та наукові дослідження!`,
-      images: []
-    }
+    <br /><br />
+    Переможці конференції:
+    <br />
+    1 місце: Проект "Екологічні проблеми сучасності" - Група 10-А класу
+    <br />
+    2 місце: Проект "Інноваційні технології в освіті" - Група 11-Б класу
+    <br />
+    3 місце: Проект "Розвиток креативного мислення" - Група 9-В класу
+    <br /><br />
+    Дякуємо всім учасникам за цікаві проекти та наукові дослідження!`,
+      images: [],
+    },
   ];
 
   const handleReadMore = (id) => {
@@ -95,17 +86,19 @@ export default function NewsPage() {
   };
 
   const handlePrevImage = () => {
-    const currentNews = news.find(item => item.images.includes(currentImage));
+    const currentNews = news.find((item) => item.images.includes(currentImage));
     if (currentNews) {
       const currentIndex = currentNews.images.indexOf(currentImage);
-      const prevIndex = (currentIndex - 1 + currentNews.images.length) % currentNews.images.length;
+      const prevIndex =
+        (currentIndex - 1 + currentNews.images.length) %
+        currentNews.images.length;
       setCurrentImage(currentNews.images[prevIndex]);
       setCurrentImageIndex(prevIndex);
     }
   };
 
   const handleNextImage = () => {
-    const currentNews = news.find(item => item.images.includes(currentImage));
+    const currentNews = news.find((item) => item.images.includes(currentImage));
     if (currentNews) {
       const currentIndex = currentNews.images.indexOf(currentImage);
       const nextIndex = (currentIndex + 1) % currentNews.images.length;
@@ -119,27 +112,27 @@ export default function NewsPage() {
       <div className={styles.background}>
         <div className={styles.gradientBg}></div>
       </div>
-      
+
       <main className={styles.newsMain}>
         <h2 className={styles.newsStreamTitle}>Стрічка новин</h2>
 
         <div className={styles.newsList}>
           {news.map((item) => (
-            <div 
-              key={item.id} 
-              className={`${styles.newsItem} ${expandedNews === item.id ? styles.expanded : ''}`}
+            <div
+              key={item.id}
+              className={`${styles.newsItem} ${expandedNews === item.id ? styles.expanded : ""}`}
             >
               <div className={styles.newsContent}>
                 <h3 className={styles.newsItemTitle}>{item.title}</h3>
-                <p 
+                <p
                   className={styles.newsItemText}
                   dangerouslySetInnerHTML={{ __html: item.text }}
                 />
-                <button 
-                  className={`${styles.readMoreBtn} ${expandedNews === item.id ? styles.expanded : ''}`}
+                <button
+                  className={`${styles.readMoreBtn} ${expandedNews === item.id ? styles.expanded : ""}`}
                   onClick={() => handleReadMore(item.id)}
                 >
-                  {expandedNews === item.id ? 'Згорнути' : 'Читати далі'}
+                  {expandedNews === item.id ? "Згорнути" : "Читати далі"}
                 </button>
               </div>
               {item.images.length > 0 && (
@@ -151,15 +144,17 @@ export default function NewsPage() {
                     height={300}
                     onClick={() => handleImageClick(item.images, 0)}
                   />
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className={styles.newsImageOverlay}
                     onClick={(e) => {
                       e.preventDefault();
                       handleImageClick(item.images, 0);
                     }}
                   >
-                    <span className={styles.viewMoreText}>Переглянути більше</span>
+                    <span className={styles.viewMoreText}>
+                      Переглянути більше
+                    </span>
                   </a>
                 </div>
               )}
@@ -170,7 +165,9 @@ export default function NewsPage() {
 
       {/* Gallery Modal */}
       {galleryOpen && (
-        <div className={`${styles.galleryModal} ${galleryOpen ? styles.active : ''}`}>
+        <div
+          className={`${styles.galleryModal} ${galleryOpen ? styles.active : ""}`}
+        >
           <div className={styles.galleryContent}>
             <Image
               src={currentImage}
@@ -179,12 +176,25 @@ export default function NewsPage() {
               height={800}
             />
             <div className={styles.galleryNav}>
-              <button className={styles.galleryPrev} onClick={handlePrevImage}>❮</button>
-              <button className={styles.galleryNext} onClick={handleNextImage}>❯</button>
+              <button className={styles.galleryPrev} onClick={handlePrevImage}>
+                ❮
+              </button>
+              <button className={styles.galleryNext} onClick={handleNextImage}>
+                ❯
+              </button>
             </div>
-            <button className={styles.galleryClose} onClick={handleGalleryClose}>×</button>
+            <button
+              className={styles.galleryClose}
+              onClick={handleGalleryClose}
+            >
+              ×
+            </button>
             <div className={styles.galleryCounter}>
-              {currentImageIndex + 1} / {news.find(item => item.images.includes(currentImage))?.images.length}
+              {currentImageIndex + 1} /{" "}
+              {
+                news.find((item) => item.images.includes(currentImage))?.images
+                  .length
+              }
             </div>
           </div>
         </div>
