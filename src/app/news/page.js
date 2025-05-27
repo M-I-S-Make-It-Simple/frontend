@@ -113,23 +113,23 @@ export default function NewsPage() {
       <div className={styles.background}>
         <div className={styles.gradientBg}></div>
       </div>
-      
+
       <main className={styles.newsMain}>
         <h2 className={styles.newsStreamTitle}>Стрічка новин</h2>
 
         <div className={styles.newsList}>
           {news.map((item) => (
-            <div 
-              key={item.id} 
+            <div
+              key={item.id}
               className={`${styles.newsItem} ${expandedNews === item.id ? styles.expanded : ''}`}
             >
               <div className={styles.newsContent}>
                 <h3 className={styles.newsItemTitle}>{item.title}</h3>
-                <p 
+                <p
                   className={styles.newsItemText}
                   dangerouslySetInnerHTML={{ __html: item.text }}
                 />
-                <button 
+                <button
                   className={`${styles.readMoreBtn} ${expandedNews === item.id ? styles.expanded : ''}`}
                   onClick={() => handleReadMore(item.id)}
                 >
@@ -145,8 +145,8 @@ export default function NewsPage() {
                     height={300}
                     onClick={() => handleImageClick(item.images, 0)}
                   />
-                  <a 
-                    href="#" 
+                  <a
+                    href="#"
                     className={styles.newsImageOverlay}
                     onClick={(e) => {
                       e.preventDefault();
