@@ -107,8 +107,8 @@ const Header = () => {
                 Атестація педпрацівників
               </Link>
               <Link href="/methodical-events">Основні методичні заходи</Link>
-              <Link href="pedagogical-olympus.html">Педагогічний Олімп</Link>
-              <Link href="methodical-lifehacks.html">Методичні лайфхаки</Link>
+              <Link href="/pedagogical-olympus">Педагогічний Олімп</Link>
+              <Link href="/methodical-lifehacks">Методичні лайфхаки</Link>
             </div>
           </div>
 
@@ -118,8 +118,8 @@ const Header = () => {
               <span>сторінка</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="#">Батькам</Link>
-              <Link href="#">Учням</Link>
+              <Link href="/parents">Батькам</Link>
+              <Link href="/students">Учням</Link>
             </div>
           </div>
 
@@ -128,11 +128,11 @@ const Header = () => {
               <span>Інше</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="#">Літературний сайт Володимира Малика</Link>
-              <Link href="#">Лубенська міська рада</Link>
-              <Link href="#">Міністерство освіти і науки України</Link>
-              <Link href="#">Український центр оцінювання якості освіти</Link>
-              <Link href="#">
+              <Link href="http://malyk.ho.ua/">Літературний сайт Володимира Малика</Link>
+              <Link href="https://lubnyrada.gov.ua/">Лубенська міська рада</Link>
+              <Link href="https://www.mon.gov.ua/">Міністерство освіти і науки України</Link>
+              <Link href="https://testportal.gov.ua">Український центр оцінювання якості освіти</Link>
+              <Link href="https://zno-kharkiv.org.ua/">
                 Харківський регіональний центр оцінювання якості освіти
               </Link>
             </div>
@@ -310,10 +310,10 @@ const Header = () => {
               <Link href="/methodical-events" onClick={closeMobileMenu}>
                 Основні методичні заходи
               </Link>
-              <Link href="pedagogical-olympus.html" onClick={closeMobileMenu}>
+              <Link href="/pedagogical-olympus" onClick={closeMobileMenu}>
                 Педагогічний Олімп
               </Link>
-              <Link href="methodical-lifehacks.html" onClick={closeMobileMenu}>
+              <Link href="/methodical-lifehacks" onClick={closeMobileMenu}>
                 Методичні лайфхаки
               </Link>
             </div>
@@ -328,10 +328,10 @@ const Header = () => {
               Інформаційна сторінка
             </Link>
             <div className={styles.mobileDropdownContent}>
-              <Link href="#" onClick={closeMobileMenu}>
+              <Link href="/parents" onClick={closeMobileMenu}>
                 Батькам
               </Link>
-              <Link href="#" onClick={closeMobileMenu}>
+              <Link href="/students" onClick={closeMobileMenu}>
                 Учням
               </Link>
             </div>
