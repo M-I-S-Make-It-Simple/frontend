@@ -13,6 +13,8 @@ import {
   GraduationCap,
   Coffee,
 } from "lucide-react";
+import Image from "next/image";
+
 import styles from "./VirtualTour.module.css";
 
 const VirtualTour = () => {
@@ -195,12 +197,15 @@ const VirtualTour = () => {
             <div
               className={`${styles.imageWrapper} ${isTransitioning ? styles.transitioning : ""}`}
             >
-              <img
+              <Image
                 src={currentRoom.image}
                 alt={currentRoom.name}
+                width={800}
+                height={500}
                 className={styles.mainImage}
+                priority
                 onError={(e) => {
-                  e.target.src = `https://via.placeholder.com/800x500/4A90E2/FFFFFF?text=${encodeURIComponent(currentRoom.name)}`;
+                  e.currentTarget.src = `https://via.placeholder.com/800x500/4A90E2/FFFFFF?text=${encodeURIComponent(currentRoom.name)}`;
                 }}
               />
 
