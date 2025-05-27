@@ -53,6 +53,7 @@ body {
   color: white;
   position: relative;
   z-index: 2;
+  padding-bottom:300px;
 }
 
 .welcome-text {
@@ -203,26 +204,30 @@ body {
 
 /* FAQ Section */
 .faq-section {
+  position: relative;
   padding: 60px 0;
-  background: #FFFFFF;
 }
 
 .faq-container {
   max-width: 1352px;
   margin: 0 auto;
   display: flex;
-  gap: 60px;
+  justify-content: flex-end;
+  /*gap: 60px;*/
+}
+.firebird-image{
+  width: 100%;
+  height: 100%;
 }
 
 .faq-image {
-  width: 524px;
-  height: 1176px;
-  background: #DDDEE0;
-  border-radius: 18px;
+  position: absolute;
+  left: -37px;
+  max-width: 540px;
 }
 
 .faq-content {
-  flex: 1;
+  width: 50%;
 }
 
 .faq-title {
@@ -333,7 +338,7 @@ body {
 .statistics-section {
   height: 451px;
   width: 100%;
-  /*background-image: url('../img/geometric_ornament.svg');*/
+  background-image: url('../assets/geometric_ornament.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
