@@ -34,7 +34,7 @@ const Header = () => {
         {/* Desktop Navigation */}
         <div className={styles.navLinks}>
           <div className={`${styles.navItem} ${styles.dropdown}`}>
-            <Link className={styles.navLink} href="/index">
+            <Link className={styles.navLink} href="#">
               <span>Про</span>
               <span>ліцей</span>
             </Link>
@@ -50,7 +50,7 @@ const Header = () => {
           </Link>
 
           <div className={styles.navItem}>
-            <Link className={styles.navLink} href="/teaching-staff">
+            <Link className={styles.navLink} href="/teachingstaff">
               <span>Педагогічний</span>
               <span>колектив</span>
             </Link>
@@ -62,9 +62,9 @@ const Header = () => {
               <span>{t("management")}</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="/regulatory-documents">Нормативні документи</Link>
-              <Link href="/financial-reports">Фінансова звітність</Link>
-              <Link href="/public-information">Публічна інформація</Link>
+              <Link href="/regulatorydocuments">Нормативні документи</Link>
+              <Link href="/financialreports">Фінансова звітність</Link>
+              <Link href="/publicinformation">Публічна інформація</Link>
             </div>
           </div>
 
@@ -75,24 +75,24 @@ const Header = () => {
             </Link>
             <div className={styles.dropdownContent}>
               <Link href="/intellect">Інтелект та обдарованість</Link>
-              <Link href="/student-self-government">
+              <Link href="/studentselfgovernment">
                 Учнівське самоврядування
               </Link>
-              <Link href="/project-research">
+              <Link href="/projectresearch">
                 Проєктно-дослідницька діяльність
               </Link>
-              <Link href="/patriotic-education">
+              <Link href="/patrioticeducation">
                 Національно-патріотичне виховання
               </Link>
-              <Link href="/evaluation-criteria">Критерії оцінювання</Link>
-              <Link href="/career-guidance">Профорієнтаційна сторінка</Link>
-              <Link href="/moral-education">Морально-етичне виховання</Link>
-              <Link href="/clubs-studios">Клуби та студії</Link>
+              <Link href="/evaluationcriteria">Критерії оцінювання</Link>
+              <Link href="/careerguidance">Профорієнтаційна сторінка</Link>
+              <Link href="/moraleducation">Морально-етичне виховання</Link>
+              <Link href="/clubsstudios">Клуби та студії</Link>
               <Link href="/sportlife">СпортLife</Link>
-              <Link href="/psychological-support">
+              <Link href="/psychologicalsupport">
                 Соціально-психологічна підтримка
               </Link>
-              <Link href="/anti-bullying">Протидія булінгу</Link>
+              <Link href="/antibullying">Протидія булінгу</Link>
             </div>
           </div>
 
@@ -102,16 +102,16 @@ const Header = () => {
               <span>{t("work")}</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="/teacher-help">На допомогу вчителю</Link>
-              <Link href="/qualification-improvement">
+              <Link href="/teacherhelp">На допомогу вчителю</Link>
+              <Link href="/qualificationimprovement">
                 Підвищення кваліфікації
               </Link>
-              <Link href="/teacher-certification">
+              <Link href="/teachercertification">
                 Атестація педпрацівників
               </Link>
-              <Link href="/methodical-events">Основні методичні заходи</Link>
-              <Link href="/pedagogical-olympus">Педагогічний Олімп</Link>
-              <Link href="/methodical-lifehacks">Методичні лайфхаки</Link>
+              <Link href="/methodicalevents">Основні методичні заходи</Link>
+              <Link href="/pedagogicalolympus">Педагогічний Олімп</Link>
+              <Link href="/methodicallifehacks">Методичні лайфхаки</Link>
             </div>
           </div>
 
@@ -131,11 +131,11 @@ const Header = () => {
               <span>{t("other")}</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="http://malyk.ho.ua/">Літературний сайт Володимира Малика</Link>
-              <Link href="https://lubnyrada.gov.ua/">Лубенська міська рада</Link>
-              <Link href="https://www.mon.gov.ua/">Міністерство освіти і науки України</Link>
-              <Link href="https://testportal.gov.ua">Український центр оцінювання якості освіти</Link>
-              <Link href="https://zno-kharkiv.org.ua/">
+              <Link href="http://malyk.ho.ua/" target="_blank">Літературний сайт Володимира Малика</Link>
+              <Link href="https://lubnyrada.gov.ua/" target="_blank">Лубенська міська рада</Link>
+              <Link href="https://www.mon.gov.ua/" target="_blank">Міністерство освіти і науки України</Link>
+              <Link href="https://testportal.gov.ua" target="_blank">Український центр оцінювання якості освіти</Link>
+              <Link href="https://zno-kharkiv.org.ua/" target="_blank">
                 Харківський регіональний центр оцінювання якості освіти
               </Link>
             </div>
