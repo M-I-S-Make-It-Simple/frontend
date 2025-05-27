@@ -384,3 +384,286 @@ body {
   line-height: 1.4;
   margin: 0;
 }
+
+/* Responsive Styles - додати до основного CSS файлу або імпортувати окремо */
+
+/* Tablet - до 1024px */
+@media (max-width: 1024px) {
+  /* Hero Section */
+  .content {
+    max-width: 90%;
+    padding-left: 40px;
+    padding-top: 80px;
+    padding-bottom: 200px;
+  }
+
+  .welcome-text {
+    font-size: 36px;
+    padding-left: 60px;
+    margin-bottom: 50px;
+  }
+
+  .text-container {
+    max-width: 600px;
+  }
+
+  .logo-image-bg {
+    right: -120px;
+    width: 70%;
+  }
+
+  /* Useful Functions */
+  .useful-functions {
+    max-width: 90%;
+    padding: 30px 20px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .card {
+    width: 400px;
+    height: 280px;
+  }
+
+  .wide-card {
+    height: 280px;
+  }
+
+  /* Statistics */
+  .statistics-content {
+    max-width: 90%;
+    padding: 120px 40px 0;
+    gap: 20px;
+  }
+
+  .stat-item {
+    width: 200px;
+  }
+
+  .stat-number {
+    font-size: 36px;
+  }
+
+  .stat-text {
+    font-size: 16px;
+  }
+}
+
+/* Mobile Large - до 768px */
+@media (max-width: 768px) {
+  /* Hero Section */
+  .container {
+    padding-top: 40px;
+  }
+
+  .content {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 60px;
+    padding-bottom: 150px;
+  }
+
+  .welcome-text {
+    font-size: 28px;
+    padding-left: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .text-container {
+    max-width: 100%;
+  }
+
+  .text-box p {
+    font-size: 16px;
+  }
+
+  .logo-image-bg {
+    right: -80px;
+    width: 60%;
+    height: 100%;
+  }
+
+  /* Useful Functions */
+  .section-title {
+    font-size: 24px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+  }
+
+  .cards-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+  }
+
+  .wide-card {
+    height: 250px;
+  }
+
+  .card-title {
+    font-size: 20px;
+  }
+
+  /* Statistics */
+  .statistics-section {
+    height: auto;
+    padding: 60px 0;
+  }
+
+  .statistics-section::before {
+    top: 20px;
+    height: calc(100% - 40px);
+  }
+
+  .statistics-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 80px 20px 60px;
+    gap: 40px;
+  }
+
+  .stat-item {
+    width: calc(50% - 20px);
+    min-width: 150px;
+  }
+
+  .stat-number {
+    font-size: 32px;
+  }
+
+  .stat-text {
+    font-size: 14px;
+  }
+
+  .faq-image {
+    z-index: -1;
+  }
+  .faq-content{
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+/* Mobile Small - до 480px */
+@media (max-width: 480px) {
+  /* Hero Section */
+  .content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 40px;
+    padding-bottom: 100px;
+  }
+
+  .welcome-text {
+    font-size: 24px;
+    padding-left: 0;
+    margin-bottom: 30px;
+  }
+
+  .text-box {
+    padding: 24px 18px;
+  }
+
+  .text-box p {
+    font-size: 15px;
+  }
+
+  .logo-image-bg {
+    display: none; /* Ховаємо на дуже маленьких екранах */
+  }
+
+  /* Useful Functions */
+  .useful-functions {
+    padding: 20px 15px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+
+  .cards-container {
+    gap: 25px;
+  }
+
+  .card {
+    height: 220px;
+  }
+
+  .wide-card {
+    height: 220px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    bottom: 30px;
+  }
+
+  /* Statistics */
+  .statistics-content {
+    padding: 60px 15px 40px;
+    gap: 30px;
+  }
+
+  .stat-item {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .stat-text {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+}
+
+/* Extra Small - до 360px */
+@media (max-width: 360px) {
+  .welcome-text {
+    font-size: 20px;
+  }
+
+  .text-box {
+    border-radius: 25px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .card {
+    height: 200px;
+  }
+
+  .wide-card {
+    height: 200px;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .stat-number {
+    font-size: 24px;
+  }
+}
