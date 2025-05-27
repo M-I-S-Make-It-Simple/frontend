@@ -1,4 +1,4 @@
-import styles from "@/app/history/history.module.css";
+import styles from "@/styles/history.module.css";
 import Image from "next/image";
 import schoolPhoto1 from "@/assets/school_photo1.jpg";
 import schoolPhoto2 from "@/assets/school_photo2.jpg";
