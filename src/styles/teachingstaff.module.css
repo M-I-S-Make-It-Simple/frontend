@@ -1,0 +1,255 @@
+.teachingStaffPage {
+  width: 100%;
+  min-height: 100vh;
+  background: #FFFFFF;
+}
+
+.titleSection {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto 20px;
+  padding-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.pedagogicalTitle {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat Alternates';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 60px;
+  text-align: center;
+  color: #182BA1;
+}
+
+.yearSelector {
+  position: absolute;
+  right: -40px;
+  top: 90px;
+  transform: translateY(-50%);
+  z-index: 999;
+}
+
+.yearButton {
+  width: 220px;
+  height: 54px;
+  background-color: #DDDFE0;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.yearText {
+  font-family: 'Montserrat Alternates';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FF5700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+  display: inline-block;
+}
+
+.yearArrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #AD9588;
+  transition: transform 0.3s ease;
+}
+
+.yearDropdownContent {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  width: 180px;
+  background-color: #DDDFE0;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  z-index: 1002;
+  margin-top: 10px;
+}
+
+.yearDropdownContent a {
+  color: #000;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  font-family: 'Montserrat Alternates';
+  font-size: 12px;
+  line-height: 1.2;
+  transition: background-color 0.3s ease;
+  background-color: #DDDFE0;
+}
+
+.yearDropdownContent a:hover {
+  background-color: #C5C7C8;
+  color: #FF5700;
+}
+
+.yearDropdownContent.active {
+  display: block;
+}
+
+.yearButton.active .yearArrow {
+  transform: rotate(180deg);
+}
+
+.yearDropdownContent a.selected {
+  background-color: #C5C7C8;
+  color: #FF5700;
+  font-weight: 500;
+}
+
+.administrationTitle {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 20px;
+  font-family: 'Montserrat Alternates';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #000000;
+}
+
+.adminCardsContainer {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.adminCard {
+  display: flex;
+  background-color: rgba(15, 28, 101, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+  height: 260px;
+  width: 100%;
+  position: relative;
+}
+
+.adminPhoto {
+  width: 160px;
+  height: 226px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-right: 50px;
+  margin-top: -3px;
+  margin-left: 15px;
+}
+
+.adminPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adminInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  width: 280px;
+}
+
+.adminName {
+  font-family: 'Montserrat Alternates';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #000000;
+}
+
+.adminPosition {
+  background-color: #182BA1;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-family: 'Montserrat Alternates';
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  color: white;
+  width: 260px;
+  position: relative;
+  top: -20px;
+}
+
+.adminBio {
+  width: 510px;
+  height: 220px;
+  margin-left: auto;
+  padding: 15px;
+  position: relative;
+  border: none;
+}
+
+.adminBio::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 16px;
+  height: 90%;
+  width: 1px;
+  background-color: #000000;
+}
+
+.adminBio p {
+  font-family: 'Montserrat Alternates';
+  font-style: normal;
+  font-weight: 450;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+  padding-left: 30px;
+}
+
+@media (max-width: 1200px) {
+  .adminCard {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+  }
+  
+  .adminPhoto {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  
+  .adminInfo {
+    margin-bottom: 20px;
+  }
+  
+  .adminBio {
+    width: 100%;
+    margin-left: 0;
+  }
+} 

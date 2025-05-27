@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import styles from '@/styles/intellect.module.css';
+import styles from '@/styles/psychologicalsupport.module.css';
 
-
-export default function IntellectPage() {
+export default function PsychologicalSupportPage() {
   const [selectedYear, setSelectedYear] = useState('2025');
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
   const [activeEvent, setActiveEvent] = useState(null);
@@ -23,10 +22,9 @@ export default function IntellectPage() {
   };
 
   return (
-    <div className={styles.intellectPage}>
-     
+    <div className={styles.psychologicalSupportPage}>
       <div className={styles.intellectContent}>
-        <h1 className={styles.intellectTitle}>Інтелект та обдарованість</h1>
+        <h1 className={styles.intellectTitle}>Соціально-психологічна підтримка</h1>
         
         <div className={styles.yearSelector} onClick={toggleYearDropdown}>
           <span className={styles.yearText}>{selectedYear}</span>
@@ -47,7 +45,7 @@ export default function IntellectPage() {
               <div className={styles.eventContentWrapper}>
                 <div className={styles.eventText}>
                   <div className={styles.contentDivider}></div>
-                  <p>Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text.</p>
+                  <p>Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text.</p>
                 </div>
                 <div className={styles.eventImage}>
                   <img src="/img/news-placeholder.jpg" alt="Event image" />
@@ -66,7 +64,7 @@ export default function IntellectPage() {
               <div className={styles.eventContentWrapper}>
                 <div className={styles.eventText}>
                   <div className={styles.contentDivider}></div>
-                  <p>Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text.</p>
+                  <p>Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text.</p>
                 </div>
                 <div className={styles.eventImage}>
                   <img src="/img/news-placeholder.jpg" alt="Event image" />
@@ -85,7 +83,7 @@ export default function IntellectPage() {
               <div className={styles.eventContentWrapper}>
                 <div className={styles.eventText}>
                   <div className={styles.contentDivider}></div>
-                  <p>Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text.</p>
+                  <p>Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text Sample text.</p>
                 </div>
                 <div className={styles.eventImage}>
                   <img src="/img/news-placeholder.jpg" alt="Event image" />
@@ -95,7 +93,6 @@ export default function IntellectPage() {
           </div>
         </div>
       </div>
-      
     </div>
   );
-}
+} 
