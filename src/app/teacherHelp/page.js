@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from '@/styles/teacherhelp.module.css';
 
 
@@ -17,9 +18,10 @@ export default function TeacherHelpPage() {
 
   return (
     <div className={styles.teacherHelpPage}>
-     
       <main className={styles.teacherHelpMain}>
-        <h2 className={styles.teacherHelpTitle}>На допомогу вчителю</h2>
+        <div className={styles.titleContainer}>
+          <h2 className={styles.teacherHelpTitle}>На допомогу вчителю</h2>
+        </div>
 
         {/* Секція з іграми на перервах */}
         <section className={styles.teacherHelpSection}>

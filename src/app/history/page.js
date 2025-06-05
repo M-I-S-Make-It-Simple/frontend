@@ -6,7 +6,7 @@ import schoolPhoto3 from "@/assets/school_photo3.jpg";
 
 export default function HistoryPage() {
   return (
-    <>
+    <div className="container">
       <main className={styles.historyContent}>
         <section className={styles.schoolBuilding}>
           <h2 className={styles.sectionTitle}>Будівля школи</h2>
@@ -76,6 +76,6 @@ export default function HistoryPage() {
           </div>
         </section>
       </main>
-    </>
+    </div>
   );
 }

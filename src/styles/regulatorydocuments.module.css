@@ -6,11 +6,10 @@
 
 .regulatoryDocumentsMain {
   max-width: 1344px;
-  margin: 40px auto 60px;
+  margin: 0 auto 60px;
   padding: 40px 20px;
   position: relative;
   z-index: 2;
-  margin-top: 45px;
 }
 
 .regulatoryDocumentsTitle {
@@ -20,6 +19,17 @@
   text-align: center;
   margin-bottom: 50px;
   font-weight: 700;
+  position: relative;
+}
+
+.firebirdImage {
+  position: absolute;
+  right: 10;
+  transform: translateY(-50%);
+  width: 500px;
+  height: 500px;
+  object-fit: contain;
+  margin-top: 270px;
 }
 
 .documentsSections {
@@ -89,6 +99,12 @@
   font-weight: 400;
   width: 112px;
   height: 20px;
+}
+
+/* Спеціальне правило для фону сторінки нормативних документів */
+.container:has(.regulatoryDocumentsMain) .background .gradientBg {
+  background: none;
+  background-color: white;
 }
 
 @media (max-width: 768px) {

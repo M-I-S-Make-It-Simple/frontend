@@ -6,11 +6,10 @@
 
 .teacherCertificationMain {
   max-width: 1000px;
-  margin: 40px auto 60px;
+  margin: 60px auto 60px;
   padding: 45px 20px;
   position: relative;
   z-index: 2;
-  margin-top: 40px;
 }
 
 .teacherCertificationTitle {

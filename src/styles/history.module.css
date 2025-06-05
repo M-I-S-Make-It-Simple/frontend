@@ -2,8 +2,11 @@
 
 .historyContent {
   max-width: 1298px;
-  margin: 0 auto;
-  padding: 90px 20px 40px;
+  margin: 0 auto 60px;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
 }
 
 /* Заголовок секції */

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import styles from '@/styles/publicinformation.module.css';
+import Image from 'next/image';
+import firebird3 from '@/assets/firebird3.png';
 
 const PublicInformationPage = () => {
   const [activeSections, setActiveSections] = useState({});
@@ -20,8 +22,11 @@ const PublicInformationPage = () => {
           <div className="gradientBg"></div>
         </div>
         
-        <main className={styles.regulatoryDocumentsMain}>
-          <h2 className={styles.regulatoryDocumentsTitle}>Публічна інформація</h2>
+        <main className={styles.publicInformationMain}>
+          <h2 className={styles.publicInformationTitle}>
+            Публічна інформація
+            <Image src={firebird3} alt="Firebird" className={styles.firebirdImage} />
+          </h2>
 
           <div className={styles.documentsSections}>
             {/* Корисна інформація */}
