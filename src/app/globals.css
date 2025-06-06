@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Montserrat Alternates', sans-serif;
 }
 
 body {
@@ -224,6 +225,7 @@ body {
   position: absolute;
   left: -37px;
   max-width: 540px;
+  top: -10px;
 }
 
 .faq-content {

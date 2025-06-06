@@ -5,8 +5,7 @@ import Footer from "@/components/Footer/Footer";
 import { TranslationProvider } from "@/contexts/TranslationProvider";
 
 const montserratAlternates = Montserrat_Alternates({
-  weight: ["400", "700"],
-  variable: "--font-montserrat-alternates",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -19,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={montserratAlternates.variable}>
+      <body className={montserratAlternates.className}>
         <TranslationProvider>
           <div className="pageWrapper">
             <Header />
