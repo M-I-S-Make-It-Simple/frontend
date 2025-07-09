@@ -85,16 +85,16 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #fff;
-    min-width: 250px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    min-width: 220px;
+    background: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     z-index: 1001;
+    pointer-events: auto;
     border-radius: 4px;
-    padding: 10px 0;
-    margin-top: 5px;
 }
 
-.dropdown:hover .dropdownContent {
+.dropdown:hover .dropdownContent,
+.dropdownContent:hover {
     display: block;
 }
 
