@@ -1,11 +1,62 @@
 .studentsMain {
-    max-width: 1000px;
+    max-width: 900px;
+    width: calc(100% - 450px);
     margin: 0 auto 60px;
     padding: 40px 20px;
     position: relative;
     z-index: 2;
     margin-top: 40px;
     margin-right: 450px;
+    margin-left: 80px;
+}
+
+.warningMessage {
+    max-width: 100%;
+    margin: 0 auto 30px;
+    padding: 0;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.warningMessage h2 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 28px;
+    color: #182BA1;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.warningMessage p {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: left;
+}
+
+/* Стилі для посилань */
+.warningMessage .link {
+    color: #182BA1;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.warningMessage .link:hover {
+    color: #0f1a7a;
+    text-decoration: none;
+}
+
+.photo {
+    width: 100%;
+    max-width: 1800px;
+    margin: 50px 0;
+}
+
+.photo img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* Стилі для секцій */
@@ -16,6 +67,8 @@
     overflow: hidden;
     background-color: rgba(24, 43, 161, 0.2);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
 }
 
 .sectionHeader {
@@ -28,6 +81,7 @@
     position: relative;
     cursor: pointer;
     border-radius: 18px 18px 0 0;
+    width: 100%;
 }
 
 .sectionTitle {
@@ -58,6 +112,7 @@
 .sectionContent {
     display: none;
     text-align: left;
+    width: 100%;
 }
 
 .sectionHeader.active + .sectionContent {
@@ -71,6 +126,7 @@
     padding: 15px 30px 20px;
     position: relative;
     text-align: left;
+    width: 100%;
 }
 
 .detailedDescription p {
@@ -122,21 +178,276 @@
     }
 }
 
+/* ========================================
+   RESPONSIVE STYLES FOR STUDENTS PAGE
+   ======================================== */
+
+/* Tablet - до 1024px */
+@media (max-width: 1024px) {
+    .studentsMain {
+        max-width: 95%;
+        width: 100%;
+        margin: 0 auto 60px;
+        padding: 30px 20px;
+        margin-top: 50px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    .warningMessage h2 {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+    
+    .warningMessage p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 18px;
+    }
+    
+    .photo {
+        margin: 40px 0;
+    }
+    
+    .studentsSection {
+        max-width: 100%;
+    }
+    
+    .sectionHeader {
+        padding: 18px 25px;
+    }
+    
+    .sectionTitle {
+        font-size: 17px;
+    }
+    
+    .detailedDescription {
+        padding: 12px 25px 18px;
+    }
+    
+    .detailedDescription p {
+        font-size: 14px;
+    }
+    
+    .adviceName {
+        font-size: 15px;
+    }
+}
+
+/* Mobile Large - до 768px */
 @media (max-width: 768px) {
-    .studentsTitle {
-        font-size: 32px;
-        margin-bottom: 30px;
+    .studentsMain {
+        padding: 25px 15px;
+        margin-top: 80px; /* Збільшуємо відступ зверху, щоб не перекривалося з хедером */
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    .warningMessage h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .warningMessage p {
+        font-size: 15px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+    
+    .photo {
+        margin: 30px 0;
+    }
+    
+    .sectionHeader {
+        padding: 15px 20px;
+        border-radius: 12px; /* Додаємо заокруглені кути */
     }
     
     .sectionTitle {
         font-size: 15px;
+        font-weight: 600; /* Робимо заголовки більш виразними */
     }
     
-    .documentsTitle {
-        font-size: 26px;
+    .sectionMarker {
+        width: 10px;
+        height: 10px;
+        margin-left: 12px;
+    }
+    
+    .detailedDescription {
+        padding: 15px 20px 20px; /* Збільшуємо padding для кращої читабельності */
+        border-radius: 0 0 12px 12px; /* Додаємо заокруглені кути знизу */
+    }
+    
+    .detailedDescription p {
+        font-size: 14px; /* Збільшуємо розмір шрифту для кращої читабельності */
+        line-height: 1.5; /* Покращуємо міжрядковий інтервал */
+        margin-bottom: 12px; /* Додаємо відступ між абзацами */
     }
     
     .adviceName {
-        font-size: 16px;
+        font-size: 15px; /* Збільшуємо розмір для назв порад */
+        font-weight: 700; /* Робимо більш виразними */
+        margin-bottom: 8px; /* Додаємо відступ під назвою поради */
+    }
+    
+    .documentsTitle {
+        font-size: 24px;
+        text-align: center;
+    }
+    
+    /* Покращення для посилань на мобільних пристроях */
+    .warningMessage .link {
+        word-break: break-all;
+        display: inline-block;
+        margin-top: 5px;
+        color: #182BA1;
+        text-decoration: underline;
+    }
+    
+    .documentLink {
+        word-break: break-all;
+        display: inline-block;
+        margin-top: 5px;
+        color: #182BA1;
+        text-decoration: underline;
+    }
+    
+    /* Покращення для фотографій на мобільних пристроях */
+    .photo img {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+    }
+    
+    /* Покращення для акордеонів на мобільних пристроях */
+    .studentsSection {
+        margin-bottom: 25px; /* Зменшуємо відступ між секціями */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Додаємо тінь */
+    }
+    
+    .sectionHeader {
+        transition: all 0.3s ease; /* Додаємо плавну анімацію */
+    }
+    
+    .sectionHeader:hover {
+        background: rgba(24, 43, 161, 0.3); /* Додаємо ефект при наведенні */
+    }
+    
+    .sectionHeader.active {
+        background: rgba(24, 43, 161, 0.4); /* Виділяємо активну секцію */
+    }
+}
+
+/* Mobile Small - до 480px */
+@media (max-width: 480px) {
+    .studentsMain {
+        padding: 20px 10px;
+        margin-top: 70px; /* Збільшуємо відступ зверху для малих мобільних пристроїв */
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    .warningMessage h2 {
+        font-size: 20px;
+        margin-bottom: 18px;
+        text-align: center;
+    }
+    
+    .warningMessage p {
+        font-size: 14px;
+        line-height: 1.3;
+        margin-bottom: 12px;
+        text-align: left;
+    }
+    
+    .photo {
+        margin: 25px 0;
+    }
+    
+    .sectionHeader {
+        padding: 12px 15px;
+        border-radius: 10px; /* Додаємо заокруглені кути */
+    }
+    
+    .sectionTitle {
+        font-size: 14px;
+        font-weight: 600; /* Робимо заголовки більш виразними */
+    }
+    
+    .sectionMarker {
+        width: 8px;
+        height: 8px;
+        margin-left: 10px;
+    }
+    
+    .detailedDescription {
+        padding: 12px 15px 16px; /* Збільшуємо padding для кращої читабельності */
+        border-radius: 0 0 10px 10px; /* Додаємо заокруглені кути знизу */
+    }
+    
+    .detailedDescription p {
+        font-size: 13px; /* Збільшуємо розмір шрифту для кращої читабельності */
+        line-height: 1.4; /* Покращуємо міжрядковий інтервал */
+        margin-bottom: 10px; /* Додаємо відступ між абзацами */
+    }
+    
+    .adviceName {
+        font-size: 14px; /* Збільшуємо розмір для назв порад */
+        font-weight: 700; /* Робимо більш виразними */
+        margin-bottom: 6px; /* Додаємо відступ під назвою поради */
+    }
+    
+    .documentsTitle {
+        font-size: 20px;
+        text-align: center;
+    }
+    
+    /* Покращення для посилань на малих мобільних пристроях */
+    .warningMessage .link {
+        word-break: break-all;
+        display: inline-block;
+        margin-top: 5px;
+        color: #182BA1;
+        text-decoration: underline;
+        font-size: 12px; /* Зменшуємо розмір шрифту для посилань */
+    }
+    
+    .documentLink {
+        word-break: break-all;
+        display: inline-block;
+        margin-top: 5px;
+        color: #182BA1;
+        text-decoration: underline;
+        font-size: 12px;
+    }
+    
+    /* Покращення для фотографій на малих мобільних пристроях */
+    .photo img {
+        border-radius: 6px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 12px;
+    }
+    
+    /* Покращення для акордеонів на малих мобільних пристроях */
+    .studentsSection {
+        margin-bottom: 20px; /* Зменшуємо відступ між секціями */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Додаємо тінь */
+    }
+    
+    .sectionHeader {
+        transition: all 0.3s ease; /* Додаємо плавну анімацію */
+    }
+    
+    .sectionHeader:hover {
+        background: rgba(24, 43, 161, 0.3); /* Додаємо ефект при наведенні */
+    }
+    
+    .sectionHeader.active {
+        background: rgba(24, 43, 161, 0.4); /* Виділяємо активну секцію */
     }
 }

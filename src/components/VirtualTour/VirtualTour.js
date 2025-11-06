@@ -1,24 +1,60 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import {
-  ArrowRight,
-  MapPin,
-  Home,
-  Book,
-  Users,
-  Dumbbell,
-  FlaskConical,
-  Music,
-  GraduationCap,
-  Coffee,
-} from "lucide-react";
 import styles from "./VirtualTour.module.css";
+import { useTranslation } from "@/contexts/TranslationProvider";
+import schoolPhoto from "../../assets/school.jpg";
+import gymPhoto from "../../assets/gym.jpg";
+import danceHallPhoto from "../../assets/dance_hall.jpg";
+import primarySchool1Photo from "../../assets/primary_school1.jpg";
+import primarySchool2Photo from "../../assets/primary_school2.jpg";
+import engClass2Photo from "../../assets/eng_class2.jpg";
+import corridor31Photo from "../../assets/corridor3.1.jpg";
+import corridor32Photo from "../../assets/corridor3.2.jpg";
+import corridor33Photo from "../../assets/corridor3.3.jpg";
+import corridor34Photo from "../../assets/corridor3.4.jpg";
+import chemistryPhoto from "../../assets/chemistry.jpg";
+import physics1Photo from "../../assets/physics1.jpg";
+import physics2Photo from "../../assets/physics2.jpg";
+import biology1Photo from "../../assets/biology1.jpg";
+import biology2Photo from "../../assets/biology2.jpg";
+import yardPhoto from "../../assets/yard.jpg";
+
+// Замінюємо іконки на простий emoji/Unicode символи
+const icons = {
+  ArrowRight: () => <span>→</span>,
+  MapPin: () => <span>📍</span>,
+  Home: () => <span>🏠</span>,
+  Book: () => <span>📚</span>,
+  Users: () => <span>👥</span>,
+  Dumbbell: () => <span>💪</span>,
+  FlaskConical: () => <span>🧪</span>,
+  Music: () => <span>🎵</span>,
+  GraduationCap: () => <span>🎓</span>,
+  Coffee: () => <span>☕</span>,
+  Computer: () => <span>💻</span>,
+  Dance: () => <span>💃</span>,
+  Medical: () => <span>🏥</span>,
+  Games: () => <span>🎮</span>,
+  TeddyBear: () => <span>🧸</span>,
+  Theater: () => <span>🎭</span>,
+  Restaurant: () => <span>🍽️</span>,
+  Office: () => <span>📋</span>,
+  Language: () => <span>🌍</span>,
+  Hallway: () => <span>🚪</span>,
+  Chemistry: () => <span>🧪</span>,
+  Biology: () => <span>🌱</span>,
+  Physics: () => <span>⚡</span>,
+  Playground: () => <span>⚽</span>,
+  Courtyard: () => <span>🌳</span>,
+};
 
 const VirtualTour = () => {
+  const { t } = useTranslation();
   const [currentLocation, setCurrentLocation] = useState("entrance");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Тимчасові URL зображень (замініть на свої)
   const locations = {
@@ -26,14 +62,12 @@ const VirtualTour = () => {
       name: "Головний вхід",
       description:
         "Ласкаво просимо до нашого ліцею! Тут кожен ранок починається наша навчальна подорож. Сучасний та затишний вхід створює приємне перше враження.",
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop&crop=center",
-      icon: Home,
-      connections: ["foyer"],
+      image: schoolPhoto.src,
+      icon: icons.Home,
+      connections: ["foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
         "Сучасний дизайн фасаду",
         "Безпечний вхід з охороною",
-        "Інформаційні стенди",
       ],
     },
     foyer: {
@@ -42,133 +76,374 @@ const VirtualTour = () => {
         "Центральне фойє - це серце нашої школи, де учні та відвідувачі отримують необхідну інформацію. Простора та світла зона для зустрічей.",
       image:
         "https://images.unsplash.com/photo-1562774053-701939374585?w=800&h=600&fit=crop&crop=center",
-      icon: Users,
-      connections: ["entrance", "corridor1", "library"],
+      icon: icons.Users,
+      connections: ["entrance", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
         "Адміністративна зона",
-        "Дошка оголошень",
         "Зона очікування для батьків",
+        "Доступ до шкільного двору",
       ],
     },
-    corridor1: {
-      name: "Коридор 1-го поверху",
+    rimc: {
+      name: "РІМЦ",
+      floor: "Нульовий поверх",
       description:
-        "Головний коридор з кабінетами початкових класів та основними навчальними приміщеннями. Світлий та просторий простір для комфортного пересування.",
+        "Ресурсний інформаційно-методичний центр - багатофункціональна кімната для проведення конференцій, семінарів та різноманітних освітніх заходів. Обладнана сучасною комп'ютерною технікою та великим телевізором для презентацій.",
       image:
-        "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=600&fit=crop&crop=center",
-      icon: ArrowRight,
-      connections: ["foyer", "classroom1", "classroom2", "lab"],
+        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Computer,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
-        "Світлі та просторі коридори",
-        "Навчальні стенди",
-        "Зони для відпочинку",
-      ],
-    },
-    classroom1: {
-      name: "Класна кімната 1-4 класи",
-      description:
-        "Сучасно обладнана класна кімната для молодших школярів з інтерактивним обладнанням. Створена для комфортного навчання найменших учнів.",
-      image:
-        "https://images.unsplash.com/photo-1580893246395-52aead8960dc?w=800&h=600&fit=crop&crop=center",
-      icon: GraduationCap,
-      connections: ["corridor1"],
-      highlights: [
-        "Інтерактивна дошка",
-        "Ергономічні парти",
-        "Яскраві навчальні матеріали",
-      ],
-    },
-    classroom2: {
-      name: "Класна кімната 5-11 класи",
-      description:
-        "Просторий клас для старших учнів з сучасним мультимедійним обладнанням. Обладнаний для різноманітних форм навчання.",
-      image:
-        "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&h=600&fit=crop&crop=center",
-      icon: Book,
-      connections: ["corridor1"],
-      highlights: [
-        "Проектор та екран",
-        "Комп&apos;ютерне робоче місце",
-        "Зона для групової роботи",
+        "Сучасні комп'ютери",
+        "Великий телевізор для презентацій",
+        "Конференц-зал для заходів",
       ],
     },
     library: {
       name: "Бібліотека",
+      floor: "Нульовий поверх",
       description:
-        "Сучасна шкільна бібліотека з великою колекцією книг та комп&apos;ютерною зоною. Тихе місце для навчання та читання.",
+        "Сучасна шкільна бібліотека з великою колекцією книг та комп'ютерною зоною. Тихе місце для навчання та читання, де учні можуть поглибити свої знання.",
       image:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=center",
-      icon: Book,
-      connections: ["foyer", "gym"],
+      icon: icons.Book,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
-        "Більше 5000 книг",
-        "Комп&apos;ютерна зона",
-        "Читальний зал",
-      ],
-    },
-    lab: {
-      name: "Наукова лабораторія",
-      description:
-        "Обладнана лабораторія для проведення дослідів з хімії, фізики та біології. Безпечне середовище для практичних занять.",
-      image:
-        "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=600&fit=crop&crop=center",
-      icon: FlaskConical,
-      connections: ["corridor1"],
-      highlights: [
-        "Сучасне лабораторне обладнання",
-        "Безпечні робочі місця",
-        "Навчальні матеріали для експериментів",
+        "Читальна зона",
+        "Навчальна та художня література",
       ],
     },
     gym: {
-      name: "Спортивний зал",
+      name: "Спортзал",
+      floor: "Нульовий поверх",
       description:
-        "Великий спортивний зал для уроків фізкультури та спортивних змагань. Простір для активного та здорового способу життя.",
-      image:
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&crop=center",
-      icon: Dumbbell,
-      connections: ["library", "music"],
+        "Великий спортивний зал для уроків фізкультури та спортивних змагань. Простір для активного та здорового способу життя, де учні розвивають фізичні здібності.",
+      image: gymPhoto.src,
+      icon: icons.Dumbbell,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
         "Баскетбольні та волейбольні сітки",
         "Різноманітний спортивний інвентар",
-        "Сучасні роздягальні кімнати",
+        "Роздягальні кімнати",
+        "Безпечне покриття підлоги",
       ],
     },
-    music: {
-      name: "Музичний клас",
+    danceroom: {
+      name: "Танцзал",
+      floor: "Нульовий поверх",
       description:
-        "Спеціально обладнаний клас для музичних занять та творчого розвитку. Місце де народжується любов до мистецтва.",
-      image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop&crop=center",
-      icon: Music,
-      connections: ["gym", "cafeteria"],
+        "Просторий танцювальний зал з дзеркальними стінами для хореографічних занять та творчого самовираження. Місце де учні розвивають пластику та артистизм.",
+      image: danceHallPhoto.src,
+      icon: icons.Dance,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
-        "Піаніно та синтезатори",
-        "Професійна акустична система",
-        "Різноманітні музичні інструменти",
+        "Дзеркальні стіни",
+        "Спеціальне танцювальне покриття",
+        "Простір для групових занять",
+      ],
+    },
+    medical: {
+      name: "Медпункт",
+      floor: "Нульовий поверх",
+      description:
+        "Медичний кабінет для надання першої допомоги та медичного обслуговування учнів. Забезпечує безпечне та здорове навчальне середовище.",
+      image:
+        "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Medical,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Обладнання для першої допомоги",
+        "Медичні препарати",
+        "Кушетка для огляду",
+        "Кваліфікований медпрацівник",
+      ],
+    },
+    recreation: {
+      name: "Рекреація",
+      floor: "Перший поверх",
+      description:
+        "Просторий рекреаційний зал з ігровою зоною для відпочинку учнів. Комфортне місце для спілкування, ігор та творчої діяльності під час перерв.",
+      image:
+        "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&h=600&fit=crop&crop=center",
+      icon: icons.TeddyBear,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Ігрова зона для відпочинку",
+        "Зручні меблі для спілкування",
+      ],
+    },
+    classroom1: {
+      name: "Кабінет початкової школи",
+      floor: "Перший поверх",
+      description:
+        "Сучасний навчальний кабінет для учнів початкових класів, обладнаний інтерактивними засобами навчання та зручними меблями відповідно до віку дітей.",
+      image: primarySchool1Photo.src,
+      icon: icons.GraduationCap,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Меблі для початкової школи",
+        "Безпечне середовище для навчання",
+      ],
+    },
+    classroom2: {
+      name: "Кабінет початкової школи",
+      floor: "Перший поверх",
+      description:
+        "Навчальний кабінет для учнів початкових класів з сучасним обладнанням та комфортним освітнім середовищем для ефективного навчання.",
+      image: primarySchool2Photo.src,
+      icon: icons.Book,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Комфортні робочі місця",
+        "Творча навчальна атмосфера",
+      ],
+    },
+    teacherspace: {
+      name: "Учительський простір",
+      floor: "Другий поверх",
+      description:
+        "Спеціально обладнана зона для роботи та відпочинку вчителів. Комфортне місце для підготовки до уроків, планування та професійного спілкування.",
+      image:
+        "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Users,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Робочі місця для вчителів",
+        "Зона для відпочинку",
+        "Професійне спілкування",
+      ],
+    },
+    computerclass: {
+      name: "Комп'ютерний клас",
+      floor: "Другий поверх",
+      description:
+        "Сучасний комп'ютерний клас з новітнім обладнанням для вивчення інформаційних технологій та цифрових навичок учнями різних вікових груп.",
+      image:
+        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Computer,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Сучасні комп'ютери",
+        "Швидкісний інтернет",
+        "Мультимедійне обладнання",
+      ],
+    },
+    middleschool: {
+      name: "Кабінет середньої школи",
+      floor: "Другий поверх",
+      description:
+        "Універсальний навчальний кабінет для учнів середніх класів, призначений для проведення різноманітних предметних уроків та практичних занять.",
+      image:
+        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop&crop=center",
+      icon: icons.GraduationCap,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Сучасне навчальне обладнання",
+        "Гнучке планування простору",
+        "Мультифункціональність",
+      ],
+    },
+    auditorium: {
+      name: "Актовий зал",
+      description:
+        "Просторий актовий зал для проведення урочистих заходів, концертів, театральних вистав та загальношкільних зборів. Оснащений сучасною звуковою та світловою апаратурою.",
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Theater,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Сцена з професійним освітленням",
+        "Якісна акустична система",
+        "Місця для глядачів",
+        "Технічне обладнання для заходів",
       ],
     },
     cafeteria: {
-      name: "Їдальня",
+      name: "Шкільна їдальня",
       description:
-        "Затишна їдальня де учні можуть поїсти та відпочити. Простір для спілкування та відновлення сил протягом навчального дня.",
+        "Затишна їдальня з просторим обіднім залом та сучасною кухнею. Місце для здорового харчування учнів та персоналу протягом навчального дня.",
       image:
-        "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=600&fit=crop&crop=center",
-      icon: Coffee,
-      connections: ["music"],
+        "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Restaurant,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
+        "Сучасна кухня",
         "Здорове та смачне харчування",
-        "Комфортні місця для відпочинку",
-        "Сучасне кухонне обладнання",
+        "Просторий обідній зал",
+      ],
+    },
+    orgoffice: {
+      name: "Організаційний кабінет",
+      description:
+        "Адміністративний кабінет для координації організаційних питань ліцею. Центр планування навчальних процесів та управління внутрішніми справами закладу.",
+      image:
+        "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Office,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Робочі місця адміністрації",
+        "Документообіг та планування",
+        "Координація навчальних процесів",
+      ],
+    },
+    languageroom: {
+      name: "Кабінет іноземної мови",
+      description:
+        "Спеціалізований кабінет для вивчення іноземних мов з інтерактивними засобами навчання. Створює мовне середовище для ефективного вивчення англійської, німецької та інших мов.",
+      image:
+        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Language,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Інтерактивні мовні програми",
+        "Аудіо та відео матеріали",
+        "Комунікативні методики навчання",
+        "Мультимедійне обладнання",
+      ],
+    },
+    hallway3: {
+      name: "Коридори третього поверху",
+      floor: "Третій поверх",
+      description:
+        "Просторий коридор третього поверху з природним освітленням та зоною для відпочинку з мішками для сидіння. Центральна зона для переміщення між спеціалізованими науковими кабінетами та навчальними приміщеннями. Стіни прикрашені художніми елементами, створюючи приємну та надихаючу атмосферу для учнів.",
+      images: [corridor31Photo.src, corridor32Photo.src, corridor33Photo.src, corridor34Photo.src],
+      icon: icons.Hallway,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Природне освітлення",
+        "Зона для відпочинку з мішками для сидіння",
+        "Художнє оформлення стін",
+        "Доступ до наукових кабінетів",
+        "Простір для переміщення",
+      ],
+    },
+    chemistry: {
+      name: "Кабінет хімії",
+      floor: "Третій поверх",
+      description:
+        "Спеціально обладнаний хімічний кабінет з лабораторією для проведення практичних занять та експериментів. Безпечне середовище для вивчення хімічних процесів.",
+      image: chemistryPhoto.src,
+      icon: icons.Chemistry,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Лабораторне обладнання",
+        "Хімічні реактиви",
+        "Безпечні робочі місця",
+      ],
+    },
+    biology: {
+      name: "Кабінет біології",
+      floor: "Третій поверх",
+      description:
+        "Кабінет біології з мікроскопами та навчальними матеріалами для вивчення живої природи. Оснащений сучасним обладнанням для дослідження біологічних процесів.",
+      images: [biology1Photo.src, biology2Photo.src],
+      icon: icons.Biology,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Мікроскопи та лупи",
+        "Гербарій та колекції",
+        "Моделі органів та систем",
+      ],
+    },
+    physics: {
+      name: "Кабінет фізики",
+      floor: "Третій поверх",
+      description:
+        "Фізичний кабінет з демонстраційним обладнанням для вивчення законів природи. Лабораторія для проведення фізичних експериментів та досліджень.",
+      images: [physics1Photo.src, physics2Photo.src],
+      icon: icons.Physics,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Демонстраційне обладнання",
+        "Електричні схеми",
+        "Оптичні прилади",
+        "Механічні моделі",
+      ],
+    },
+    languageroom3: {
+      name: "Кабінет іноземної мови",
+      floor: "Третій поверх",
+      description:
+        "Додатковий кабінет іноземної мови третього поверху. Обладнаний сучасними технологіями для ефективного вивчення мов.",
+      image: engClass2Photo.src,
+      icon: icons.Language,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Інтерактивні панелі",
+        "Аудіо система",
+        "Мовні програми",
+        "Групова робота",
+      ],
+    },
+    playground: {
+      name: "Шкільний майданчик",
+      description:
+        "Просторий спортивний майданчик на свіжому повітрі для активних ігор та занять фізкультурою. Включає футбольне поле, баскетбольні кільця та зони для різноманітних спортивних активностей.",
+      image:
+        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&crop=center",
+      icon: icons.Playground,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Футбольне поле",
+        "Баскетбольні кільця",
+        "Спортивні тренажери",
+        "Зона для групових ігор",
+      ],
+    },
+    courtyard: {
+      name: "Внутрішній дворик",
+      description:
+        "Затишний внутрішній дворик з зеленими насадженнями та місцями для відпочинку. Тихе місце для роздумів, читання або неформального спілкування в природному оточенні.",
+      image: yardPhoto.src,
+      icon: icons.Courtyard,
+      connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
+      highlights: [
+        "Зелені насадження",
+        "Альтанка для відпочинку",
+        "Тиша та спокій",
+        "Природне середовище",
       ],
     },
   };
 
   const currentRoom = locations[currentLocation];
+  
+  // Функція для отримання перекладеної назви локації
+  const getLocationName = (locationId) => {
+    return t(locationId) || locations[locationId]?.name || locationId;
+  };
+
+  // Функція для отримання перекладеного опису локації
+  const getLocationDescription = (locationId) => {
+    return t(`${locationId}Description`) || locations[locationId]?.description || "";
+  };
+
+  // Функція для отримання перекладених особливостей локації
+  const getLocationHighlights = (locationId) => {
+    const translatedHighlights = t(`${locationId}Highlights`);
+    if (Array.isArray(translatedHighlights)) {
+      return translatedHighlights;
+    }
+    return locations[locationId]?.highlights || [];
+  };
+
+  // Функція для отримання перекладу поверху
+  const getFloorTranslation = (floor) => {
+    if (!floor) return "";
+    const floorMap = {
+      "Нульовий поверх": "groundFloor",
+      "Перший поверх": "firstFloor", 
+      "Другий поверх": "secondFloor",
+      "Третій поверх": "thirdFloor"
+    };
+    const translationKey = floorMap[floor];
+    return translationKey ? t(translationKey) : floor;
+  };
 
   const navigateTo = (locationId) => {
     if (currentRoom.connections.includes(locationId)) {
       setIsTransitioning(true);
+      setCurrentImageIndex(0); // Скидаємо індекс фото при зміні локації
       setTimeout(() => {
         setCurrentLocation(locationId);
         setIsTransitioning(false);
@@ -176,18 +451,57 @@ const VirtualTour = () => {
     }
   };
 
+  const nextImage = () => {
+    if (currentRoom.images && currentImageIndex < currentRoom.images.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  };
+
+  const prevImage = () => {
+    if (currentRoom.images && currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
+
   const IconComponent = currentRoom.icon;
+
+  // Визначаємо поточне зображення
+  const currentImage = currentRoom.images ? currentRoom.images[currentImageIndex] : currentRoom.image;
+  const hasMultipleImages = currentRoom.images && currentRoom.images.length > 1;
+
+  // Визначаємо спеціальні стилі для фото коридору
+  const getImageClassName = () => {
+    if (currentLocation === 'hallway3' && hasMultipleImages) {
+      switch (currentImageIndex) {
+        case 0: return `${styles.mainImage} ${styles.corridorImage1}`;
+        case 1: return `${styles.mainImage} ${styles.corridorImage2}`;
+        case 3: return `${styles.mainImage} ${styles.corridorImage4}`;
+        default: return styles.mainImage;
+      }
+    }
+    if (currentLocation === 'languageroom3') {
+      return `${styles.mainImage} ${styles.languageImage}`;
+    }
+    return styles.mainImage;
+  };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [currentLocation]);
 
   return (
     <div className={styles.container}>
       {/* Заголовок */}
       <div className={styles.header}>
         <div className={styles.headerContent}>
-          <IconComponent size={40} className={styles.headerIcon} />
+          <span className={styles.headerIcon} style={{fontSize: '40px'}}><IconComponent /></span>
           <div className={styles.headerText}>
-            <h1 className={styles.headerTitle}>Віртуальна прогулянка</h1>
+            <h1 className={styles.headerTitle}>{t("virtualTourTitle")}</h1>
             <p className={styles.headerSubtitle}>
-              Дослідіть наш ліцей не виходячи з дому
+              {t("virtualTourSubtitle")}
             </p>
           </div>
         </div>
@@ -201,25 +515,46 @@ const VirtualTour = () => {
               className={`${styles.imageWrapper} ${isTransitioning ? styles.transitioning : ""}`}
             >
               <Image
-                src={currentRoom.image}
+                src={currentImage}
                 alt={currentRoom.name}
                 width={800}
                 height={500}
-                className={styles.mainImage}
+                className={getImageClassName()}
                 priority
                 onError={(e) => {
                   e.currentTarget.src = `https://via.placeholder.com/800x500/4A90E2/FFFFFF?text=${encodeURIComponent(currentRoom.name)}`;
                 }}
               />
 
+              {/* Навігаційні стрілки для кількох фото */}
+              {hasMultipleImages && (
+                <>
+                  <button 
+                    className={`${styles.imageNavButton} ${styles.imageNavButtonLeft}`}
+                    onClick={prevImage}
+                    disabled={currentImageIndex === 0}
+                  >
+                    ←
+                  </button>
+                  <button 
+                    className={`${styles.imageNavButton} ${styles.imageNavButtonRight}`}
+                    onClick={nextImage}
+                    disabled={currentImageIndex === currentRoom.images.length - 1}
+                  >
+                    →
+                  </button>
+                </>
+              )}
+
               {/* Оверлей з інформацією */}
               <div className={styles.imageOverlay}>
                 <div className={styles.overlayContent}>
-                  <IconComponent size={32} className={styles.overlayIcon} />
+                  <span className={styles.overlayIcon} style={{fontSize: '32px'}}><IconComponent /></span>
                   <div>
-                    <h2 className={styles.overlayTitle}>{currentRoom.name}</h2>
+                    <h2 className={styles.overlayTitle}>{getLocationName(currentLocation)}</h2>
                     <p className={styles.overlaySubtitle}>
-                      Поточна локація • Клікніть на доступні переходи
+                      {currentRoom.floor ? `${getFloorTranslation(currentRoom.floor)} • ` : ''}{t("currentLocation")} • {t("clickAvailableTransitions")}
+                      {hasMultipleImages && ` • ${t("photo")} ${currentImageIndex + 1} ${t("of")} ${currentRoom.images.length}`}
                     </p>
                   </div>
                 </div>
@@ -230,7 +565,7 @@ const VirtualTour = () => {
                 <div className={styles.loadingOverlay}>
                   <div className={styles.loadingContent}>
                     <div className={styles.spinner}></div>
-                    <p className={styles.loadingText}>Переходимо...</p>
+                    <p className={styles.loadingText}>{t("transitioning")}</p>
                   </div>
                 </div>
               )}
@@ -239,16 +574,16 @@ const VirtualTour = () => {
 
           {/* Опис локації */}
           <div className={styles.descriptionSection}>
-            <p className={styles.description}>{currentRoom.description}</p>
+            <p className={styles.description}>{getLocationDescription(currentLocation)}</p>
 
             {/* Особливості */}
             <div className={styles.highlightsSection}>
               <h3 className={styles.highlightsTitle}>
                 <div className={styles.titleAccent}></div>
-                Особливості цієї локації:
+                {t("locationFeatures")}
               </h3>
               <div className={styles.highlightsGrid}>
-                {currentRoom.highlights.map((highlight, index) => (
+                {getLocationHighlights(currentLocation).map((highlight, index) => (
                   <div key={index} className={styles.highlightItem}>
                     <div className={styles.highlightDot}></div>
                     <span className={styles.highlightText}>{highlight}</span>
@@ -262,40 +597,14 @@ const VirtualTour = () => {
         {/* Бічна панель навігації */}
         <div className={styles.sidebar}>
           <div className={styles.sidebarContent}>
-            <div className={styles.navigationSection}>
-              <h3 className={styles.navigationTitle}>
-                <MapPin className={styles.navigationIcon} size={24} />
-                Куди йти далі?
-              </h3>
-
-              <div className={styles.navigationButtons}>
-                {currentRoom.connections.map((connectionId) => {
-                  const connectedRoom = locations[connectionId];
-                  const ConnectedIcon = connectedRoom.icon;
-                  return (
-                    <button
-                      key={connectionId}
-                      onClick={() => navigateTo(connectionId)}
-                      className={styles.navigationButton}
-                    >
-                      <div className={styles.buttonIcon}>
-                        <ConnectedIcon size={20} />
-                      </div>
-                      <span className={styles.buttonText}>
-                        {connectedRoom.name}
-                      </span>
-                      <ArrowRight size={18} className={styles.buttonArrow} />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Міні-карта */}
             <div className={styles.mapSection}>
-              <h3 className={styles.mapTitle}>Карта локацій</h3>
+              <h3 className={styles.mapTitle}>{t("locationsMap")}</h3>
+              
+              {/* Загальні зони */}
               <div className={styles.mapGrid}>
-                {Object.entries(locations).map(([locationId, location]) => {
+                {['entrance', 'foyer'].map((locationId) => {
+                  const location = locations[locationId];
                   const LocationIcon = location.icon;
                   const isCurrentLocation = locationId === currentLocation;
                   const isAccessible =
@@ -315,11 +624,254 @@ const VirtualTour = () => {
                             : styles.mapButtonDisabled
                       }`}
                     >
-                      <LocationIcon size={18} />
+                      <span style={{fontSize: '18px'}}><LocationIcon /></span>
                       <div className={styles.mapButtonText}>
-                        {location.name.length > 15
-                          ? location.name.substring(0, 12) + "..."
-                          : location.name}
+                        {(() => {
+                          const translatedName = getLocationName(locationId);
+                          return translatedName.length > 15
+                            ? translatedName.substring(0, 12) + "..."
+                            : translatedName;
+                        })()}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Розділювальна лінія */}
+              <div className={styles.mapDivider}></div>
+
+              {/* Кабінети нульового поверху */}
+              <div className={styles.mapGrid}>
+                {['rimc', 'library', 'gym', 'danceroom', 'medical'].map((locationId) => {
+                  const location = locations[locationId];
+                  const LocationIcon = location.icon;
+                  const isCurrentLocation = locationId === currentLocation;
+                  const isAccessible =
+                    currentRoom.connections.includes(locationId);
+                  const isClickable = isAccessible || isCurrentLocation;
+
+                  return (
+                    <button
+                      key={locationId}
+                      onClick={() => isAccessible && navigateTo(locationId)}
+                      disabled={!isClickable}
+                      className={`${styles.mapButton} ${
+                        isCurrentLocation
+                          ? styles.mapButtonCurrent
+                          : isAccessible
+                            ? styles.mapButtonAccessible
+                            : styles.mapButtonDisabled
+                      }`}
+                    >
+                      <span style={{fontSize: '18px'}}><LocationIcon /></span>
+                      <div className={styles.mapButtonText}>
+                        {(() => {
+                          const translatedName = getLocationName(locationId);
+                          return translatedName.length > 15
+                            ? translatedName.substring(0, 12) + "..."
+                            : translatedName;
+                        })()}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Розділювальна лінія */}
+              <div className={styles.mapDivider}></div>
+
+              {/* Кабінети першого поверху */}
+              <div className={styles.mapGrid}>
+                {['recreation', 'classroom1', 'classroom2'].map((locationId) => {
+                  const location = locations[locationId];
+                  const LocationIcon = location.icon;
+                  const isCurrentLocation = locationId === currentLocation;
+                  const isAccessible =
+                    currentRoom.connections.includes(locationId);
+                  const isClickable = isAccessible || isCurrentLocation;
+
+                  return (
+                    <button
+                      key={locationId}
+                      onClick={() => isAccessible && navigateTo(locationId)}
+                      disabled={!isClickable}
+                      className={`${styles.mapButton} ${
+                        isCurrentLocation
+                          ? styles.mapButtonCurrent
+                          : isAccessible
+                            ? styles.mapButtonAccessible
+                            : styles.mapButtonDisabled
+                      }`}
+                    >
+                      <span style={{fontSize: '18px'}}><LocationIcon /></span>
+                      <div className={styles.mapButtonText}>
+                        {(() => {
+                          const translatedName = getLocationName(locationId);
+                          return translatedName.length > 15
+                            ? translatedName.substring(0, 12) + "..."
+                            : translatedName;
+                        })()}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Розділювальна лінія */}
+              <div className={styles.mapDivider}></div>
+
+              {/* Кабінети другого поверху */}
+              <div className={styles.mapGrid}>
+                {['teacherspace', 'computerclass', 'middleschool'].map((locationId) => {
+                  const location = locations[locationId];
+                  const LocationIcon = location.icon;
+                  const isCurrentLocation = locationId === currentLocation;
+                  const isAccessible =
+                    currentRoom.connections.includes(locationId);
+                  const isClickable = isAccessible || isCurrentLocation;
+
+                  return (
+                    <button
+                      key={locationId}
+                      onClick={() => isAccessible && navigateTo(locationId)}
+                      disabled={!isClickable}
+                      className={`${styles.mapButton} ${
+                        isCurrentLocation
+                          ? styles.mapButtonCurrent
+                          : isAccessible
+                            ? styles.mapButtonAccessible
+                            : styles.mapButtonDisabled
+                      }`}
+                    >
+                      <span style={{fontSize: '18px'}}><LocationIcon /></span>
+                      <div className={styles.mapButtonText}>
+                        {(() => {
+                          const translatedName = getLocationName(locationId);
+                          return translatedName.length > 15
+                            ? translatedName.substring(0, 12) + "..."
+                            : translatedName;
+                        })()}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Розділювальна лінія */}
+              <div className={styles.mapDivider}></div>
+
+              {/* Додаткові кабінети */}
+              <div className={styles.mapGrid}>
+                {['auditorium', 'cafeteria', 'orgoffice', 'languageroom'].map((locationId) => {
+                  const location = locations[locationId];
+                  const LocationIcon = location.icon;
+                  const isCurrentLocation = locationId === currentLocation;
+                  const isAccessible =
+                    currentRoom.connections.includes(locationId);
+                  const isClickable = isAccessible || isCurrentLocation;
+
+                  return (
+                    <button
+                      key={locationId}
+                      onClick={() => isAccessible && navigateTo(locationId)}
+                      disabled={!isClickable}
+                      className={`${styles.mapButton} ${
+                        isCurrentLocation
+                          ? styles.mapButtonCurrent
+                          : isAccessible
+                            ? styles.mapButtonAccessible
+                            : styles.mapButtonDisabled
+                      }`}
+                    >
+                      <span style={{fontSize: '18px'}}><LocationIcon /></span>
+                      <div className={styles.mapButtonText}>
+                        {(() => {
+                          const translatedName = getLocationName(locationId);
+                          return translatedName.length > 15
+                            ? translatedName.substring(0, 12) + "..."
+                            : translatedName;
+                        })()}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Розділювальна лінія */}
+              <div className={styles.mapDivider}></div>
+
+              {/* Кабінети третього поверху */}
+              <div className={styles.mapGrid}>
+                {['hallway3', 'chemistry', 'biology', 'physics', 'languageroom3'].map((locationId) => {
+                  const location = locations[locationId];
+                  const LocationIcon = location.icon;
+                  const isCurrentLocation = locationId === currentLocation;
+                  const isAccessible =
+                    currentRoom.connections.includes(locationId);
+                  const isClickable = isAccessible || isCurrentLocation;
+
+                  return (
+                    <button
+                      key={locationId}
+                      onClick={() => isAccessible && navigateTo(locationId)}
+                      disabled={!isClickable}
+                      className={`${styles.mapButton} ${
+                        isCurrentLocation
+                          ? styles.mapButtonCurrent
+                          : isAccessible
+                            ? styles.mapButtonAccessible
+                            : styles.mapButtonDisabled
+                      }`}
+                    >
+                      <span style={{fontSize: '18px'}}><LocationIcon /></span>
+                      <div className={styles.mapButtonText}>
+                        {(() => {
+                          const translatedName = getLocationName(locationId);
+                          return translatedName.length > 15
+                            ? translatedName.substring(0, 12) + "..."
+                            : translatedName;
+                        })()}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Розділювальна лінія */}
+              <div className={styles.mapDivider}></div>
+
+              {/* Шкільний двір */}
+              <div className={styles.mapGrid}>
+                {['playground', 'courtyard'].map((locationId) => {
+                  const location = locations[locationId];
+                  const LocationIcon = location.icon;
+                  const isCurrentLocation = locationId === currentLocation;
+                  const isAccessible =
+                    currentRoom.connections.includes(locationId);
+                  const isClickable = isAccessible || isCurrentLocation;
+
+                  return (
+                    <button
+                      key={locationId}
+                      onClick={() => isAccessible && navigateTo(locationId)}
+                      disabled={!isClickable}
+                      className={`${styles.mapButton} ${
+                        isCurrentLocation
+                          ? styles.mapButtonCurrent
+                          : isAccessible
+                            ? styles.mapButtonAccessible
+                            : styles.mapButtonDisabled
+                      }`}
+                    >
+                      <span style={{fontSize: '18px'}}><LocationIcon /></span>
+                      <div className={styles.mapButtonText}>
+                        {(() => {
+                          const translatedName = getLocationName(locationId);
+                          return translatedName.length > 15
+                            ? translatedName.substring(0, 12) + "..."
+                            : translatedName;
+                        })()}
                       </div>
                     </button>
                   );
@@ -331,24 +883,24 @@ const VirtualTour = () => {
             <div className={styles.instructionsSection}>
               <h4 className={styles.instructionsTitle}>
                 <span className={styles.instructionsIcon}>💡</span>
-                Як користуватися
+                {t("howToUse")}
               </h4>
               <ul className={styles.instructionsList}>
                 <li className={styles.instructionItem}>
                   <span className={styles.instructionBullet}>•</span>
-                  Обирайте доступні локації для переходу
+                  {t("chooseAvailableLocations")}
                 </li>
                 <li className={styles.instructionItem}>
                   <span className={styles.instructionBullet}>•</span>
-                  Читайте опис кожного приміщення
+                  {t("readDescription")}
                 </li>
                 <li className={styles.instructionItem}>
                   <span className={styles.instructionBullet}>•</span>
-                  Використовуйте міні-карту для швидкої навігації
+                  {t("useMiniMap")}
                 </li>
                 <li className={styles.instructionItem}>
                   <span className={styles.instructionBullet}>•</span>
-                  Вивчайте особливості кожної локації
+                  {t("studyFeatures")}
                 </li>
               </ul>
             </div>
@@ -356,19 +908,7 @@ const VirtualTour = () => {
         </div>
       </div>
 
-      {/* Футер з додатковою інформацією */}
-      <div className={styles.footer}>
-        <p className={styles.footerText}>
-          🏫 Хочете відвідати нас особисто?
-          <span className={styles.footerHighlight}>
-            {" "}
-            Зв&apos;яжіться з нами для організації екскурсії!
-          </span>
-        </p>
-        <p className={styles.footerSubtext}>
-          Наша адреса та контакти доступні на головній сторінці сайту
-        </p>
-      </div>
+
     </div>
   );
 };

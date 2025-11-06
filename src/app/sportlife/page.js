@@ -1,144 +1,206 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import styles from '@/styles/sportlife.module.css';
+import { useTranslation } from '@/contexts/TranslationProvider';
 
-export default function SportLife() {
-  const [selectedYear, setSelectedYear] = useState('2025');
-  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
-  const [expandedEvents, setExpandedEvents] = useState({});
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+export default function SportLifePage() {
+  const { t, locale } = useTranslation();
+  const [expandedEvent, setExpandedEvent] = useState(null);
+  const [galleryOpen, setGalleryOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [renderKey, setRenderKey] = useState(0);
 
-  const toggleYearDropdown = () => {
-    setIsYearDropdownOpen(!isYearDropdownOpen);
+  // Діагностика перекладу
+  console.log('SportLife - Current locale:', locale);
+  console.log('SportLife - Translation test:', t('sportLife'));
+
+  // Відстеження змін мови
+  useEffect(() => {
+    console.log('SportLife - Language changed to:', locale);
+    setRenderKey(prev => prev + 1);
+  }, [locale]);
+
+  // Функція для отримання локалізованого контенту
+  const getLocalizedContent = (item) => {
+    if (locale === 'en') {
+      return {
+        heading: item.headingEn || item.heading, // fallback до української
+        description: item.descriptionEn || item.description
+      };
+    }
+    return {
+      heading: item.heading,
+      description: item.description
+    };
   };
 
-  const handleYearSelect = (year) => {
-    setSelectedYear(year);
-    setIsYearDropdownOpen(false);
+  const loadEvents = async () => {
+    try {
+      setIsLoading(true);
+      console.log(" --- start ---");
+      
+      // Прямий запит до API сервера
+      const response = await fetch("http://localhost:3001/api/sport-life");
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Events loaded:", data);
+
+      // Оновлюємо стан з даними з API
+      const mappedEvents = data.map((item) => ({
+        id: item.id,
+        heading: item.heading,
+        description: item.description,
+        headingEn: item.headingEn,
+        descriptionEn: item.descriptionEn,
+        photoUrls: item.photoUrls ? item.photoUrls.map((url) => 
+          url.startsWith('http') ? url : `http://localhost:3001${url}`
+        ) : [],
+        imagePosition: item.imagePosition || 'center'
+      }));
+      
+      setEvents(mappedEvents);
+      return data;
+    } catch (error) {
+      console.error("Error loading events:", error);
+      setEvents([]);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const toggleEvent = (eventId) => {
-    setExpandedEvents(prev => ({
-      ...prev,
-      [eventId]: !prev[eventId]
-    }));
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  const handleReadMore = (id) => {
+    setExpandedEvent(expandedEvent === id ? null : id);
   };
 
-  const openGallery = (images, index) => {
+  const handleImageClick = (images, index) => {
     setCurrentImage(images[index]);
     setCurrentImageIndex(index);
-    setIsGalleryOpen(true);
+    setGalleryOpen(true);
   };
 
-  const closeGallery = () => {
-    setIsGalleryOpen(false);
+  const handleGalleryClose = () => {
+    setGalleryOpen(false);
     setCurrentImage(null);
+    setCurrentImageIndex(0);
   };
 
-  const nextImage = (images) => {
-    const nextIndex = (currentImageIndex + 1) % images.length;
-    setCurrentImage(images[nextIndex]);
-    setCurrentImageIndex(nextIndex);
-  };
-
-  const prevImage = (images) => {
-    const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
-    setCurrentImage(images[prevIndex]);
-    setCurrentImageIndex(prevIndex);
-  };
-
-  const events = [
-    {
-      id: 1,
-      title: 'Спортивні секції',
-      text: 'У школі працюють різноманітні спортивні секції: футбол, баскетбол, волейбол, легка атлетика, гімнастика. Кожен учень може обрати вид спорту за своїми інтересами та здібностями. Тренування проводяться під керівництвом кваліфікованих тренерів, які допомагають учням досягати високих результатів.',
-      images: ['/img/sport1.jpg', '/img/sport2.jpg', '/img/sport3.jpg']
-    },
-    {
-      id: 2,
-      title: 'Спортивні змагання',
-      text: 'Школа регулярно проводить спортивні змагання між класами та командами. Учні беруть участь у шкільних, районних та міських змаганнях, де демонструють свої спортивні досягнення. Переможці отримують нагороди та грамоти.',
-      images: ['/img/sport1.jpg', '/img/sport2.jpg', '/img/sport3.jpg']
-    },
-    {
-      id: 3,
-      title: 'Спортивні свята',
-      text: 'У школі проводяться спортивні свята та фестивалі, присвячені різним видам спорту. Учні беруть участь у спортивних естафетах, конкурсах та майстер-класах. Такі заходи сприяють популяризації здорового способу життя та розвитку спортивної культури.',
-      images: ['/img/sport1.jpg', '/img/sport2.jpg', '/img/sport3.jpg']
+  const handlePrevImage = () => {
+    const currentEvent = events.find((item) => item.photoUrls.includes(currentImage));
+    if (currentEvent && currentImage) {
+      const currentIndex = currentEvent.photoUrls.indexOf(currentImage);
+      const prevIndex =
+        (currentIndex - 1 + currentEvent.photoUrls.length) %
+        currentEvent.photoUrls.length;
+      setCurrentImage(currentEvent.photoUrls[prevIndex]);
+      setCurrentImageIndex(prevIndex);
     }
-  ];
+  };
+
+  const handleNextImage = () => {
+    const currentEvent = events.find((item) => item.photoUrls.includes(currentImage));
+    if (currentEvent && currentImage) {
+      const currentIndex = currentEvent.photoUrls.indexOf(currentImage);
+      const nextIndex = (currentIndex + 1) % currentEvent.photoUrls.length;
+      setCurrentImage(currentEvent.photoUrls[nextIndex]);
+      setCurrentImageIndex(nextIndex);
+    }
+  };
 
   return (
-    <div className={styles.sportLifePage}>
-      <div className={styles.intellectContent}>
-        <h1 className={styles.intellectTitle}>СпортLife</h1>
-        
-        <div className={styles.yearSelector} onClick={toggleYearDropdown}>
-          <span className={styles.yearText}>{selectedYear}</span>
-          <div className={styles.yearDropdownIcon}></div>
-          <div className={`${styles.yearDropdownContent} ${isYearDropdownOpen ? styles.active : ''}`}>
-            <a onClick={() => handleYearSelect('2025')}>2025</a>
-          </div>
-        </div>
-
-        <div className={styles.eventsList}>
-          {events.map((event) => (
-            <div key={event.id} className={`${styles.eventItem} ${expandedEvents[event.id] ? styles.expanded : ''}`}>
-              <div className={styles.eventContent}>
-                <h2 className={styles.eventTitle}>{event.title}</h2>
-                <p className={styles.eventText}>{event.text}</p>
-                <button 
-                  className={`${styles.readMoreBtn} ${expandedEvents[event.id] ? styles.expanded : ''}`}
-                  onClick={() => toggleEvent(event.id)}
-                >
-                  {expandedEvents[event.id] ? 'Згорнути' : 'Читати далі'}
-                </button>
-              </div>
-              <div className={styles.eventImage}>
-                <Image
-                  src={event.images[0]}
-                  alt={event.title}
-                  width={500}
-                  height={300}
-                  style={{ objectFit: 'cover' }}
-                />
-                <div 
-                  className={styles.eventImageOverlay}
-                  onClick={() => openGallery(event.images, 0)}
-                >
-                  <span className={styles.viewMoreText}>Переглянути всі фото</span>
-                </div>
-              </div>
+    <>
+      <div className={styles.sportLifePage} lang={locale} key={`${locale}-${renderKey}`}>
+        <div className={styles.sportLifeContent}>
+          <h1 className={styles.sportLifeTitle}>{t("sportLife")}</h1>
+          
+          {(
+            <div className={styles.eventsList}>
+              {events.map((item) => {
+                const localized = getLocalizedContent(item);
+                
+                return (
+                  <div
+                    key={item.id}
+                    className={`${styles.eventItem} ${expandedEvent === item.id ? styles.expanded : ""}`}
+                  >
+                    <div className={styles.eventContent}>
+                      <h3 className={styles.eventTitle}>{localized.heading}</h3>
+                      <p
+                        className={styles.eventText}
+                        style={{ whiteSpace: 'pre-line' }}
+                      >
+                        {localized.description}
+                      </p>
+                      <button
+                        className={`${styles.readMoreBtn} ${expandedEvent === item.id ? styles.expanded : ""}`}
+                        onClick={() => handleReadMore(item.id)}
+                      >
+                        {expandedEvent === item.id ? t("collapse") : t("readMore")}
+                      </button>
+                    </div>
+                    {item.photoUrls.length > 0 && (
+                      <div className={styles.eventImage}>
+                        <img
+                          src={item.photoUrls[0]}
+                          alt="Event image"
+                          onClick={() => handleImageClick(item.photoUrls, 0)}
+                          data-position={item.imagePosition || 'center'}
+                          onLoad={() => console.log(`🖼️ Зображення завантажено для ID ${item.id}, data-position = "${item.imagePosition || 'center'}"`)}
+                        />
+                        <div 
+                          className={styles.eventImageOverlay}
+                          onClick={() => handleImageClick(item.photoUrls, 0)}
+                        >
+                          <span className={styles.viewMoreText}>{t("viewMore")}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          )}
         </div>
       </div>
 
-      {isGalleryOpen && currentImage && (
-        <div className={`${styles.galleryModal} ${isGalleryOpen ? styles.active : ''}`}>
+      {/* Gallery Modal - рендериться поза основним контейнером */}
+      {galleryOpen && (
+        <div className={`${styles.galleryModal} ${styles.active}`}>
           <div className={styles.galleryContent}>
-            <Image
+            <img
               src={currentImage}
-              alt="Gallery"
-              width={1200}
-              height={800}
-              style={{ objectFit: 'contain' }}
+              alt="Gallery image"
             />
             <div className={styles.galleryNav}>
-              <button onClick={() => prevImage(events[0].images)}>❮</button>
-              <button onClick={() => nextImage(events[0].images)}>❯</button>
+              <button className={styles.galleryPrev} onClick={handlePrevImage}>
+                ❮
+              </button>
+              <button className={styles.galleryNext} onClick={handleNextImage}>
+                ❯
+              </button>
             </div>
-            <button className={styles.galleryClose} onClick={closeGallery}>×</button>
+            <button className={styles.galleryClose} onClick={handleGalleryClose}>
+              ×
+            </button>
             <div className={styles.galleryCounter}>
-              {currentImageIndex + 1} / {events[0].images.length}
+              {currentImageIndex + 1} /{" "}
+              {events.find((item) => item.photoUrls.includes(currentImage))?.photoUrls.length}
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
-} 
+}

@@ -4,8 +4,21 @@
   background: #FFFFFF;
 }
 
+/* Стилі для динамічного контенту */
+.section {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.dynamicSection {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
 .qualificationImprovementMain {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 60px auto 60px;
   padding: 45px 20px;
   position: relative;
@@ -17,7 +30,7 @@
   font-size: 42px;
   color: #182BA1;
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   font-weight: 700;
 }
 
@@ -112,13 +125,34 @@
   margin-bottom: 0;
 }
 
+.topicsList {
+  list-style-type: disc;
+  margin: 15px 0 20px 20px;
+}
+
+.topicsList li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.externalLink {
+  color: #182BA1;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.externalLink:hover {
+  color: #2a41d1;
+}
+
 .courseName {
   font-weight: 700;
 }
 
 .qualificationImprovementDocuments {
   margin-top: 180px;
-  padding: 30px 0;
+  padding: 40px 0;
   background-color: rgba(255, 109, 33, 0.2);
   width: 100vw;
   margin-left: calc((100% - 100vw) / 2);
@@ -126,68 +160,297 @@
   box-sizing: border-box;
   z-index: 1;
   clear: both;
+  min-height: fit-content;
 }
 
-.documentsTitle {
-  font-size: 32px;
-  text-align: center;
-  margin-bottom: 40px;
-  margin-left: 0;
+.documentsContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.documentsBlock {
+  margin-bottom: 30px;
+}
+
+.documentsText {
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 20px;
+  line-height: 1.5;
 }
 
 .documentsList {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
-  text-align: left;
-  margin-left: 40px;
-}
-
-.documentItem {
   display: flex;
-  align-items: center;
-  margin-bottom: 25px;
-  text-align: left;
-  padding-left: 0;
-}
-
-.documentIcon {
-  width: 18px;
-  height: 18px;
-  background-color: #676E96;
-  margin-right: 15px;
-  mask-image: url('/img/document-icon.svg');
-  -webkit-mask-image: url('/img/document-icon.svg');
-  mask-size: contain;
-  -webkit-mask-size: contain;
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .documentLink {
-  color: #000;
-  text-decoration: none;
-  font-size: 18px;
+  color: #182BA1;
+  text-decoration: underline;
+  font-size: 16px;
   transition: color 0.3s ease;
-  text-align: left;
-  margin-left: 0;
+  line-height: 1.5;
+  display: inline-block;
+  position: relative;
+  padding-left: 20px;
+}
+
+.documentLink::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #182BA1;
+  font-size: 20px;
+  line-height: 1;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .documentLink:hover {
-  color: #182BA1;
+  color: #2a41d1;
 }
 
-@media (max-width: 768px) {
+.divider {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 30px 0;
+  width: 100%;
+}
+
+.loadingMessage {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  color: #182BA1;
+  text-align: center;
+  padding: 40px;
+  background-color: rgba(24, 43, 161, 0.1);
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+.additionalText {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(24, 43, 161, 0.3);
+}
+
+.additionalText p {
+  margin-bottom: 15px;
+  font-style: italic;
+  color: #555;
+}
+
+.linkSection {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.linkSection .documentLink {
+  display: inline-block;
+  background: linear-gradient(135deg, #FF8C00, #FF6347);
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+}
+
+.linkSection .documentLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+/* === АДАПТИВНІ СТИЛІ === */
+
+/* Tablet - до 1024px */
+@media (max-width: 1024px) {
+  .qualificationImprovementMain {
+    padding: 35px 20px;
+  }
+  
   .qualificationImprovementTitle {
-    font-size: 32px;
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+  
+  .sectionHeader {
+    padding: 18px 25px;
+  }
+  
+  .sectionTitle {
+    font-size: 17px;
+  }
+  
+  .detailedDescription {
+    padding: 0 25px;
+  }
+  
+  .sectionHeader.active + .sectionContent .detailedDescription {
+    padding: 18px 25px 25px;
+  }
+  
+  .detailedDescription p {
+    font-size: 15px;
+  }
+  
+  .qualificationImprovementDocuments {
+    margin-top: 120px;
+    padding: 35px 0;
+  }
+  
+  .documentsContainer {
+    padding: 0 30px;
+  }
+  
+  .documentsText {
+    font-size: 16px;
+  }
+  
+  .documentLink {
+    font-size: 15px;
+  }
+}
+
+/* Mobile Large - до 768px */
+@media (max-width: 768px) {
+  .qualificationImprovementMain {
+    padding: 25px 15px;
+  }
+  
+  .qualificationImprovementTitle {
+    font-size: 28px;
     margin-bottom: 30px;
+  }
+  
+  .sectionHeader {
+    padding: 15px 20px;
   }
   
   .sectionTitle {
     font-size: 15px;
   }
   
-  .documentsTitle {
-    font-size: 26px;
+  .detailedDescription {
+    padding: 0 20px;
   }
-} 
+  
+  .sectionHeader.active + .sectionContent .detailedDescription {
+    padding: 15px 20px 20px;
+  }
+  
+  .detailedDescription p {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  
+  .topicsList {
+    margin: 12px 0 15px 15px;
+  }
+  
+  .topicsList li {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .qualificationImprovementDocuments {
+    margin-top: 80px;
+    padding: 25px 0;
+  }
+  
+  .documentsContainer {
+    padding: 0 20px;
+  }
+  
+  .documentsText {
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .documentLink {
+    font-size: 14px;
+    padding-left: 15px;
+  }
+  
+  .linkSection .documentLink {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile Small - до 480px */
+@media (max-width: 480px) {
+  .qualificationImprovementMain {
+    padding: 20px 10px;
+  }
+  
+  .qualificationImprovementTitle {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .sectionHeader {
+    padding: 12px 15px;
+  }
+  
+  .sectionTitle {
+    font-size: 14px;
+  }
+  
+  .detailedDescription {
+    padding: 0 15px;
+  }
+  
+  .sectionHeader.active + .sectionContent .detailedDescription {
+    padding: 12px 15px 15px;
+  }
+  
+  .detailedDescription p {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  
+  .topicsList {
+    margin: 10px 0 12px 12px;
+  }
+  
+  .topicsList li {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  
+  .qualificationImprovementDocuments {
+    margin-top: 60px;
+    padding: 20px 0;
+  }
+  
+  .documentsContainer {
+    padding: 0 15px;
+  }
+  
+  .documentsText {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .documentLink {
+    font-size: 13px;
+    padding-left: 12px;
+  }
+  
+  .linkSection .documentLink {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .divider {
+    margin: 20px 0;
+  }
+}

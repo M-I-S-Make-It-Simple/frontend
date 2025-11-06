@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 
 import headerLogo from "../../assets/header_lyceum_logo.png";
-import languageChange from "../../assets/language_change.png";
+import ukrIcon from "../../assets/ukr_lang_change.png";
+import engIcon from "../../assets/eng_lang_change.png";
 import styles from "../../styles/HeaderFooter.module.css";
 import { useTranslation } from "@/contexts/TranslationProvider";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { t, locale, changeLanguage } = useTranslation();
 
   const toggleMobileMenu = () => {
@@ -22,8 +25,30 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Скролимо вниз і пройшли 100px - ховаємо хедер
+        setIsHeaderHidden(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Скролимо вгору - показуємо хедер
+        setIsHeaderHidden(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isHeaderHidden ? styles.hidden : ''}`}>
       <nav className={styles.navContainer}>
         <div className={styles.logo}>
           <Link href="/">
@@ -35,8 +60,8 @@ const Header = () => {
         <div className={styles.navLinks}>
           <div className={`${styles.navItem} ${styles.dropdown}`}>
             <Link className={styles.navLink} href="#">
-              <span>Про</span>
-              <span>ліцей</span>
+              <span>{t("aboutLyceum")}</span>
+              <span>{t("lyceum")}</span>
             </Link>
             <div className={styles.dropdownContent}>
               <Link href="/visitingcard">{t("ourCard")}</Link>
@@ -51,8 +76,8 @@ const Header = () => {
 
           <div className={styles.navItem}>
             <Link className={styles.navLink} href="/teachingstaff">
-              <span>Педагогічний</span>
-              <span>колектив</span>
+              <span>{t("teaching")}</span>
+              <span>{t("staff")}</span>
             </Link>
           </div>
 
@@ -62,9 +87,9 @@ const Header = () => {
               <span>{t("management")}</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="/regulatorydocuments">Нормативні документи</Link>
-              <Link href="/financialreports">Фінансова звітність</Link>
-              <Link href="/publicinformation">Публічна інформація</Link>
+              <Link href="/regulatorydocuments">{t("regulatoryDocuments")}</Link>
+              <Link href="/financialreports">{t("financialReports")}</Link>
+              <Link href="/publicinformation">{t("publicInformation")}</Link>
             </div>
           </div>
 
@@ -74,25 +99,15 @@ const Header = () => {
               <span>{t("process")}</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="/intellect">Інтелект та обдарованість</Link>
-              <Link href="/studentselfgovernment">
-                Учнівське самоврядування
-              </Link>
-              <Link href="/projectresearch">
-                Проєктно-дослідницька діяльність
-              </Link>
-              <Link href="/patrioticeducation">
-                Національно-патріотичне виховання
-              </Link>
-              <Link href="/evaluationcriteria">Критерії оцінювання</Link>
-              <Link href="/careerguidance">Профорієнтаційна сторінка</Link>
-              <Link href="/moraleducation">Морально-етичне виховання</Link>
-              <Link href="/clubsstudios">Клуби та студії</Link>
-              <Link href="/sportlife">СпортLife</Link>
-              <Link href="/psychologicalsupport">
-                Соціально-психологічна підтримка
-              </Link>
-              <Link href="/antibullying">Протидія булінгу</Link>
+              <Link href="/intellect">{t("intellectAndTalent")}</Link>
+              <Link href="/studentselfgovernment">{t("studentSelfGovernment")}</Link>
+              <Link href="/projectresearch">{t("projectResearch")}</Link>
+              <Link href="/patrioticeducation">{t("patrioticEducation")}</Link>
+              <Link href="/evaluationcriteria">{t("evaluationCriteria")}</Link>
+              <Link href="/clubsstudios">{t("clubsAndStudios")}</Link>
+              <Link href="/sportlife">{t("sportLife")}</Link>
+              <Link href="/psychologicalsupport">{t("psychologicalSupport")}</Link>
+              <Link href="/antibullying">{t("antiBullying")}</Link>
             </div>
           </div>
 
@@ -102,16 +117,10 @@ const Header = () => {
               <span>{t("work")}</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="/teacherhelp">На допомогу вчителю</Link>
-              <Link href="/qualificationimprovement">
-                Підвищення кваліфікації
-              </Link>
-              <Link href="/teachercertification">
-                Атестація педпрацівників
-              </Link>
-              <Link href="/methodicalevents">Основні методичні заходи</Link>
-              <Link href="/pedagogicalolympus">Педагогічний Олімп</Link>
-              <Link href="/methodicallifehacks">Методичні лайфхаки</Link>
+              <Link href="/teacherhelp">{t("teacherHelp")}</Link>
+              <Link href="/qualificationimprovement">{t("qualificationImprovement")}</Link>
+              <Link href="/teachercertification">{t("teacherCertification")}</Link>
+              <Link href="/methodicalevents">{t("methodicalEvents")}</Link>
             </div>
           </div>
 
@@ -131,13 +140,11 @@ const Header = () => {
               <span>{t("other")}</span>
             </Link>
             <div className={styles.dropdownContent}>
-              <Link href="http://malyk.ho.ua/" target="_blank">Літературний сайт Володимира Малика</Link>
-              <Link href="https://lubnyrada.gov.ua/" target="_blank">Лубенська міська рада</Link>
-              <Link href="https://www.mon.gov.ua/" target="_blank">Міністерство освіти і науки України</Link>
-              <Link href="https://testportal.gov.ua" target="_blank">Український центр оцінювання якості освіти</Link>
-              <Link href="https://zno-kharkiv.org.ua/" target="_blank">
-                Харківський регіональний центр оцінювання якості освіти
-              </Link>
+              <Link href="http://malyk.ho.ua/" target="_blank">{t("malikLiterarySite")}</Link>
+              <Link href="https://lubnyrada.gov.ua/" target="_blank">{t("lubensCityCouncil")}</Link>
+              <Link href="https://www.mon.gov.ua/" target="_blank">{t("ministryEducation")}</Link>
+              <Link href="https://testportal.gov.ua" target="_blank">{t("ukrainianCenterEducation")}</Link>
+              <Link href="https://zno-kharkiv.org.ua/" target="_blank">{t("kharkivRegionalCenter")}</Link>
             </div>
           </div>
         </div>
@@ -149,10 +156,10 @@ const Header = () => {
             }}
           >
             <Image
-              src={languageChange}
+              src={locale === "uk" ? engIcon : ukrIcon}
               alt="languageChange"
-              width={32}
-              height={38}
+              width={40}
+              height={48}
             />
           </Box>
         </div>
@@ -237,13 +244,13 @@ const Header = () => {
               {t("transparencyManagement")}
             </Link>
             <div className={styles.mobileDropdownContent}>
-              <Link href="/regulatory-documents" onClick={closeMobileMenu}>
+              <Link href="/regulatorydocuments" onClick={closeMobileMenu}>
                 Нормативні документи
               </Link>
-              <Link href="/financial-reports" onClick={closeMobileMenu}>
+              <Link href="/financialreports" onClick={closeMobileMenu}>
                 Фінансова звітність
               </Link>
-              <Link href="/public-information" onClick={closeMobileMenu}>
+              <Link href="/publicinformation" onClick={closeMobileMenu}>
                 Публічна інформація
               </Link>
             </div>
@@ -261,34 +268,28 @@ const Header = () => {
               <Link href="/intellect" onClick={closeMobileMenu}>
                 {t("intellectAndTalent")}
               </Link>
-              <Link href="/student-self-government" onClick={closeMobileMenu}>
-                Учнівське самоврядування
+              <Link href="/studentselfgovernment" onClick={closeMobileMenu}>
+                {t("studentSelfGovernment")}
               </Link>
-              <Link href="/project-research" onClick={closeMobileMenu}>
+              <Link href="/projectresearch" onClick={closeMobileMenu}>
                 Проєктно-дослідницька діяльність
               </Link>
-              <Link href="/patriotic-education" onClick={closeMobileMenu}>
+              <Link href="/patrioticeducation" onClick={closeMobileMenu}>
                 Національно-патріотичне виховання
               </Link>
-              <Link href="/evaluation-criteria" onClick={closeMobileMenu}>
+              <Link href="/evaluationcriteria" onClick={closeMobileMenu}>
                 Критерії оцінювання
               </Link>
-              <Link href="/career-guidance" onClick={closeMobileMenu}>
-                Профорієнтаційна сторінка
-              </Link>
-              <Link href="/moral-education" onClick={closeMobileMenu}>
-                Морально-етичне виховання
-              </Link>
-              <Link href="/clubs-studios" onClick={closeMobileMenu}>
+              <Link href="/clubsstudios" onClick={closeMobileMenu}>
                 Клуби та студії
               </Link>
               <Link href="/sportlife" onClick={closeMobileMenu}>
                 {t("sportLife")}
               </Link>
-              <Link href="/psychological-support" onClick={closeMobileMenu}>
+              <Link href="/psychologicalsupport" onClick={closeMobileMenu}>
                 Соціально-психологічна підтримка
               </Link>
-              <Link href="/anti-bullying" onClick={closeMobileMenu}>
+              <Link href="/antibullying" onClick={closeMobileMenu}>
                 Протидія булінгу
               </Link>
             </div>
@@ -303,23 +304,17 @@ const Header = () => {
               {t("methodicalWork")}
             </Link>
             <div className={styles.mobileDropdownContent}>
-              <Link href="/teacher-help" onClick={closeMobileMenu}>
+              <Link href="/teacherhelp" onClick={closeMobileMenu}>
                 На допомогу вчителю
               </Link>
-              <Link href="/qualification-improvement" onClick={closeMobileMenu}>
+              <Link href="/qualificationimprovement" onClick={closeMobileMenu}>
                 Підвищення кваліфікації
               </Link>
-              <Link href="/teacher-certification" onClick={closeMobileMenu}>
+              <Link href="/teachercertification" onClick={closeMobileMenu}>
                 Атестація педпрацівників
               </Link>
-              <Link href="/methodical-events" onClick={closeMobileMenu}>
+              <Link href="/methodicalevents" onClick={closeMobileMenu}>
                 Основні методичні заходи
-              </Link>
-              <Link href="/pedagogical-olympus" onClick={closeMobileMenu}>
-                Педагогічний Олімп
-              </Link>
-              <Link href="/methodical-lifehacks" onClick={closeMobileMenu}>
-                Методичні лайфхаки
               </Link>
             </div>
           </div>
@@ -340,6 +335,22 @@ const Header = () => {
                 {t("students")}
               </Link>
             </div>
+          </div>
+
+          {/* Mobile Language Switcher */}
+          <div 
+            className={styles.mobileLanguageSwitcher}
+            onClick={() => {
+              changeLanguage(locale === "uk" ? "en" : "uk");
+              closeMobileMenu();
+            }}
+          >
+            <Image
+              src={locale === "uk" ? engIcon : ukrIcon}
+              alt="languageChange"
+              width={44}
+              height={48}
+            />
           </div>
         </div>
       </div>

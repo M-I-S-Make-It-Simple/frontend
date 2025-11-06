@@ -1,10 +1,11 @@
-.studentSelfGovernmentPage {
+/* Стилі для сторінки "Учнівське самоврядування" */
+.studentGovernmentPage {
   width: 100%;
   min-height: 100vh;
   background: #FFFFFF;
 }
 
-.intellectContent {
+.studentGovernmentContent {
   max-width: 1344px;
   margin: 60px auto 60px;
   padding: 40px 20px;
@@ -12,7 +13,7 @@
   z-index: 2;
 }
 
-.intellectTitle {
+.studentGovernmentTitle {
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 42px;
   color: #182BA1;
@@ -21,71 +22,29 @@
   font-weight: 700;
 }
 
-/* Стилі для селектора року */
-.yearSelector {
-  width: 180px;
-  height: 50px;
-  background-color: rgba(24, 43, 161, 0.2);
-  border-radius: 15px;
+.studentGovernmentContainer {
+  min-height: 400px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  margin: 0 auto 40px;
-  cursor: pointer;
-  position: relative;
+  justify-content: center;
 }
 
-.yearText {
-  color: #FF5700;
+.loadingMessage {
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 18px;
-  font-weight: 500;
-}
-
-.yearDropdownIcon {
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 9px solid #FF5700;
-}
-
-/* Стилі для випадаючого списку року */
-.yearDropdownContent {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  margin-top: 5px;
-  overflow: hidden;
-}
-
-.yearDropdownContent.active {
-  display: block;
-}
-
-.yearDropdownContent a {
-  display: block;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #FF5700;
-  font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 16px;
+  color: #182BA1;
   text-align: center;
-  transition: background-color 0.3s;
+  padding: 40px;
 }
 
-.yearDropdownContent a:hover {
-  background-color: rgba(24, 43, 161, 0.1);
+.noEventsMessage {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  color: #4B555C;
+  text-align: center;
+  padding: 40px;
 }
 
-/* Стилі для акордеону подій */
 .eventsList {
   display: flex;
   flex-direction: column;
@@ -194,8 +153,20 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
   transition: transform 0.3s ease;
+}
+
+/* Позиції фото - додано нові стилі */
+.eventImage img[data-position="top"] {
+  object-position: center top;
+}
+
+.eventImage img[data-position="bottom"] {
+  object-position: center bottom;
+}
+
+.eventImage img[data-position="center"] {
+  object-position: center center;
 }
 
 .eventImageOverlay {
@@ -238,7 +209,7 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Gallery Modal Styles */
+/* Gallery Modal Styles - точно такі ж, як у "Інтелект та обдарованість" */
 .galleryModal {
   display: none;
   position: fixed;
@@ -328,13 +299,68 @@
   -webkit-line-clamp: unset;
 }
 
-@media (max-width: 768px) {
-  .intellectContent {
-    padding: 40px 20px;
+/* === АДАПТИВНІ СТИЛІ === */
+
+/* Tablet - до 1024px */
+@media (max-width: 1024px) {
+  .studentGovernmentContent {
+    padding: 35px 20px;
   }
   
-  .intellectTitle {
+  .studentGovernmentTitle {
     font-size: 36px;
+    margin-bottom: 35px;
+  }
+  
+  .eventItem {
+    min-height: 200px;
+  }
+  
+  .eventContent {
+    width: 60%;
+    padding: 28px 28px 28px 40px;
+  }
+  
+  .eventTitle {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .eventText {
+    font-size: 15px;
+    margin: 10px 0;
+  }
+  
+  .readMoreBtn {
+    padding: 7px 18px;
+    font-size: 13px;
+    width: 200px;
+    height: 30px;
+  }
+  
+  .eventImage {
+    width: 40%;
+  }
+}
+
+/* Mobile Large - до 768px */
+@media (max-width: 768px) {
+  .studentGovernmentContent {
+    padding: 25px 15px;
+  }
+  
+  .studentGovernmentTitle {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .eventsList {
+    gap: 30px;
+  }
+  
+  .eventItem {
+    flex-direction: column;
+    min-height: auto;
   }
   
   .eventContent {
@@ -342,14 +368,137 @@
     padding: 20px;
   }
   
-  .eventImage {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-top: 20px;
+  .eventTitle {
+    font-size: 20px;
+    margin-bottom: 8px;
   }
   
   .eventTitle::before {
     display: none;
   }
-} 
+  
+  .eventText {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  
+  .readMoreBtn {
+    padding: 6px 16px;
+    font-size: 12px;
+    width: 180px;
+    height: 28px;
+    margin-top: 6px;
+  }
+  
+  .eventImage {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-top: 0;
+  }
+  
+  /* Кнопка "Переглянути всі фото" завжди видима на мобільних пристроях */
+  .eventImageOverlay {
+    opacity: 1 !important;
+  }
+  
+  .galleryContent {
+    max-width: 95%;
+    max-height: 85vh;
+  }
+  
+  .galleryNav {
+    padding: 0 15px;
+  }
+  
+  .galleryNav button {
+    padding: 12px;
+  }
+  
+  .galleryClose {
+    top: 15px;
+    right: 15px;
+    font-size: 25px;
+  }
+  
+  .galleryCounter {
+    bottom: 15px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile Small - до 480px */
+@media (max-width: 480px) {
+  .studentGovernmentContent {
+    padding: 20px 10px;
+  }
+  
+  .studentGovernmentTitle {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .eventsList {
+    gap: 25px;
+  }
+  
+  .eventContent {
+    padding: 15px;
+  }
+  
+  .eventTitle {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  
+  .eventText {
+    font-size: 13px;
+    margin: 6px 0;
+  }
+  
+  .readMoreBtn {
+    padding: 5px 14px;
+    font-size: 11px;
+    width: 160px;
+    height: 26px;
+    margin-top: 5px;
+  }
+  
+  .eventImage {
+    height: 180px;
+  }
+  
+  /* Кнопка "Переглянути всі фото" завжди видима на малих мобільних пристроях */
+  .eventImageOverlay {
+    opacity: 1 !important;
+  }
+  
+  .viewMoreText {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
+  .galleryContent {
+    max-width: 98%;
+    max-height: 80vh;
+  }
+  
+  .galleryNav {
+    padding: 0 10px;
+  }
+  
+  .galleryNav button {
+    padding: 10px;
+  }
+  
+  .galleryClose {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+  
+  .galleryCounter {
+    bottom: 10px;
+    font-size: 12px;
+  }
+}

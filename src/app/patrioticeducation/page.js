@@ -1,144 +1,214 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import styles from '@/styles/patrioticeducation.module.css';
+import Image from 'next/image';
+import { useTranslation } from '@/contexts/TranslationProvider';
 
 export default function PatrioticEducation() {
-  const [selectedYear, setSelectedYear] = useState('2025');
-  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
-  const [expandedEvents, setExpandedEvents] = useState({});
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(null);
+  const { t, locale } = useTranslation();
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [expandedEvents, setExpandedEvents] = useState(new Set());
+  const [selectedImages, setSelectedImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showGallery, setShowGallery] = useState(false);
+  const [renderKey, setRenderKey] = useState(0);
 
-  const toggleYearDropdown = () => {
-    setIsYearDropdownOpen(!isYearDropdownOpen);
+  // Діагностика перекладу
+  console.log('PatrioticEducation - Current locale:', locale);
+  console.log('PatrioticEducation - Translation test:', t('patrioticEducation'));
+
+  // Відстеження змін мови
+  useEffect(() => {
+    console.log('PatrioticEducation - Language changed to:', locale);
+    setRenderKey(prev => prev + 1);
+  }, [locale]);
+
+  // Функція для отримання локалізованого контенту
+  const getLocalizedContent = (item) => {
+    if (locale === 'en') {
+      return {
+        heading: item.headingEn || item.heading, // fallback до української
+        description: item.descriptionEn || item.description
+      };
+    }
+    return {
+      heading: item.heading,
+      description: item.description
+    };
   };
 
-  const handleYearSelect = (year) => {
-    setSelectedYear(year);
-    setIsYearDropdownOpen(false);
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  const loadEvents = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:3001/api/patriotic-education');
+      
+      if (!response.ok) {
+        throw new Error('Помилка завантаження даних');
+      }
+      
+      const data = await response.json();
+      console.log('Отримані дані:', data);
+      
+      const mappedEvents = data.map((item) => ({
+        id: item.id,
+        heading: item.heading,
+        description: item.description,
+        headingEn: item.headingEn,
+        descriptionEn: item.descriptionEn,
+        photoUrls: item.photoUrls ? item.photoUrls.map((url) =>
+          url.startsWith('http') ? url : `http://localhost:3001${url}`
+        ) : [],
+        imagePosition: item.imagePosition || 'center'
+      }));
+      
+      setEvents(mappedEvents);
+    } catch (error) {
+      console.error('Помилка завантаження подій:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const toggleEvent = (eventId) => {
-    setExpandedEvents(prev => ({
-      ...prev,
-      [eventId]: !prev[eventId]
-    }));
+  const toggleEventExpansion = (eventId) => {
+    const newExpandedEvents = new Set(expandedEvents);
+    if (newExpandedEvents.has(eventId)) {
+      newExpandedEvents.delete(eventId);
+    } else {
+      newExpandedEvents.add(eventId);
+    }
+    setExpandedEvents(newExpandedEvents);
   };
 
-  const openGallery = (images, index) => {
-    setCurrentImage(images[index]);
+  const handleImageClick = (images, index) => {
+    setSelectedImages(images);
     setCurrentImageIndex(index);
-    setIsGalleryOpen(true);
+    setShowGallery(true);
   };
 
   const closeGallery = () => {
-    setIsGalleryOpen(false);
-    setCurrentImage(null);
+    setShowGallery(false);
+    setSelectedImages([]);
+    setCurrentImageIndex(0);
   };
 
-  const nextImage = (images) => {
-    const nextIndex = (currentImageIndex + 1) % images.length;
-    setCurrentImage(images[nextIndex]);
-    setCurrentImageIndex(nextIndex);
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === selectedImages.length - 1 ? 0 : prev + 1
+    );
   };
 
-  const prevImage = (images) => {
-    const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
-    setCurrentImage(images[prevIndex]);
-    setCurrentImageIndex(prevIndex);
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? selectedImages.length - 1 : prev - 1
+    );
   };
 
-  const events = [
-    {
-      id: 1,
-      title: 'Вшанування пам\'яті Героїв Небесної Сотні',
-      text: 'Урочисте вшанування пам\'яті Героїв Небесної Сотні. Учні школи взяли участь у мітингу-реквіємі, поклали квіти до меморіалу, підготували літературно-музичну композицію. Після урочистостей відбувся круглий стіл "Уроки Революції Гідності" з учасниками подій 2014 року.',
-      images: ['/img/patriotic1.jpg', '/img/patriotic2.jpg', '/img/patriotic3.jpg']
-    },
-    {
-      id: 2,
-      title: 'Свято Незалежності України',
-      text: 'Урочисте святкування Дня Незалежності України. Учні підготували концертну програму з патріотичними піснями та танцями. Відбувся конкурс малюнків "Моя Україна", виставка народного мистецтва, спортивні змагання. Завершилося свято урочистим флешмобом "Жива прапор України".',
-      images: ['/img/patriotic1.jpg', '/img/patriotic2.jpg', '/img/patriotic3.jpg']
-    },
-    {
-      id: 3,
-      title: 'Військово-патріотична гра "Сокіл"',
-      text: 'Щорічна військово-патріотична гра "Сокіл" для учнів 8-11 класів. Учасники змагалися у військовій підготовці, медичній допомозі, туристичних навичках. Гра сприяє вихованню патріотизму, розвитку фізичної підготовки та командного духу.',
-      images: ['/img/patriotic1.jpg', '/img/patriotic2.jpg', '/img/patriotic3.jpg']
+  const getImagePositionStyle = (position) => {
+    switch (position) {
+      case 'top':
+        return { objectPosition: 'center top' };
+      case 'bottom':
+        return { objectPosition: 'center bottom' };
+      case 'center':
+      default:
+        return { objectPosition: 'center center' };
     }
-  ];
+  };
+
+
 
   return (
-    <div className={styles.patrioticEducationPage}>
-      <div className={styles.intellectContent}>
-        <h1 className={styles.intellectTitle}>Національно-патріотичне виховання</h1>
-        
-        <div className={styles.yearSelector} onClick={toggleYearDropdown}>
-          <span className={styles.yearText}>{selectedYear}</span>
-          <div className={styles.yearDropdownIcon}></div>
-          <div className={`${styles.yearDropdownContent} ${isYearDropdownOpen ? styles.active : ''}`}>
-            <a onClick={() => handleYearSelect('2025')}>2025</a>
-          </div>
-        </div>
-
-        <div className={styles.eventsList}>
-          {events.map((event) => (
-            <div key={event.id} className={`${styles.eventItem} ${expandedEvents[event.id] ? styles.expanded : ''}`}>
-              <div className={styles.eventContent}>
-                <h2 className={styles.eventTitle}>{event.title}</h2>
-                <p className={styles.eventText}>{event.text}</p>
-                <button 
-                  className={`${styles.readMoreBtn} ${expandedEvents[event.id] ? styles.expanded : ''}`}
-                  onClick={() => toggleEvent(event.id)}
-                >
-                  {expandedEvents[event.id] ? 'Згорнути' : 'Читати далі'}
-                </button>
-              </div>
-              <div className={styles.eventImage}>
-                <Image
-                  src={event.images[0]}
-                  alt={event.title}
-                  width={500}
-                  height={300}
-                  style={{ objectFit: 'cover' }}
-                />
+    <>
+      <div className={styles.patrioticEducationPage} lang={locale} key={`${locale}-${renderKey}`}>
+        <div className={styles.intellectContent}>
+          <h1 className={styles.intellectTitle}>
+            {t("patrioticEducation") || "Національно-патріотичне виховання"}
+          </h1>
+          
+          <div className={styles.eventsList}>
+            {events.map((item) => {
+              const isExpanded = expandedEvents.has(item.id);
+              const localized = getLocalizedContent(item);
+              
+              return (
                 <div 
-                  className={styles.eventImageOverlay}
-                  onClick={() => openGallery(event.images, 0)}
+                  key={item.id} 
+                  className={`${styles.eventItem} ${isExpanded ? styles.expanded : ''}`}
                 >
-                  <span className={styles.viewMoreText}>Переглянути всі фото</span>
+                  <div className={styles.eventContent}>
+                    <h2 className={styles.eventTitle}>{localized.heading}</h2>
+                    <p className={styles.eventText}>{localized.description}</p>
+                    
+                    <button
+                      className={`${styles.readMoreBtn} ${isExpanded ? styles.expanded : ''}`}
+                      onClick={() => toggleEventExpansion(item.id)}
+                    >
+                      {isExpanded ? t("collapse") : t("readMore")}
+                    </button>
+                  </div>
+                  
+                  {item.photoUrls.length > 0 && (
+                    <div className={styles.eventImage}>
+                      <Image
+                        src={item.photoUrls[0]}
+                        alt="Event image"
+                        width={400}
+                        height={300}
+                        onClick={() => handleImageClick(item.photoUrls, 0)}
+                        style={getImagePositionStyle(item.imagePosition)}
+                      />
+                      
+                      {/* Overlay показується завжди, як у "Інтелект та обдарованість" */}
+                      <div 
+                        className={styles.eventImageOverlay}
+                        onClick={() => handleImageClick(item.photoUrls, 0)}
+                      >
+                        <span className={styles.viewMoreText}>
+                          {t("viewMore")}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {isGalleryOpen && currentImage && (
-        <div className={`${styles.galleryModal} ${isGalleryOpen ? styles.active : ''}`}>
+      {/* Галерея - рендериться поза основним контейнером, як у "Інтелект та обдарованість" */}
+      {showGallery && (
+        <div className={`${styles.galleryModal} ${styles.active}`}>
           <div className={styles.galleryContent}>
             <Image
-              src={currentImage}
-              alt="Gallery"
+              src={selectedImages[currentImageIndex]}
+              alt="Gallery image"
               width={1200}
               height={800}
-              style={{ objectFit: 'contain' }}
             />
             <div className={styles.galleryNav}>
-              <button onClick={() => prevImage(events[0].images)}>❮</button>
-              <button onClick={() => nextImage(events[0].images)}>❯</button>
+              <button className={styles.galleryPrev} onClick={prevImage}>
+                ❮
+              </button>
+              <button className={styles.galleryNext} onClick={nextImage}>
+                ❯
+              </button>
             </div>
-            <button className={styles.galleryClose} onClick={closeGallery}>×</button>
+            <button className={styles.galleryClose} onClick={closeGallery}>
+              ×
+            </button>
             <div className={styles.galleryCounter}>
-              {currentImageIndex + 1} / {events[0].images.length}
+              {currentImageIndex + 1} / {selectedImages.length}
             </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
-} 
+}

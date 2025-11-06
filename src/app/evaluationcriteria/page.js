@@ -1,144 +1,166 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import styles from '@/styles/evaluationcriteria.module.css';
+import { useTranslation } from '@/contexts/TranslationProvider';
 
 export default function EvaluationCriteria() {
-  const [selectedYear, setSelectedYear] = useState('2025');
-  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
-  const [expandedEvents, setExpandedEvents] = useState({});
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { t, locale } = useTranslation();
+  const [expandedSubject, setExpandedSubject] = useState(null);
+  const [subjects, setSubjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [renderKey, setRenderKey] = useState(0);
 
-  const toggleYearDropdown = () => {
-    setIsYearDropdownOpen(!isYearDropdownOpen);
-  };
+  // Діагностика перекладу
+  console.log('EvaluationCriteria - Current locale:', locale);
+  console.log('EvaluationCriteria - Translation test:', t('evaluationCriteria'));
 
-  const handleYearSelect = (year) => {
-    setSelectedYear(year);
-    setIsYearDropdownOpen(false);
-  };
+  // Відстеження змін мови
+  useEffect(() => {
+    console.log('EvaluationCriteria - Language changed to:', locale);
+    setRenderKey(prev => prev + 1);
+  }, [locale]);
 
-  const toggleEvent = (eventId) => {
-    setExpandedEvents(prev => ({
-      ...prev,
-      [eventId]: !prev[eventId]
-    }));
-  };
-
-  const openGallery = (images, index) => {
-    setCurrentImage(images[index]);
-    setCurrentImageIndex(index);
-    setIsGalleryOpen(true);
-  };
-
-  const closeGallery = () => {
-    setIsGalleryOpen(false);
-    setCurrentImage(null);
-  };
-
-  const nextImage = (images) => {
-    const nextIndex = (currentImageIndex + 1) % images.length;
-    setCurrentImage(images[nextIndex]);
-    setCurrentImageIndex(nextIndex);
-  };
-
-  const prevImage = (images) => {
-    const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
-    setCurrentImage(images[prevIndex]);
-    setCurrentImageIndex(prevIndex);
-  };
-
-  const events = [
-    {
-      id: 1,
-      title: 'Критерії оцінювання навчальних досягнень учнів',
-      text: 'Система оцінювання навчальних досягнень учнів базується на принципах об\'єктивності, справедливості та прозорості. Оцінювання здійснюється за 12-бальною шкалою, де 12 балів - найвищий рівень досягнень. При оцінюванні враховуються рівень засвоєння знань, умінь та навичок, самостійність, творчість, системність знань, здатність застосовувати їх на практиці.',
-      images: ['/img/criteria1.jpg', '/img/criteria2.jpg', '/img/criteria3.jpg']
-    },
-    {
-      id: 2,
-      title: 'Форми та методи оцінювання',
-      text: 'У навчальному процесі використовуються різні форми оцінювання: поточне, тематичне, семестрове та річне. Поточне оцінювання включає усні відповіді, письмові роботи, практичні завдання, проекти. Тематичне оцінювання проводиться після вивчення теми. Семестрове та річне оцінювання враховують результати поточного та тематичного оцінювання.',
-      images: ['/img/criteria1.jpg', '/img/criteria2.jpg', '/img/criteria3.jpg']
-    },
-    {
-      id: 3,
-      title: 'Система заохочення учнів',
-      text: 'За успіхи в навчанні учні можуть отримати похвальний лист, грамоту, подяку. Найкращі учні залучаються до участі в олімпіадах, конкурсах, конференціях. Система заохочення спрямована на розвиток інтересу до навчання, підтримку талановитих учнів, створення позитивної мотивації до навчання.',
-      images: ['/img/criteria1.jpg', '/img/criteria2.jpg', '/img/criteria3.jpg']
+  // Функція для отримання локалізованого контенту
+  const getLocalizedContent = (item) => {
+    if (locale === 'en') {
+      return {
+        name: item.nameEn || item.name // fallback до української
+      };
     }
-  ];
+    return {
+      name: item.name
+    };
+  };
+
+  const loadSubjects = async () => {
+    try {
+      setIsLoading(true);
+      console.log(" --- start ---");
+      
+      // Прямий запит до API сервера
+      const response = await fetch("http://localhost:3001/api/evaluation-criteria");
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Subjects loaded:", data);
+
+      // Оновлюємо стан з даними з API
+      const mappedSubjects = data.map((item) => ({
+        id: item.id,
+        name: item.name,
+        nameEn: item.nameEn,
+        color: item.color,
+        link: item.url,
+        hasSubItems: item.hasSubItems,
+        subItems: item.hasSubItems && item.subItems ? item.subItems.map((subItem) => ({
+          name: subItem.name,
+          link: subItem.link
+        })) : []
+      }));
+      
+      setSubjects(mappedSubjects);
+      return data;
+    } catch (error) {
+      console.error("Error loading subjects:", error);
+      setSubjects([]);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadSubjects();
+  }, []);
+
+  const toggleSubject = (subjectId) => {
+    setExpandedSubject(expandedSubject === subjectId ? null : subjectId);
+  };
 
   return (
-    <div className={styles.evaluationCriteriaPage}>
-      <div className={styles.intellectContent}>
-        <h1 className={styles.intellectTitle}>Критерії оцінювання</h1>
+    <div className={styles.evaluationCriteriaPage} lang={locale} key={`${locale}-${renderKey}`}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>{t("evaluationCriteria")}</h1>
         
-        <div className={styles.yearSelector} onClick={toggleYearDropdown}>
-          <span className={styles.yearText}>{selectedYear}</span>
-          <div className={styles.yearDropdownIcon}></div>
-          <div className={`${styles.yearDropdownContent} ${isYearDropdownOpen ? styles.active : ''}`}>
-            <a onClick={() => handleYearSelect('2025')}>2025</a>
-          </div>
-        </div>
-
-        <div className={styles.eventsList}>
-          {events.map((event) => (
-            <div key={event.id} className={`${styles.eventItem} ${expandedEvents[event.id] ? styles.expanded : ''}`}>
-              <div className={styles.eventContent}>
-                <h2 className={styles.eventTitle}>{event.title}</h2>
-                <p className={styles.eventText}>{event.text}</p>
-                <button 
-                  className={`${styles.readMoreBtn} ${expandedEvents[event.id] ? styles.expanded : ''}`}
-                  onClick={() => toggleEvent(event.id)}
-                >
-                  {expandedEvents[event.id] ? 'Згорнути' : 'Читати далі'}
-                </button>
-              </div>
-              <div className={styles.eventImage}>
-                <Image
-                  src={event.images[0]}
-                  alt={event.title}
-                  width={500}
-                  height={300}
-                  style={{ objectFit: 'cover' }}
-                />
-                <div 
-                  className={styles.eventImageOverlay}
-                  onClick={() => openGallery(event.images, 0)}
-                >
-                  <span className={styles.viewMoreText}>Переглянути всі фото</span>
+        {(
+          <div className={styles.subjectsGrid}>
+            {subjects.map((subject) => {
+              const localized = getLocalizedContent(subject);
+              
+              return (
+                <div key={subject.id} className={styles.subjectCard}>
+                  {subject.hasSubItems ? (
+                    <div className={styles.subjectWithSubItems}>
+                      <div 
+                        className={styles.subjectHeader}
+                        onClick={() => toggleSubject(subject.id)}
+                      >
+                        <div className={styles.subjectInfo}>
+                          <div 
+                            className={styles.imageContainer}
+                            style={{ backgroundColor: subject.color }}
+                          >
+                            <span className={styles.subjectIcon}>
+                              {localized.name.charAt(0)}
+                            </span>
+                          </div>
+                          <h3 className={styles.subjectName}>{localized.name}</h3>
+                        </div>
+                        <span className={`${styles.expandIcon} ${expandedSubject === subject.id ? styles.expanded : ''}`}>
+                          ▼
+                        </span>
+                      </div>
+                      
+                      {expandedSubject === subject.id && (
+                        <div className={styles.subItems}>
+                          <div className={styles.subItemsGrid}>
+                            {subject.subItems.map((item, index) => (
+                              <a
+                                key={index}
+                                href={item.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.subItem}
+                              >
+                                {item.name}
+                                <span className={styles.linkIcon}>↗</span>
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <a
+                      href={subject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.subjectLink}
+                    >
+                      <div className={styles.subjectInfo}>
+                        <div 
+                          className={styles.imageContainer}
+                          style={{ backgroundColor: subject.color }}
+                        >
+                          <span className={styles.subjectIcon}>
+                            {localized.name.charAt(0)}
+                          </span>
+                        </div>
+                        <h3 className={styles.subjectName}>{localized.name}</h3>
+                      </div>
+                      <span className={styles.linkIcon}>↗</span>
+                    </a>
+                  )}
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {isGalleryOpen && currentImage && (
-        <div className={`${styles.galleryModal} ${isGalleryOpen ? styles.active : ''}`}>
-          <div className={styles.galleryContent}>
-            <Image
-              src={currentImage}
-              alt="Gallery"
-              width={1200}
-              height={800}
-              style={{ objectFit: 'contain' }}
-            />
-            <div className={styles.galleryNav}>
-              <button onClick={() => prevImage(events[0].images)}>❮</button>
-              <button onClick={() => nextImage(events[0].images)}>❯</button>
-            </div>
-            <button className={styles.galleryClose} onClick={closeGallery}>×</button>
-            <div className={styles.galleryCounter}>
-              {currentImageIndex + 1} / {events[0].images.length}
-            </div>
+              );
+            })}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
-} 
+}

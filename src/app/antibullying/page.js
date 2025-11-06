@@ -1,144 +1,309 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import styles from '@/styles/antibullying.module.css';
+import { useTranslation } from '@/contexts/TranslationProvider';
 
 export default function Antibullying() {
-  const [selectedYear, setSelectedYear] = useState('2025');
-  const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false);
-  const [expandedEvents, setExpandedEvents] = useState({});
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { t, locale } = useTranslation();
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [renderKey, setRenderKey] = useState(0);
 
-  const toggleYearDropdown = () => {
-    setIsYearDropdownOpen(!isYearDropdownOpen);
-  };
+  // Діагностика перекладу
+  console.log('Antibullying - Current locale:', locale);
+  console.log('Antibullying - Translation test:', t('antiBullying'));
 
-  const handleYearSelect = (year) => {
-    setSelectedYear(year);
-    setIsYearDropdownOpen(false);
-  };
+  // Відстеження змін мови
+  useEffect(() => {
+    console.log('Antibullying - Language changed to:', locale);
+    setRenderKey(prev => prev + 1);
+  }, [locale]);
 
-  const toggleEvent = (eventId) => {
-    setExpandedEvents(prev => ({
-      ...prev,
-      [eventId]: !prev[eventId]
-    }));
-  };
-
-  const openGallery = (images, index) => {
-    setCurrentImage(images[index]);
-    setCurrentImageIndex(index);
-    setIsGalleryOpen(true);
-  };
-
-  const closeGallery = () => {
-    setIsGalleryOpen(false);
-    setCurrentImage(null);
-  };
-
-  const nextImage = (images) => {
-    const nextIndex = (currentImageIndex + 1) % images.length;
-    setCurrentImage(images[nextIndex]);
-    setCurrentImageIndex(nextIndex);
-  };
-
-  const prevImage = (images) => {
-    const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
-    setCurrentImage(images[prevIndex]);
-    setCurrentImageIndex(prevIndex);
-  };
-
-  const events = [
-    {
-      id: 1,
-      title: 'Профілактика булінгу',
-      text: 'У школі реалізується комплексна програма профілактики булінгу, яка включає регулярні тренінги для учнів, педагогів та батьків. Проводяться заняття з розвитку емпатії, комунікативних навичок, вирішення конфліктів. Особливу увагу приділяється формуванню культури взаємної поваги та толерантності.',
-      images: ['/img/bullying1.jpg', '/img/bullying2.jpg', '/img/bullying3.jpg']
-    },
-    {
-      id: 2,
-      title: 'Система реагування',
-      text: 'У школі діє ефективна система реагування на випадки булінгу. Створено службу медиації, де навчені учні-медіатори допомагають вирішувати конфліктні ситуації. Працює "телефон довіри" та електронна пошта для анонімних повідомлень про випадки булінгу.',
-      images: ['/img/bullying1.jpg', '/img/bullying2.jpg', '/img/bullying3.jpg']
-    },
-    {
-      id: 3,
-      title: 'Просвітницька робота',
-      text: 'Регулярно проводяться просвітницькі заходи для всіх учасників освітнього процесу: семінари, круглі столи, тематичні зустрічі. Організовуються акції та флешмоби, спрямовані на популяризацію ідеї безпечного навчального середовища. Велика увага приділяється інформаційній роботі через шкільні медіа.',
-      images: ['/img/bullying1.jpg', '/img/bullying2.jpg', '/img/bullying3.jpg']
+  // Функція для отримання локалізованого контенту
+  const getLocalizedContent = (item) => {
+    if (locale === 'en') {
+      return {
+        title: item.titleEn || item.title, // fallback до української
+        content: item.contentEn || item.content,
+        linkText: item.linkTextEn || item.linkText
+      };
     }
-  ];
+    return {
+      title: item.title,
+      content: item.content,
+      linkText: item.linkText
+    };
+  };
+
+  const loadArticles = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("http://localhost:3001/api/anti-bullying");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Articles loaded:", data);
+
+      // Сортуємо за ID (новіші зверху)
+      const sortedArticles = data.sort((a, b) => b.id - a.id);
+      setArticles(sortedArticles);
+    } catch (error) {
+      console.error("Error loading articles:", error);
+      setArticles([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadArticles();
+  }, []);
+
+  // Розділяємо динамічні елементи на блоки та елементи для секції документів
+  const blockItems = articles.filter(item => {
+    const localized = getLocalizedContent(item);
+    return localized.title && localized.content;
+  });
+  
+  // Елементи для відображення в секції "Корисні документи та матеріали"
+  const documentItems = articles.filter(item => 
+    item.link
+  ).sort((a, b) => a.id - b.id); // Сортуємо за ID в прямому порядку (старіші зверху)
+
+  // Функція для відображення тексту з пропущеними рядками
+  const renderTextWithLineBreaks = (text) => {
+    if (!text) return null;
+    
+    // Розділяємо текст на абзаци за подвійними пропущеними рядками
+    const paragraphs = text.split('\n\n');
+    
+    return paragraphs.map((paragraph, index) => (
+      <p key={index}>
+        {paragraph.split('\n').map((line, lineIndex) => (
+          <span key={lineIndex}>
+            {line}
+            {lineIndex < paragraph.split('\n').length - 1 && <br />}
+          </span>
+        ))}
+      </p>
+    ));
+  };
 
   return (
-    <div className={styles.antibullyingPage}>
+    <div className={styles.antibullyingPage} lang={locale} key={`${locale}-${renderKey}`}>
       <div className={styles.intellectContent}>
-        <h1 className={styles.intellectTitle}>Протидія булінгу</h1>
+        <h1 className={styles.intellectTitle}>{t("antiBullying")}</h1>
         
-        <div className={styles.yearSelector} onClick={toggleYearDropdown}>
-          <span className={styles.yearText}>{selectedYear}</span>
-          <div className={styles.yearDropdownIcon}></div>
-          <div className={`${styles.yearDropdownContent} ${isYearDropdownOpen ? styles.active : ''}`}>
-            <a onClick={() => handleYearSelect('2025')}>2025</a>
+        {/* Шкільний чат-бот секція */}
+        <div className={styles.chatbotSection}>
+          <div className={styles.chatbotContent}>
+              <h2 className={styles.chatbotTitle}>
+                {t("schoolChatbot")} <span className={styles.hashtag}>{t("chatbotHashtag")}</span>
+              </h2>
+            <p className={styles.chatbotDescription}>
+              {t("chatbotDescription")}
+            </p>
+            <p className={styles.chatbotInfo}>
+              {t("chatbotInfo")}{' '}
+              <a 
+                href="http://t.me/ProBullyingBot" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.telegramLink}
+              >
+                http://t.me/ProBullyingBot
+              </a>
+            </p>
           </div>
         </div>
 
-        <div className={styles.eventsList}>
-          {events.map((event) => (
-            <div key={event.id} className={`${styles.eventItem} ${expandedEvents[event.id] ? styles.expanded : ''}`}>
-              <div className={styles.eventContent}>
-                <h2 className={styles.eventTitle}>{event.title}</h2>
-                <p className={styles.eventText}>{event.text}</p>
-                <button 
-                  className={`${styles.readMoreBtn} ${expandedEvents[event.id] ? styles.expanded : ''}`}
-                  onClick={() => toggleEvent(event.id)}
+        {/* Розділювальна лінія */}
+        <div className={styles.divider}></div>
+
+        {/* Посилання на документи */}
+        <div className={styles.documentsSection}>
+           <h3 className={styles.documentsTitle}>{t("usefulDocuments")}</h3>
+          <div className={styles.documentsList}>
+            <a 
+              href="https://drive.google.com/file/d/1NOzfllJcpHzTK7ShfKGAyHDCFjnITMSn/view" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={styles.documentLink}
+            >
+               {t("bullyingReport")}
+             </a>
+             
+             <a 
+               href="https://drive.google.com/file/d/1_uBWZ8P_eVkUIqA6LfHnBgVbOobdBvaN/view" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className={styles.documentLink}
+             >
+               {t("bullyingProcedure")}
+             </a>
+             
+             <a 
+               href="https://drive.google.com/file/d/1LQqIU9E79Mun7tM0m3Py3YgbJfXTs9ld/view" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className={styles.documentLink}
+             >
+               {t("cyberbullyingProtection")}
+             </a>
+             
+             <a 
+               href="https://docs.google.com/document/d/1LDIjtAUm1wouy6X-76ho1SG6EYemMbf2/edit" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className={styles.documentLink}
+             >
+               {t("cyberbullyingGuide")}
+            </a>
+
+            {/* Динамічні елементи для секції документів */}
+            {documentItems.map((item, index) => {
+              const localized = getLocalizedContent(item);
+              
+              return (
+                <a 
+                  key={item.id}
+                  href={item.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={styles.documentLink}
                 >
-                  {expandedEvents[event.id] ? 'Згорнути' : 'Читати далі'}
-                </button>
-              </div>
-              <div className={styles.eventImage}>
-                <Image
-                  src={event.images[0]}
-                  alt={event.title}
-                  width={500}
-                  height={300}
-                  style={{ objectFit: 'cover' }}
-                />
-                <div 
-                  className={styles.eventImageOverlay}
-                  onClick={() => openGallery(event.images, 0)}
-                >
-                  <span className={styles.viewMoreText}>Переглянути всі фото</span>
+                  {localized.linkText || item.link}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Динамічні блоки з адмінки */}
+        {isLoading ? (
+           <div className={styles.loadingMessage}>{t("loadingArticles")}</div>
+        ) : blockItems.length === 0 ? null : (
+          <div className={styles.verticalContent}>
+            {blockItems.map((article, index) => {
+              const localized = getLocalizedContent(article);
+              
+              return (
+                <div key={article.id} className={styles.contentCard}>
+                  <h3 className={styles.contentTitle}>{localized.title}</h3>
+                  <div className={styles.contentText}>
+                    {localized.content.split('\n').map((paragraph, pIndex) => {
+                      if (paragraph.trim().startsWith('•')) {
+                        return (
+                          <ul key={pIndex} className={styles.bulletList}>
+                            <li>{paragraph.trim().substring(1).trim()}</li>
+                          </ul>
+                        );
+                      } else if (paragraph.trim().startsWith('ПОРЯДОК') || 
+                                 paragraph.trim().startsWith('Визначення') ||
+                                 paragraph.trim().startsWith('Основні') ||
+                                 paragraph.trim().startsWith('Подача')) {
+                        return (
+                          <h4 key={pIndex} className={styles.sectionTitle}>
+                            {paragraph}
+                          </h4>
+                        );
+                      } else if (paragraph.trim().startsWith('Загальні') ||
+                                 paragraph.trim().startsWith('Типові') ||
+                                 paragraph.trim().startsWith('Подання') ||
+                                 paragraph.trim().startsWith('Розгляд') ||
+                                 paragraph.trim().startsWith('Відповідальна') ||
+                                 paragraph.trim().startsWith('Комісія') ||
+                                 paragraph.trim().startsWith('Терміни')) {
+                        return (
+                          <h5 key={pIndex} className={styles.subsectionTitle}>
+                            {paragraph}
+                          </h5>
+                        );
+                      } else if (paragraph.trim().startsWith('Булінг') ||
+                                 paragraph.trim().startsWith('Цькування') ||
+                                 paragraph.trim().startsWith('Така ж') ||
+                                 paragraph.trim().startsWith('За булінг')) {
+                        return (
+                          <div key={pIndex} className={styles.definitionBox}>
+                            <p>{paragraph}</p>
+                          </div>
+                        );
+                      } else if (paragraph.trim().startsWith('Заяви щодо')) {
+                        return (
+                          <div key={pIndex} className={styles.contactInfo}>
+                            <p>{paragraph}</p>
+                          </div>
+                        );
+                      } else if (paragraph.trim()) {
+                        return <p key={pIndex}>{paragraph}</p>;
+                      }
+                      return null;
+                    })}
+                  </div>
+                  {article.photoUrls && (
+                    <div style={{ 
+                      display: 'flex', 
+                      flexWrap: 'wrap', 
+                      gap: '20px',
+                      justifyContent: 'center',
+                      marginTop: '20px',
+                      width: '100%'
+                    }}>
+                      {article.photoUrls.split(',').filter(url => url.trim()).map((url, photoIndex) => (
+                        <div key={photoIndex} style={{ 
+                          flex: '0 0 auto',
+                          maxWidth: 'calc(50% - 10px)',
+                          minWidth: '300px',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          transition: 'transform 0.3s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.02)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                        }}>
+                          <img
+                            src={`http://localhost:3001${url}`}
+                            alt={`Фото ${photoIndex + 1}`}
+                            style={{ 
+                              width: '100%', 
+                              height: '280px',
+                              objectFit: 'cover',
+                              borderRadius: '8px'
+                            }}
+                            onError={(e) => {
+                              console.error('Помилка завантаження зображення:', url);
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {article.link && (
+                    <div className={styles.articleLink}>
+                      <a 
+                        href={article.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.documentLink}
+                      >
+                         {localized.linkText || t("viewDocument")}
+                      </a>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {isGalleryOpen && currentImage && (
-        <div className={`${styles.galleryModal} ${isGalleryOpen ? styles.active : ''}`}>
-          <div className={styles.galleryContent}>
-            <Image
-              src={currentImage}
-              alt="Gallery"
-              width={1200}
-              height={800}
-              style={{ objectFit: 'contain' }}
-            />
-            <div className={styles.galleryNav}>
-              <button onClick={() => prevImage(events[0].images)}>❮</button>
-              <button onClick={() => nextImage(events[0].images)}>❯</button>
-            </div>
-            <button className={styles.galleryClose} onClick={closeGallery}>×</button>
-            <div className={styles.galleryCounter}>
-              {currentImageIndex + 1} / {events[0].images.length}
-            </div>
+              );
+            })}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
-} 
+}
