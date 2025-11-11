@@ -20,6 +20,7 @@ import assemblyHallPhoto from "../../assets/assembly_hall.jpg";
 import assemblyHall2Photo from "../../assets/assembly_hall2.jpg";
 import canteenPhoto from "../../assets/canteen.jpg";
 import engClassPhoto from "../../assets/eng_class.jpg";
+import organizeRoomPhoto from "../../assets/organize_room.jpg";
 import primarySchool1Photo from "../../assets/primary_school1.jpg";
 import primarySchool2Photo from "../../assets/primary_school2.jpg";
 import engClass2Photo from "../../assets/eng_class2.jpg";
@@ -281,8 +282,7 @@ const VirtualTour = () => {
       name: "Організаційний кабінет",
       description:
         "Адміністративний кабінет для координації організаційних питань ліцею. Центр планування навчальних процесів та управління внутрішніми справами закладу.",
-      image:
-        "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&h=600&fit=crop&crop=center",
+      image: organizeRoomPhoto.src,
       icon: icons.Office,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -527,6 +527,9 @@ const VirtualTour = () => {
     }
     if (currentLocation === "cafeteria") {
       return `${styles.mainImage} ${styles.cafeteriaImage}`;
+    }
+    if (currentLocation === "orgoffice") {
+      return `${styles.mainImage} ${styles.orgofficeImage}`;
     }
     return styles.mainImage;
   };
