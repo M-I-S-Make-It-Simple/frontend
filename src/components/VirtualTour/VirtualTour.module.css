@@ -178,9 +178,53 @@
     object-position: center 90% !important;
 }
 
+.rimcImage {
+    object-position: center 80% !important;
+}
+
+.libraryImage {
+    object-position: center 100% !important;
+}
+
 /* Позиціонування фото іноземного кабінету */
 .languageImage {
     object-position: center 70% !important;
+}
+
+.gymImage {
+    object-position: center 60% !important;
+}
+
+.medicalImage {
+    object-position: center 70% !important;
+}
+
+.recreationImage {
+    object-position: center 80% !important;
+}
+
+.teacherspaceImage {
+    object-position: center 80% !important;
+}
+
+.computerclassImage {
+    object-position: center 80% !important;
+}
+
+.middleschoolImage {
+    object-position: center 70% !important;
+}
+
+.auditoriumImage2 {
+    object-position: center 70% !important;
+}
+
+.languageroomImage {
+    object-position: center 90% !important;
+}
+
+.cafeteriaImage {
+    object-position: center 100% !important;
 }
 
 @media (min-width: 768px) {

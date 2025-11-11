@@ -7,6 +7,19 @@ import { useTranslation } from "@/contexts/TranslationProvider";
 import schoolPhoto from "../../assets/school.jpg";
 import gymPhoto from "../../assets/gym.jpg";
 import danceHallPhoto from "../../assets/dance_hall.jpg";
+import foyerPhoto from "../../assets/foyer.jpg";
+import rimcPhoto from "../../assets/rimc.jpg";
+import libraryPhoto from "../../assets/library.jpg";
+import medRoomPhoto from "../../assets/med_room.jpg";
+import hallPhoto from "../../assets/hall.jpg";
+import teachRoomPhoto from "../../assets/teach_room.jpg";
+import compRoomPhoto from "../../assets/comp_room.jpg";
+import sportPhoto from "../../assets/sport.JPG";
+import class2FloorPhoto from "../../assets/class2floor.jpg";
+import assemblyHallPhoto from "../../assets/assembly_hall.jpg";
+import assemblyHall2Photo from "../../assets/assembly_hall2.jpg";
+import canteenPhoto from "../../assets/canteen.jpg";
+import engClassPhoto from "../../assets/eng_class.jpg";
 import primarySchool1Photo from "../../assets/primary_school1.jpg";
 import primarySchool2Photo from "../../assets/primary_school2.jpg";
 import engClass2Photo from "../../assets/eng_class2.jpg";
@@ -55,6 +68,7 @@ const VirtualTour = () => {
   const [currentLocation, setCurrentLocation] = useState("entrance");
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageError, setImageError] = useState(false);
 
   // Тимчасові URL зображень (замініть на свої)
   const locations = {
@@ -74,8 +88,7 @@ const VirtualTour = () => {
       name: "Фойє та рецепція",
       description:
         "Центральне фойє - це серце нашої школи, де учні та відвідувачі отримують необхідну інформацію. Простора та світла зона для зустрічей.",
-      image:
-        "https://images.unsplash.com/photo-1562774053-701939374585?w=800&h=600&fit=crop&crop=center",
+      image: foyerPhoto.src,
       icon: icons.Users,
       connections: ["entrance", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -89,8 +102,7 @@ const VirtualTour = () => {
       floor: "Нульовий поверх",
       description:
         "Ресурсний інформаційно-методичний центр - багатофункціональна кімната для проведення конференцій, семінарів та різноманітних освітніх заходів. Обладнана сучасною комп'ютерною технікою та великим телевізором для презентацій.",
-      image:
-        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop&crop=center",
+      image: rimcPhoto.src,
       icon: icons.Computer,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -104,8 +116,7 @@ const VirtualTour = () => {
       floor: "Нульовий поверх",
       description:
         "Сучасна шкільна бібліотека з великою колекцією книг та комп'ютерною зоною. Тихе місце для навчання та читання, де учні можуть поглибити свої знання.",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=center",
+      image: libraryPhoto.src,
       icon: icons.Book,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -147,8 +158,7 @@ const VirtualTour = () => {
       floor: "Нульовий поверх",
       description:
         "Медичний кабінет для надання першої допомоги та медичного обслуговування учнів. Забезпечує безпечне та здорове навчальне середовище.",
-      image:
-        "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=800&h=600&fit=crop&crop=center",
+      image: medRoomPhoto.src,
       icon: icons.Medical,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -162,14 +172,14 @@ const VirtualTour = () => {
       name: "Рекреація",
       floor: "Перший поверх",
       description:
-        "Просторий рекреаційний зал з ігровою зоною для відпочинку учнів. Комфортне місце для спілкування, ігор та творчої діяльності під час перерв.",
-      image:
-        "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&h=600&fit=crop&crop=center",
+        "Світлий коридор першого поверху для короткого відпочинку між уроками. Простір із широкими проходами, зручними місцями для сидіння та приємною атмосферою.",
+      image: hallPhoto.src,
       icon: icons.TeddyBear,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
-        "Ігрова зона для відпочинку",
-        "Зручні меблі для спілкування",
+        "Природне освітлення",
+        "Зручні місця для очікування",
+        "Доступ до основних кабінетів",
       ],
     },
     classroom1: {
@@ -203,8 +213,7 @@ const VirtualTour = () => {
       floor: "Другий поверх",
       description:
         "Спеціально обладнана зона для роботи та відпочинку вчителів. Комфортне місце для підготовки до уроків, планування та професійного спілкування.",
-      image:
-        "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&h=600&fit=crop&crop=center",
+      image: teachRoomPhoto.src,
       icon: icons.Users,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -218,8 +227,7 @@ const VirtualTour = () => {
       floor: "Другий поверх",
       description:
         "Сучасний комп'ютерний клас з новітнім обладнанням для вивчення інформаційних технологій та цифрових навичок учнями різних вікових груп.",
-      image:
-        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop&crop=center",
+      image: compRoomPhoto.src,
       icon: icons.Computer,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -233,8 +241,7 @@ const VirtualTour = () => {
       floor: "Другий поверх",
       description:
         "Універсальний навчальний кабінет для учнів середніх класів, призначений для проведення різноманітних предметних уроків та практичних занять.",
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop&crop=center",
+      image: class2FloorPhoto.src,
       icon: icons.GraduationCap,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -247,8 +254,7 @@ const VirtualTour = () => {
       name: "Актовий зал",
       description:
         "Просторий актовий зал для проведення урочистих заходів, концертів, театральних вистав та загальношкільних зборів. Оснащений сучасною звуковою та світловою апаратурою.",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=center",
+      images: [assemblyHallPhoto.src, assemblyHall2Photo.src],
       icon: icons.Theater,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -262,8 +268,7 @@ const VirtualTour = () => {
       name: "Шкільна їдальня",
       description:
         "Затишна їдальня з просторим обіднім залом та сучасною кухнею. Місце для здорового харчування учнів та персоналу протягом навчального дня.",
-      image:
-        "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&h=600&fit=crop&crop=center",
+      image: canteenPhoto.src,
       icon: icons.Restaurant,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -290,8 +295,7 @@ const VirtualTour = () => {
       name: "Кабінет іноземної мови",
       description:
         "Спеціалізований кабінет для вивчення іноземних мов з інтерактивними засобами навчання. Створює мовне середовище для ефективного вивчення англійської, німецької та інших мов.",
-      image:
-        "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=600&fit=crop&crop=center",
+      image: engClassPhoto.src,
       icon: icons.Language,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -379,8 +383,7 @@ const VirtualTour = () => {
       name: "Шкільний майданчик",
       description:
         "Просторий спортивний майданчик на свіжому повітрі для активних ігор та занять фізкультурою. Включає футбольне поле, баскетбольні кільця та зони для різноманітних спортивних активностей.",
-      image:
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&crop=center",
+      image: sportPhoto.src,
       icon: icons.Playground,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -469,18 +472,61 @@ const VirtualTour = () => {
   const currentImage = currentRoom.images ? currentRoom.images[currentImageIndex] : currentRoom.image;
   const hasMultipleImages = currentRoom.images && currentRoom.images.length > 1;
 
+  useEffect(() => {
+    setImageError(false);
+  }, [currentImage, currentLocation]);
+
   // Визначаємо спеціальні стилі для фото коридору
   const getImageClassName = () => {
-    if (currentLocation === 'hallway3' && hasMultipleImages) {
+    if (currentLocation === "hallway3" && hasMultipleImages) {
       switch (currentImageIndex) {
-        case 0: return `${styles.mainImage} ${styles.corridorImage1}`;
-        case 1: return `${styles.mainImage} ${styles.corridorImage2}`;
-        case 3: return `${styles.mainImage} ${styles.corridorImage4}`;
-        default: return styles.mainImage;
+        case 0:
+          return `${styles.mainImage} ${styles.corridorImage1}`;
+        case 1:
+          return `${styles.mainImage} ${styles.corridorImage2}`;
+        case 3:
+          return `${styles.mainImage} ${styles.corridorImage4}`;
+        default:
+          return styles.mainImage;
       }
     }
-    if (currentLocation === 'languageroom3') {
+    if (currentLocation === "auditorium" && hasMultipleImages) {
+      if (currentImageIndex === 1) {
+        return `${styles.mainImage} ${styles.auditoriumImage2}`;
+      }
+    }
+    if (currentLocation === "languageroom") {
+      return `${styles.mainImage} ${styles.languageroomImage}`;
+    }
+    if (currentLocation === "languageroom3") {
       return `${styles.mainImage} ${styles.languageImage}`;
+    }
+    if (currentLocation === "rimc") {
+      return `${styles.mainImage} ${styles.rimcImage}`;
+    }
+    if (currentLocation === "library") {
+      return `${styles.mainImage} ${styles.libraryImage}`;
+    }
+    if (currentLocation === "gym") {
+      return `${styles.mainImage} ${styles.gymImage}`;
+    }
+    if (currentLocation === "medical") {
+      return `${styles.mainImage} ${styles.medicalImage}`;
+    }
+    if (currentLocation === "recreation") {
+      return `${styles.mainImage} ${styles.recreationImage}`;
+    }
+    if (currentLocation === "teacherspace") {
+      return `${styles.mainImage} ${styles.teacherspaceImage}`;
+    }
+    if (currentLocation === "computerclass") {
+      return `${styles.mainImage} ${styles.computerclassImage}`;
+    }
+    if (currentLocation === "middleschool") {
+      return `${styles.mainImage} ${styles.middleschoolImage}`;
+    }
+    if (currentLocation === "cafeteria") {
+      return `${styles.mainImage} ${styles.cafeteriaImage}`;
     }
     return styles.mainImage;
   };
@@ -515,15 +561,18 @@ const VirtualTour = () => {
               className={`${styles.imageWrapper} ${isTransitioning ? styles.transitioning : ""}`}
             >
               <Image
-                src={currentImage}
+                key={`${currentLocation}-${currentImageIndex}-${imageError ? 'error' : 'ok'}`}
+                src={
+                  imageError
+                    ? `https://via.placeholder.com/800x500/4A90E2/FFFFFF?text=${encodeURIComponent(currentRoom.name)}`
+                    : currentImage
+                }
                 alt={currentRoom.name}
                 width={800}
                 height={500}
                 className={getImageClassName()}
                 priority
-                onError={(e) => {
-                  e.currentTarget.src = `https://via.placeholder.com/800x500/4A90E2/FFFFFF?text=${encodeURIComponent(currentRoom.name)}`;
-                }}
+                onError={() => setImageError(true)}
               />
 
               {/* Навігаційні стрілки для кількох фото */}

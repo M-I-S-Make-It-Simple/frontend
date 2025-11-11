@@ -850,8 +850,8 @@ export const translations = {
     physicsHighlights: ["Демонстраційне обладнання", "Електричні схеми", "Оптичні прилади", "Механічні моделі"],
     
     // Додаткові локації
-    recreationDescription: "Просторий рекреаційний зал з ігровою зоною для відпочинку учнів. Комфортне місце для спілкування, ігор та творчої діяльності під час перерв.",
-    recreationHighlights: ["Ігрова зона для відпочинку", "Зручні меблі для спілкування"],
+    recreationDescription: "Світлий коридор першого поверху для короткого відпочинку між уроками.",
+    recreationHighlights: ["Природне освітлення", "Доступ до основних кабінетів"],
     
     classroom1Description: "Сучасний навчальний кабінет для учнів початкових класів, обладнаний інтерактивними засобами навчання та зручними меблями відповідно до віку дітей.",
     classroom1Highlights: ["Меблі для початкової школи", "Безпечне середовище для навчання"],
@@ -2095,8 +2095,8 @@ export const translations = {
     physicsHighlights: ["Demonstration equipment", "Electrical circuits", "Optical instruments", "Mechanical models"],
     
     // Additional locations
-    recreationDescription: "Spacious recreation hall with play area for student relaxation. A comfortable place for communication, games and creative activities during breaks.",
-    recreationHighlights: ["Play area for relaxation", "Comfortable furniture for communication"],
+    recreationDescription: "Bright first-floor corridor for short breaks between classes.",
+    recreationHighlights: ["Natural lighting", "Access to main classrooms"],
     
     classroom1Description: "Modern classroom for primary school students, equipped with interactive learning tools and comfortable furniture appropriate for children's age.",
     classroom1Highlights: ["Furniture for primary school", "Safe learning environment"],
