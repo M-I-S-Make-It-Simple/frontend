@@ -8,12 +8,12 @@ const TranslationContext = createContext();
 export const TranslationProvider = ({ children }) => {
   const [locale, setLocale] = useState("uk");
   const [isInitialized, setIsInitialized] = useState(false);
+  const [hasSeenTooltip, setHasSeenTooltip] = useState(false);
 
   useEffect(() => {
-    const savedLocale = localStorage.getItem("locale");
-    if (savedLocale && translations[savedLocale]) {
-      setLocale(savedLocale);
-    }
+    // Завжди починаємо з української мови
+    setLocale("uk");
+    localStorage.setItem("locale", "uk");
     setIsInitialized(true);
   }, []);
 
@@ -34,7 +34,7 @@ export const TranslationProvider = ({ children }) => {
   }
 
   return (
-    <TranslationContext.Provider value={{ t, locale, changeLanguage }}>
+    <TranslationContext.Provider value={{ t, locale, changeLanguage, hasSeenTooltip, setHasSeenTooltip }}>
       {children}
     </TranslationContext.Provider>
   );

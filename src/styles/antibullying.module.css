@@ -1,8 +1,26 @@
+.antibullyingPage {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  padding-bottom: 50px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .intellectContent {
   max-width: 1344px;
-  margin: 40px auto;
-  padding: 45px 48px;
-  text-align: center;
+  margin: 60px auto 0;
+  padding: 40px 20px 0;
+  position: relative;
+  z-index: 2;
+  flex: 1;
 }
 
 .intellectTitle {
@@ -10,193 +28,612 @@
   font-size: 42px;
   color: #182BA1;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-weight: 700;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
 }
 
-/* Стилі для селектора року */
-.yearSelector {
-  width: 180px;
-  height: 50px;
-  background-color: rgba(24, 43, 161, 0.2);
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  margin: 0 auto 40px;
-  cursor: pointer;
+/* Чат-бот секція */
+.chatbotSection {
+  background: linear-gradient(135deg, #FF8C00, #FF6347);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 50px;
+  box-shadow: 0 10px 30px rgba(255, 140, 0, 0.3);
   position: relative;
 }
 
-.yearText {
-  color: #FF5700;
-  font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 18px;
-  font-weight: 500;
+.chatbotContent {
+  position: relative;
+  z-index: 2;
 }
 
-.yearDropdownIcon {
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 9px solid #FF5700;
-}
-
-/* Стилі для випадаючого списку року */
-.yearDropdownContent {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  margin-top: 5px;
-  overflow: hidden;
-}
-
-.yearDropdownContent.active {
-  display: block;
-}
-
-.yearDropdownContent a {
-  display: block;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #FF5700;
-  font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 16px;
+.chatbotTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  color: white;
+  margin-bottom: 20px;
   text-align: center;
-  transition: background-color 0.3s;
+  font-weight: 700;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
 }
 
-.yearDropdownContent a:hover {
-  background-color: rgba(24, 43, 161, 0.1);
+.hashtag {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 25px;
+  border: 2px solid white;
+  font-weight: 800;
 }
 
-/* Стилі для акордеону подій */
-.eventsAccordion {
+.chatbotDescription {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: white;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: center;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
+.chatbotInfo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
+.telegramLink {
+  color: white;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.telegramLink:hover {
+  color: #E0E7FF;
+}
+
+/* Секція документів */
+.documentsSection {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 50px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.documentsTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  color: #1E40AF;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.documentsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.documentLink {
+  display: block;
+  background: linear-gradient(135deg, #6B7280, #3B82F6);
+  color: white;
+  text-decoration: none;
+  padding: 20px;
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.documentLink:hover {
+  color: white;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
+}
+
+/* Вертикальний контент */
+.verticalContent {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  text-align: left;
+  gap: 40px;
+  margin-bottom: 0;
 }
 
-.eventItem {
-  background: linear-gradient(to bottom, #B8BBCE, #A2A4AD);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+.contentCard {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
 }
 
-.eventHeader {
-  padding: 20px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
+.contentCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 3px;
+  background: linear-gradient(135deg, #FF8C00, #3B82F6);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 1;
+  pointer-events: none;
 }
 
-.eventTitle {
-  color: white;
-  font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 18px;
-  font-weight: 500;
+.contentTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  color: #1E40AF;
+  margin-bottom: 25px;
+  font-weight: 700;
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #FF8C00;
 }
 
-.eventArrow {
-  width: 12px;
-  height: 12px;
-  border: solid #FFFFFF;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease;
-  margin-top: -6px;
-}
-
-/* Стилі для відкритого акордеону */
-.eventContent {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  color: white;
-  font-family: 'Montserrat Alternates', sans-serif;
-  padding: 0 30px;
-}
-
-.eventContentWrapper {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-}
-
-.eventText {
-  flex: 1;
-  display: flex;
-}
-
-.eventImage {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 50%;
-}
-
-.eventImage img {
-  width: 100%;
-  height: auto;
-  max-height: 300px;
-  object-fit: cover;
+.sectionTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  color: #FF8C00;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+  background: rgba(255, 140, 0, 0.1);
+  padding: 15px;
   border-radius: 10px;
+  border-left: 4px solid #FF8C00;
 }
 
-.eventItem.active .eventContent {
-  max-height: 1000px;
-  padding: 0 30px 30px;
+.subsectionTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #3B82F6;
+  margin: 25px 0 15px 0;
+  font-weight: 600;
+  padding-left: 15px;
+  border-left: 3px solid #3B82F6;
 }
 
-.eventItem.active .eventArrow {
-  transform: rotate(-135deg);
-  margin-top: 6px;
+.contentText p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #374151;
+  margin-bottom: 15px;
 }
 
-.contentDivider {
-  width: 1px;
-  height: 280px;
-  background-color: white;
-  margin: 0 16px 0 -8px;
+.definitionBox {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(59, 130, 246, 0.1));
+  border: 2px solid #FF8C00;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  position: relative;
 }
 
-.eventContent p {
-  line-height: 1.5;
-  margin-top: 15px;
+.definitionBox::before {
+  content: 'ℹ';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: #FF8C00;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-/* Медіа-запити для адаптивності */
-@media (max-width: 768px) {
+.penaltyBox {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+  border: 2px solid #EF4444;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.contactInfo {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1));
+  border: 2px solid #22C55E;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.bulletList {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.bulletList li {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 12px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.bulletList li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: #FF8C00;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+
+/* Розділювальна лінія */
+.divider {
+  height: 4px;
+  background: linear-gradient(90deg, #FF8C00, #3B82F6, #FF8C00);
+  border-radius: 2px;
+  margin: 50px 0;
+  position: relative;
+}
+
+.divider::before {
+  content: '🛡️';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
+}
+
+/* Додаткові стилі для завантаження */
+.loadingMessage, .noArticlesMessage {
+  text-align: center;
+  padding: 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #6B7280;
+}
+
+.articleLink {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Додатковий елемент для розтягування сірого фону */
+.antibullyingPage::after {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  z-index: -1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .intellectContent {
-    padding: 40px 20px 30px;
+    max-width: 95%;
+    padding: 30px 20px 0;
   }
   
   .intellectTitle {
     font-size: 36px;
+    margin-bottom: 35px;
   }
   
-  .eventContentWrapper {
-    flex-direction: column;
+  .chatbotSection {
+    padding: 35px 30px;
+    margin-bottom: 45px;
   }
   
-  .eventImage {
-    max-width: 100%;
-    margin-top: 20px;
+  .chatbotTitle {
+    font-size: 28px;
+    margin-bottom: 18px;
   }
   
-  .contentDivider {
-    display: none;
+  .chatbotDescription {
+    font-size: 17px;
+    margin-bottom: 18px;
   }
-} 
+  
+  .chatbotInfo {
+    font-size: 15px;
+  }
+  
+  .documentsSection {
+    padding: 35px 30px;
+    margin-bottom: 45px;
+  }
+  
+  .documentsTitle {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
+  
+  .documentsList {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  
+  .documentLink {
+    padding: 18px;
+    font-size: 15px;
+  }
+  
+  .contentCard {
+    padding: 28px 25px;
+  }
+  
+  .contentTitle {
+    font-size: 22px;
+    margin-bottom: 22px;
+  }
+  
+  .sectionTitle {
+    font-size: 19px;
+    margin-bottom: 18px;
+  }
+  
+  .subsectionTitle {
+    font-size: 17px;
+    margin: 22px 0 14px 0;
+  }
+  
+  .contentText p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  /* Стилі для планшетної версії динамічного контенту */
+  .contentCard div[style*="display: flex"][style*="gap: 20px"] {
+    gap: 18px !important;
+  }
+  
+  .contentCard div[style*="maxWidth: calc(50% - 10px)"] {
+    max-width: calc(50% - 9px) !important;
+    min-width: 200px !important;
+  }
+  
+  .contentCard img[style*="height: 280px"] {
+    height: 220px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .antibullyingPage {
+    padding-bottom: 40px;
+  }
+  
+  .intellectContent {
+    padding: 25px 15px 0;
+  }
+  
+  .intellectTitle {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .chatbotSection {
+    padding: 25px 20px;
+    margin-bottom: 35px;
+  }
+  
+  .chatbotTitle {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .hashtag {
+    margin-top: 8px;
+    display: inline-block;
+  }
+  
+  .chatbotDescription {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .chatbotInfo {
+    font-size: 14px;
+  }
+  
+  .documentsSection {
+    padding: 25px 20px;
+    margin-bottom: 35px;
+  }
+  
+  .documentsTitle {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+  
+  .documentsList {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .documentLink {
+    padding: 16px;
+    font-size: 14px;
+  }
+  
+  .contentCard {
+    padding: 22px 18px;
+  }
+  
+  .contentTitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .sectionTitle {
+    font-size: 17px;
+    margin-bottom: 16px;
+  }
+  
+  .subsectionTitle {
+    font-size: 16px;
+    margin: 20px 0 12px 0;
+  }
+  
+  .contentText p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  /* Стилі для мобільної версії динамічного контенту */
+  .contentCard div[style*="display: flex"][style*="gap: 20px"] {
+    gap: 15px !important;
+  }
+  
+  .contentCard div[style*="maxWidth: calc(50% - 10px)"] {
+    max-width: calc(50% - 8px) !important;
+    min-width: 150px !important;
+  }
+  
+  .contentCard img[style*="height: 280px"] {
+    height: 180px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .antibullyingPage {
+    padding-bottom: 35px;
+  }
+  
+  .intellectContent {
+    padding: 20px 10px 0;
+  }
+  
+  .intellectTitle {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .chatbotSection {
+    padding: 20px 15px;
+    margin-bottom: 30px;
+  }
+  
+  .chatbotTitle {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .hashtag {
+    margin-top: 6px;
+    display: inline-block;
+  }
+  
+  .chatbotDescription {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  
+  .chatbotInfo {
+    font-size: 13px;
+  }
+  
+  .documentsSection {
+    padding: 20px 15px;
+    margin-bottom: 30px;
+  }
+  
+  .documentsTitle {
+    font-size: 20px;
+    margin-bottom: 22px;
+  }
+  
+  .documentsList {
+    gap: 12px;
+  }
+  
+  .documentLink {
+    padding: 14px;
+    font-size: 13px;
+  }
+  
+  .contentCard {
+    padding: 18px 15px;
+  }
+  
+  .contentTitle {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+  
+  .sectionTitle {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  
+  .subsectionTitle {
+    font-size: 15px;
+    margin: 18px 0 10px 0;
+  }
+  
+  .contentText p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  /* Стилі для мобільної версії динамічного контенту */
+  .contentCard div[style*="display: flex"][style*="gap: 20px"] {
+    gap: 15px !important;
+  }
+  
+  .contentCard div[style*="maxWidth: calc(50% - 10px)"] {
+    max-width: calc(50% - 8px) !important;
+    min-width: 150px !important;
+  }
+  
+  .contentCard img[style*="height: 280px"] {
+    height: 180px !important;
+  }
+}

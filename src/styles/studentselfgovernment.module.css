@@ -1,202 +1,504 @@
-.intellectContent {
-  max-width: 1344px;
-  margin: 40px auto;
-  padding: 45px 48px;
-  text-align: center;
+/* Стилі для сторінки "Учнівське самоврядування" */
+.studentGovernmentPage {
+  width: 100%;
+  min-height: 100vh;
+  background: #FFFFFF;
 }
 
-.intellectTitle {
+.studentGovernmentContent {
+  max-width: 1344px;
+  margin: 60px auto 60px;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.studentGovernmentTitle {
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 42px;
   color: #182BA1;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-weight: 700;
 }
 
-/* Стилі для селектора року */
-.yearSelector {
-  width: 180px;
-  height: 50px;
-  background-color: rgba(24, 43, 161, 0.2);
-  border-radius: 15px;
+.studentGovernmentContainer {
+  min-height: 400px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  margin: 0 auto 40px;
-  cursor: pointer;
-  position: relative;
+  justify-content: center;
 }
 
-.yearText {
-  color: #FF5700;
+.loadingMessage {
   font-family: 'Montserrat Alternates', sans-serif;
   font-size: 18px;
-  font-weight: 500;
-}
-
-.yearDropdownIcon {
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 9px solid #FF5700;
-}
-
-/* Стилі для випадаючого списку року */
-.yearDropdownContent {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  margin-top: 5px;
-  overflow: hidden;
-}
-
-.yearDropdownContent.active {
-  display: block;
-}
-
-.yearDropdownContent a {
-  display: block;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #FF5700;
-  font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 16px;
+  color: #182BA1;
   text-align: center;
-  transition: background-color 0.3s;
+  padding: 40px;
 }
 
-.yearDropdownContent a:hover {
-  background-color: rgba(24, 43, 161, 0.1);
+.noEventsMessage {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 18px;
+  color: #4B555C;
+  text-align: center;
+  padding: 40px;
 }
 
-/* Стилі для акордеону подій */
-.eventsAccordion {
+.eventsList {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  text-align: left;
+  gap: 40px;
 }
 
 .eventItem {
-  background: linear-gradient(to bottom, #B8BBCE, #A2A4AD);
-  border-radius: 18px;
+  width: 100%;
+  height: auto;
+  min-height: 240px;
+  position: relative;
+  display: flex;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: height 0.3s ease-in-out;
+  background: linear-gradient(to bottom, #9A9DB5, #7A7C8A);
 }
 
-.eventHeader {
-  padding: 20px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
+.eventContent {
+  width: 65%;
+  padding: 32px 32px 32px 47px;
+  position: relative;
+  z-index: 2;
 }
 
 .eventTitle {
-  color: white;
   font-family: 'Montserrat Alternates', sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.eventArrow {
-  width: 12px;
-  height: 12px;
-  border: solid #FFFFFF;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease;
-  margin-top: -6px;
-}
-
-/* Стилі для відкритого акордеону */
-.eventContent {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+  font-size: 24px;
   color: white;
-  font-family: 'Montserrat Alternates', sans-serif;
-  padding: 0 30px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  position: relative;
 }
 
-.eventContentWrapper {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
+.eventTitle::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 0;
+  height: 176px;
+  width: 1px;
+  background-color: white;
 }
 
 .eventText {
-  flex: 1;
-  display: flex;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: white;
+  margin: 12px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 100%;
+  white-space: pre-wrap;
+}
+
+.readMoreBtn {
+  display: inline-block;
+  background-color: rgba(225, 229, 235, 0.62);
+  padding: 8px 20px;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+  margin-top: 8px;
+  position: relative;
+  width: 231px;
+  height: 33px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.readMoreBtn:hover {
+  background-color: rgba(225, 229, 235, 0.8);
+}
+
+.readMoreBtn.expanded::after {
+  content: '↑';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.readMoreBtn:not(.expanded)::after {
+  content: '→';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .eventImage {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 50%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 35%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .eventImage img {
   width: 100%;
-  height: auto;
-  max-height: 300px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
+  transition: transform 0.3s ease;
 }
 
-.eventItem.active .eventContent {
-  max-height: 1000px;
-  padding: 0 30px 30px;
+/* Позиції фото - додано нові стилі */
+.eventImage img[data-position="top"] {
+  object-position: center top;
 }
 
-.eventItem.active .eventArrow {
-  transform: rotate(-135deg);
-  margin-top: 6px;
+.eventImage img[data-position="bottom"] {
+  object-position: center bottom;
 }
 
-.contentDivider {
-  width: 1px;
-  height: 280px;
-  background-color: white;
-  margin: 0 16px 0 -8px;
+.eventImage img[data-position="center"] {
+  object-position: center center;
 }
 
-.eventContent p {
-  line-height: 1.5;
-  margin-top: 15px;
+.eventImageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  z-index: 2;
 }
 
-/* Медіа-запити для адаптивності */
-@media (max-width: 768px) {
-  .intellectContent {
-    padding: 40px 20px 30px;
+.eventImage:hover .eventImageOverlay {
+  opacity: 1;
+}
+
+.eventImage:hover img {
+  transform: scale(1.05);
+}
+
+.viewMoreText {
+  color: white;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px 20px;
+  border: 2px solid white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.viewMoreText:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Gallery Modal Styles - точно такі ж, як у "Інтелект та обдарованість" */
+.galleryModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.galleryModal.active {
+  display: flex;
+}
+
+.galleryContent {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  z-index: 10000;
+}
+
+.galleryContent img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.galleryNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10000;
+}
+
+.galleryNav button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.galleryNav button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.galleryClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.galleryCounter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 16px;
+  z-index: 10000;
+}
+
+.eventItem.expanded {
+  height: auto;
+}
+
+.eventItem.expanded .eventContent {
+  padding-bottom: 40px;
+}
+
+.eventItem.expanded .eventText {
+  -webkit-line-clamp: unset;
+}
+
+/* === АДАПТИВНІ СТИЛІ === */
+
+/* Tablet - до 1024px */
+@media (max-width: 1024px) {
+  .studentGovernmentContent {
+    padding: 35px 20px;
   }
   
-  .intellectTitle {
+  .studentGovernmentTitle {
     font-size: 36px;
+    margin-bottom: 35px;
   }
   
-  .eventContentWrapper {
-    flex-direction: column;
+  .eventItem {
+    min-height: 200px;
+  }
+  
+  .eventContent {
+    width: 60%;
+    padding: 28px 28px 28px 40px;
+  }
+  
+  .eventTitle {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .eventText {
+    font-size: 15px;
+    margin: 10px 0;
+  }
+  
+  .readMoreBtn {
+    padding: 7px 18px;
+    font-size: 13px;
+    width: 200px;
+    height: 30px;
   }
   
   .eventImage {
-    max-width: 100%;
-    margin-top: 20px;
+    width: 40%;
+  }
+}
+
+/* Mobile Large - до 768px */
+@media (max-width: 768px) {
+  .studentGovernmentContent {
+    padding: 25px 15px;
   }
   
-  .contentDivider {
+  .studentGovernmentTitle {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .eventsList {
+    gap: 30px;
+  }
+  
+  .eventItem {
+    flex-direction: column;
+    min-height: auto;
+  }
+  
+  .eventContent {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .eventTitle {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  
+  .eventTitle::before {
     display: none;
   }
-} 
+  
+  .eventText {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  
+  .readMoreBtn {
+    padding: 6px 16px;
+    font-size: 12px;
+    width: 180px;
+    height: 28px;
+    margin-top: 6px;
+  }
+  
+  .eventImage {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-top: 0;
+  }
+  
+  /* Кнопка "Переглянути всі фото" завжди видима на мобільних пристроях */
+  .eventImageOverlay {
+    opacity: 1 !important;
+  }
+  
+  .galleryContent {
+    max-width: 95%;
+    max-height: 85vh;
+  }
+  
+  .galleryNav {
+    padding: 0 15px;
+  }
+  
+  .galleryNav button {
+    padding: 12px;
+  }
+  
+  .galleryClose {
+    top: 15px;
+    right: 15px;
+    font-size: 25px;
+  }
+  
+  .galleryCounter {
+    bottom: 15px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile Small - до 480px */
+@media (max-width: 480px) {
+  .studentGovernmentContent {
+    padding: 20px 10px;
+  }
+  
+  .studentGovernmentTitle {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .eventsList {
+    gap: 25px;
+  }
+  
+  .eventContent {
+    padding: 15px;
+  }
+  
+  .eventTitle {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  
+  .eventText {
+    font-size: 13px;
+    margin: 6px 0;
+  }
+  
+  .readMoreBtn {
+    padding: 5px 14px;
+    font-size: 11px;
+    width: 160px;
+    height: 26px;
+    margin-top: 5px;
+  }
+  
+  .eventImage {
+    height: 180px;
+  }
+  
+  /* Кнопка "Переглянути всі фото" завжди видима на малих мобільних пристроях */
+  .eventImageOverlay {
+    opacity: 1 !important;
+  }
+  
+  .viewMoreText {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
+  .galleryContent {
+    max-width: 98%;
+    max-height: 80vh;
+  }
+  
+  .galleryNav {
+    padding: 0 10px;
+  }
+  
+  .galleryNav button {
+    padding: 10px;
+  }
+  
+  .galleryClose {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+  
+  .galleryCounter {
+    bottom: 10px;
+    font-size: 12px;
+  }
+}

@@ -27,8 +27,8 @@ export default function MainPage() {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const current = Math.floor(start + range * easeOutQuart);
+      // Лінійна анімація для плавного набігання без затримки в кінці
+      const current = Math.floor(start + range * progress);
 
       callback(current);
 
@@ -45,15 +45,13 @@ export default function MainPage() {
           setIsVisible(true);
 
           finalValues.forEach((value, index) => {
-            setTimeout(() => {
-              animateNumber(0, value, 2000, (current) => {
-                setCounters((prev) => {
-                  const newCounters = [...prev];
-                  newCounters[index] = current;
-                  return newCounters;
-                });
+            animateNumber(0, value, 2000, (current) => {
+              setCounters((prev) => {
+                const newCounters = [...prev];
+                newCounters[index] = current;
+                return newCounters;
               });
-            }, index * 200);
+            });
           });
         }
       },
@@ -78,13 +76,11 @@ export default function MainPage() {
         </div>
 
         <div className="content">
-          <h1 className="welcome-text">{t("welcome")}</h1>
-
           <div className="text-container">
             <div className="text-box">
-              <p>
-                {t("welcomeDescription")}{" "}
-                <span className="bold-text">{t("welcomeHighlight")}</span>.
+              <h1 className="welcome-text">{t("welcome")}</h1>
+              <p style={{ whiteSpace: 'pre-line' }}>
+                {t("welcomeDescription")}
               </p>
             </div>
           </div>
@@ -96,24 +92,38 @@ export default function MainPage() {
         <p className="section-subtitle">{t("recommendTry")}</p>
 
         <div className="cards-container">
-          <a href="#" className="card wide-card">
+          <Link href="/virtual-tour" className="card wide-card">
             <Image src={virtualImg} alt={t("virtualTour")} />
             <div className="card-gradient"></div>
             <h3 className="card-title">{t("virtualTour")}</h3>
-          </a>
+          </Link>
 
           <div className="cards-row">
-            <a href="#" className="card">
+            <Link href="/profile-tests" className="card">
               <Image src={testImage} alt={t("profileTests")} />
               <div className="card-gradient"></div>
               <h3 className="card-title">{t("profileTests")}</h3>
-            </a>
+            </Link>
 
-            <Link href="#faq-section" className="card">
+            <button 
+              className="card" 
+              onClick={() => {
+                const element = document.getElementById('faq-section');
+                if (element) {
+                  const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                  const offsetPosition = elementPosition - 0; // 20px відступ для заголовка
+                  
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+            >
               <Image src={faqImg} alt={t("faq")} />
               <div className="card-gradient"></div>
               <h3 className="card-title">{t("faq")}</h3>
-            </Link>
+            </button>
           </div>
         </div>
       </section>
