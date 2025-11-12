@@ -14,7 +14,6 @@ import medRoomPhoto from "../../assets/med_room.jpg";
 import hallPhoto from "../../assets/hall.jpg";
 import teachRoomPhoto from "../../assets/teach_room.jpg";
 import compRoomPhoto from "../../assets/comp_room.jpg";
-import sportPhoto from "../../assets/sport.JPG";
 import class2FloorPhoto from "../../assets/class2floor.jpg";
 import assemblyHallPhoto from "../../assets/assembly_hall.jpg";
 import assemblyHall2Photo from "../../assets/assembly_hall2.jpg";
@@ -34,6 +33,7 @@ import physics2Photo from "../../assets/physics2.jpg";
 import biology1Photo from "../../assets/biology1.jpg";
 import biology2Photo from "../../assets/biology2.jpg";
 import yardPhoto from "../../assets/yard.jpg";
+import sportGroundPhoto from "../../assets/sport_ground.jpg";
 
 // Замінюємо іконки на простий emoji/Unicode символи
 const icons = {
@@ -383,7 +383,7 @@ const VirtualTour = () => {
       name: "Шкільний майданчик",
       description:
         "Просторий спортивний майданчик на свіжому повітрі для активних ігор та занять фізкультурою. Включає футбольне поле, баскетбольні кільця та зони для різноманітних спортивних активностей.",
-      image: sportPhoto.src,
+      image: sportGroundPhoto.src,
       icon: icons.Playground,
       connections: ["entrance", "foyer", "rimc", "library", "gym", "danceroom", "medical", "recreation", "classroom1", "classroom2", "teacherspace", "computerclass", "middleschool", "auditorium", "cafeteria", "orgoffice", "languageroom", "hallway3", "chemistry", "biology", "physics", "languageroom3", "playground", "courtyard"],
       highlights: [
@@ -530,6 +530,9 @@ const VirtualTour = () => {
     }
     if (currentLocation === "orgoffice") {
       return `${styles.mainImage} ${styles.orgofficeImage}`;
+    }
+    if (currentLocation === "playground") {
+      return `${styles.mainImage} ${styles.playgroundImage}`;
     }
     return styles.mainImage;
   };

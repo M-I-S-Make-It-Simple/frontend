@@ -231,6 +231,10 @@
     object-position: center 60% !important;
 }
 
+.playgroundImage {
+    object-position: center 70% !important;
+}
+
 @media (min-width: 768px) {
     .mainImage {
         height: 24rem;
